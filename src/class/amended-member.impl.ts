@@ -1,6 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amender, AmendTarget, newAmendTarget } from '../base';
-import { AmendRequest } from '../base/amend-request';
+import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
 import { AmendedClass } from './amended-class';
 import { AmendedMember } from './amended-member';
 
@@ -20,7 +19,7 @@ export interface AmendedMember$Desc<TValue extends TUpdate, TClass extends Class
  * @internal
  */
 export function AmendedMember$createBuilder<TValue extends TUpdate, TClass extends Class, TUpdate>(
-    amender: Amender.Action<AmendedMember<TValue, TClass, TUpdate>>,
+    amender: Amender<AmendedMember<TValue, TClass, TUpdate>>,
     key: string | symbol,
     init: AmendedMember$Desc<TValue, TClass, TUpdate>,
 ): (

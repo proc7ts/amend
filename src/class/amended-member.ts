@@ -1,5 +1,5 @@
 import { Class, noop } from '@proc7ts/primitives';
-import { Amender, combineAmenders } from '../base';
+import { Amendment, combineAmendments } from '../base';
 import { AmendedClass } from './amended-class';
 import {
   AmendedMember$createBuilder,
@@ -76,10 +76,10 @@ export interface AmendedMember<
 }
 
 export function AmendedMember<TValue extends TUpdate, TClass extends Class = Class, TUpdate = TValue>(
-    ...amenders: Amender<AmendedMember<TValue, TClass, TUpdate>>[]
+    ...amendments: Amendment<AmendedMember<TValue, TClass, TUpdate>>[]
 ): MemberAmendment<TValue, TClass, TUpdate> {
 
-  const amender = combineAmenders(amenders);
+  const amender = combineAmendments(amendments);
   const decorator = <TMemberValue extends TValue>(
       targetProto: InstanceType<TClass>,
       key: string | symbol,

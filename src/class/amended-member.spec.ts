@@ -218,7 +218,7 @@ describe('AmendedMember', () => {
       expect(() => setValue(instance, 'other')).toThrow(TypeError);
       expect(getValue(instance)).toBe('initial');
     });
-    it('applies multiple amenders', () => {
+    it('applies multiple amendments', () => {
 
       class TestClass {
 
