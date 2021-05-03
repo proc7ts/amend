@@ -1,3 +1,4 @@
+import { AmendRequest } from './amend-request';
 import { AmendTarget } from './amend-target';
 
 export type Amender<TAmended> =
@@ -49,7 +50,7 @@ export function combineAmenders<TAmended>(amenders: Iterable<Amender<TAmended>>)
         amender: Amender<TAmended>,
     ): void => amenderOf(amender)({
       ...target,
-      amend<TExt>(modification?: AmendTarget.Modification<TAmended, TExt>): (
+      amend<TExt>(modification?: AmendRequest<TAmended, TExt>): (
           this: void,
       ) => AmendTarget<TAmended & TExt> {
 

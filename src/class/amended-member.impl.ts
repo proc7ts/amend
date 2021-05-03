@@ -1,5 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amender, AmendTarget, newAmendTarget } from '../base';
+import { AmendRequest } from '../base/amend-request';
 import { AmendedClass } from './amended-class';
 import { AmendedMember } from './amended-member';
 
@@ -32,18 +33,16 @@ export function AmendedMember$createBuilder<TValue extends TUpdate, TClass exten
     const result = { ...init };
     const amendNext = <TBase extends AmendedMember<TValue, TClass, TUpdate>, TExt>(
         base: TBase,
-        modification = {} as AmendTarget.Modification<TBase, TExt>,
+        request = {} as AmendRequest<TBase, TExt>,
     ): () => AmendTarget.Draft<TBase & TExt> => {
 
-      const createClassTarget = classTarget.amend(
-          modification as AmendTarget.Modification<AmendedClass<TClass>, TExt> | undefined,
-      );
+      const createClassTarget = classTarget.amend(request as AmendRequest<AmendedClass<TClass>, TExt>);
 
       const {
         enumerable = base.enumerable,
         configurable = base.configurable,
-      } = modification;
-      let { get, set } = modification;
+      } = request;
+      let { get, set } = request;
       let readable: boolean;
       let writable: boolean;
 
@@ -76,7 +75,7 @@ export function AmendedMember$createBuilder<TValue extends TUpdate, TClass exten
       return () => ({
         ...createClassTarget(),
         amend: undefined,
-        ...modification,
+        ...request,
         key,
         ...result,
         readable,
