@@ -2,7 +2,7 @@ import { Class, noop } from '@proc7ts/primitives';
 import { Amender, combineAmenders, newAmendTarget } from '../base';
 import { ClassAmendment } from './class-amendment';
 
-export interface AmendedClass<TClass extends Class> {
+export interface AmendedClass<TClass extends Class = Class> {
 
   readonly class: TClass;
 
