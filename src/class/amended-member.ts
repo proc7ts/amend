@@ -9,6 +9,15 @@ import {
 } from './amended-member.impl';
 import { MemberAmendment } from './member-amendment';
 
+/**
+ * An amended entity representing a class member (property) to amend.
+ *
+ * Used by {@link Amendment amendments} to modify the member definition. I.e. its property descriptor.
+ *
+ * @typeParam TValue - Amended member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Amended member update type accepted by its setter.
+ */
 export interface AmendedMember<
     TValue extends TUpdate,
     TClass extends Class = Class,
@@ -75,6 +84,16 @@ export interface AmendedMember<
 
 }
 
+/**
+ * Creates a class member amendment and decorator.
+ *
+ * @typeParam TValue - Amended member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Amended member update type accepted by its setter.
+ * @param amendments - Amendments to apply.
+ *
+ * @returns - New class member amendment instance.
+ */
 export function AmendedMember<TValue extends TUpdate, TClass extends Class = Class, TUpdate = TValue>(
     ...amendments: Amendment<AmendedMember<TValue, TClass, TUpdate>>[]
 ): MemberAmendment<TValue, TClass, TUpdate> {

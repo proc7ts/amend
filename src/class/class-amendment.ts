@@ -14,7 +14,7 @@ export interface ClassAmendment<TClass extends Class> extends AmendmentSpec<Amen
   /**
    * Applies this amendment to decorated class.
    *
-   * @param classConstructor - Amended class constructor.
+   * @param classConstructor - Decorated class constructor.
    */
   (this: void, classConstructor: TClass): void;
 

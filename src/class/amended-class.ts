@@ -19,7 +19,7 @@ export interface AmendedClass<TClass extends Class = Class> {
 }
 
 /**
- * Creates class amendment and decorator.
+ * Creates a class amendment and decorator.
  *
  * @typeParam TClass - A type of amended class.
  * @param amendments - Amendments to apply.
