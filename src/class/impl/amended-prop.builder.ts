@@ -1,36 +1,42 @@
 import { Class } from '@proc7ts/primitives';
-import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
-import { AmendedClass } from './amended-class';
-import { AmendedMember } from './amended-member';
+import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../../base';
+import { AmendedClass } from '../amended-class';
+import { AmendedProp, AmendedProp$Host } from './amended-prop';
+import { AmendedProp$notReadable, AmendedProp$notWritable } from './amended-prop.accessor';
 
 /**
  * @internal
  */
-export interface AmendedMember$Desc<TValue extends TUpdate, TClass extends Class, TUpdate> {
+export interface AmendedProp$Desc<THost, TValue extends TUpdate, TUpdate> {
   enumerable: boolean;
   configurable: boolean;
   readable: boolean;
   writable: boolean;
-  get(this: void, instance: InstanceType<TClass>): TValue;
-  set(this: void, instance: InstanceType<TClass>, update: TUpdate): void;
+  get(this: void, host: THost): TValue;
+  set(this: void, host: THost, update: TUpdate): void;
 }
 
 /**
  * @internal
  */
-export function AmendedMember$createBuilder<TValue extends TUpdate, TClass extends Class, TUpdate>(
-    amender: Amender<AmendedMember<TValue, TClass, TUpdate>>,
+export function AmendedProp$createBuilder<
+    THost extends object,
+    TValue extends TUpdate,
+    TClass extends Class,
+    TUpdate>(
+    host: AmendedProp$Host<THost>,
+    amender: Amender<AmendedProp<THost, TValue, TClass, TUpdate>>,
     key: string | symbol,
-    init: AmendedMember$Desc<TValue, TClass, TUpdate>,
+    init: AmendedProp$Desc<THost, TValue, TUpdate>,
 ): (
     classTarget: AmendTarget<AmendedClass<TClass>>,
-) => AmendedMember$Desc<TValue, TClass, TUpdate> {
+) => AmendedProp$Desc<THost, TValue, TUpdate> {
   return (
       classTarget: AmendTarget<AmendedClass<TClass>>,
-  ): AmendedMember$Desc<TValue, TClass, TUpdate> => {
+  ): AmendedProp$Desc<THost, TValue, TUpdate> => {
 
     const result = { ...init };
-    const amendNext = <TBase extends AmendedMember<TValue, TClass, TUpdate>, TExt>(
+    const amendNext = <TBase extends AmendedProp<THost, TValue, TClass, TUpdate>, TExt>(
         base: TBase,
         request = {} as AmendRequest<TBase, TExt>,
     ): () => AmendTarget.Draft<TBase & TExt> => {
@@ -47,7 +53,7 @@ export function AmendedMember$createBuilder<TValue extends TUpdate, TClass exten
 
       if (!set) {
         if (get) {
-          set = AmendedMember$notWritable(classTarget.class, key);
+          set = AmendedProp$notWritable(host, key);
           writable = false;
           readable = true;
         } else {
@@ -59,7 +65,7 @@ export function AmendedMember$createBuilder<TValue extends TUpdate, TClass exten
         readable = true;
         writable = true;
       } else {
-        get = AmendedMember$notReadable(classTarget.class, key);
+        get = AmendedProp$notReadable(host, key);
         readable = false;
         writable = true;
       }
@@ -97,37 +103,4 @@ export function AmendedMember$createBuilder<TValue extends TUpdate, TClass exten
 
     return result;
   };
-}
-
-/**
- * @internal
- */
-export function AmendedMember$notReadable(
-    targetClass: Class,
-    key: string | symbol,
-): (instance: unknown) => never {
-  return _instance => {
-    throw new TypeError(`Property ${targetClass.name}${AmendMember$accessString(key)} is not readable`);
-  };
-}
-
-/**
- * @internal
- */
-export function AmendedMember$notWritable(
-    targetClass: Class,
-    key: string | symbol,
-): (instance: unknown, update: unknown) => never {
-  return (_instance, _update) => {
-    throw new TypeError(`Property ${targetClass.name}${AmendMember$accessString(key)} is not writable`);
-  };
-}
-
-const ASCIIIdPattern = /^[a-z_$][a-z0-9_$]*$/i;
-
-function AmendMember$accessString(key: string | symbol): string {
-  if (typeof key === 'string') {
-    return ASCIIIdPattern.test(key) ? `.${key}` : `[${JSON.stringify(key)}]`;
-  }
-  return `[${String(key)}]`;
 }
