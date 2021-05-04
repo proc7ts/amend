@@ -73,9 +73,11 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/amendedclass.html" class="tsd-kind-icon">Amended<wbr>Class</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/amendedmember.html" class="tsd-kind-icon">Amended<wbr>Member</a></li>
+								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/amendedstatic.html" class="tsd-kind-icon">Amended<wbr>Static</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/amendmentspec.html" class="tsd-kind-icon">Amendment<wbr>Spec</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/classamendment.html" class="tsd-kind-icon">Class<wbr>Amendment</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/memberamendment.html" class="tsd-kind-icon">Member<wbr>Amendment</a></li>
+								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/staticamendment.html" class="tsd-kind-icon">Static<wbr>Amendment</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -92,6 +94,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amendedclass" class="tsd-kind-icon">Amended<wbr>Class</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amendedmember" class="tsd-kind-icon">Amended<wbr>Member</a></li>
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amendedstatic" class="tsd-kind-icon">Amended<wbr>Static</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amenderof" class="tsd-kind-icon">amender<wbr>Of</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amendmentisspec" class="tsd-kind-icon">amendment<wbr>IsSpec</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#combineamendments" class="tsd-kind-icon">combine<wbr>Amendments</a></li>
@@ -111,7 +114,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amend<wbr>Request&lt;TAmended, TExt&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><a href="interfaces/amendtarget.core.html" class="tsd-signature-type" data-tsd-kind="Interface">Core</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><a href="interfaces/amendtarget.core.html" class="tsd-signature-type" data-tsd-kind="Interface">Core</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amend-request.ts#L15">base/amend-request.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amend-request.ts#L15">base/amend-request.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -145,7 +148,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amend<wbr>Target&lt;TAmended&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/amendtarget.core.html" class="tsd-signature-type" data-tsd-kind="Interface">Core</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amend-target.ts#L15">base/amend-target.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amend-target.ts#L15">base/amend-target.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -172,7 +175,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amender&lt;TAmended&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, target<span class="tsd-signature-symbol">: </span><a href="modules/amendtarget.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendTarget</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amendment.ts#L25">base/amendment.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L25">base/amendment.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -224,7 +227,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amendment&lt;TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules.html#amender" class="tsd-signature-type" data-tsd-kind="Type alias">Amender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/amendmentspec.html" class="tsd-signature-type" data-tsd-kind="Interface">AmendmentSpec</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amendment.ts#L14">base/amendment.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L14">base/amendment.ts:14</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -258,12 +261,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/class/amended-class.ts#L29">class/amended-class.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/class/amended-class.ts#L29">class/amended-class.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a class amendment and decorator.</p>
+									<p>Creates an amendment (and decorator) for a class.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -301,12 +304,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/class/amended-member.ts#L97">class/amended-member.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/class/amended-member.ts#L92">class/amended-member.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Creates a class member amendment and decorator.</p>
+									<p>Creates an amendment (and decorator) for the class instance member.</p>
 								</div>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -347,6 +350,61 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="amendedstatic" class="tsd-anchor"></a>
+					<h3>Amended<wbr>Static</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">Amended<wbr>Static&lt;TValue, TClass, TUpdate&gt;<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">...</span>amendments<span class="tsd-signature-symbol">: </span><a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#amendedstatic" class="tsd-signature-type" data-tsd-kind="Function">AmendedStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/staticamendment.html" class="tsd-signature-type" data-tsd-kind="Interface">StaticAmendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/class/amended-static.ts#L92">class/amended-static.ts:92</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an amendment (and decorator) for the static class member.</p>
+								</div>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TValue</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Amended member value type.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TClass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Class</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span> = <span class="tsd-signature-type">Class</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>A type of amended class.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TUpdate = <span class="tsd-signature-type">TValue</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Amended member update type accepted by its setter.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>amendments: <a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#amendedstatic" class="tsd-signature-type" data-tsd-kind="Function">AmendedStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Amendments to apply.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="interfaces/staticamendment.html" class="tsd-signature-type" data-tsd-kind="Interface">StaticAmendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<ul>
+								<li>New static member amendment instance.</li>
+							</ul>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
 					<a name="amenderof" class="tsd-anchor"></a>
 					<h3>amender<wbr>Of</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
@@ -356,7 +414,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amendment.ts#L59">base/amendment.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L59">base/amendment.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -397,7 +455,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amendment.ts#L72">base/amendment.ts:72</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L72">base/amendment.ts:72</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -439,7 +497,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amendment.ts#L87">base/amendment.ts:87</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L87">base/amendment.ts:87</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -482,7 +540,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amendment.ts#L136">base/amendment.ts:136</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L136">base/amendment.ts:136</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -529,7 +587,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amend-target.ts#L110">base/amend-target.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amend-target.ts#L110">base/amend-target.ts:110</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -570,7 +628,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/a80b51d/src/base/amendment.ts#L149">base/amendment.ts:149</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L149">base/amendment.ts:149</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -616,6 +674,9 @@
 						<a href="interfaces/amendedmember.html" class="tsd-kind-icon">Amended<wbr>Member</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/amendedstatic.html" class="tsd-kind-icon">Amended<wbr>Static</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/amendmentspec.html" class="tsd-kind-icon">Amendment<wbr>Spec</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
@@ -623,6 +684,9 @@
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/memberamendment.html" class="tsd-kind-icon">Member<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/staticamendment.html" class="tsd-kind-icon">Static<wbr>Amendment</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#amendrequest" class="tsd-kind-icon">Amend<wbr>Request</a>
@@ -641,6 +705,9 @@
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#amendedmember" class="tsd-kind-icon">Amended<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#amendedstatic" class="tsd-kind-icon">Amended<wbr>Static</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#amenderof" class="tsd-kind-icon">amender<wbr>Of</a>
