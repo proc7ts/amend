@@ -79,7 +79,6 @@ export function AmendedProp$createBuilder<
 
       return () => ({
         ...createClassTarget(),
-        amend: undefined,
         ...request,
         key,
         ...result,

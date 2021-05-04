@@ -52,13 +52,13 @@ export namespace AmendTarget {
   /**
    * Draft amendment target.
    *
-   * Contains amended entity, but not the target's {@link Core core API}.
+   * Contains amended entity. Ignores target's {@link Core core API}.
    *
    * @typeParam TAmended - Amended entity type.
    */
   export type Draft<TAmended> =
       & TAmended
-      & { readonly [K in keyof Core<TAmended>]?: undefined };
+      & { readonly [K in keyof Core<TAmended>]?: unknown };
 
   /**
    * Options for {@link newAmendTarget custom amendment target}.
