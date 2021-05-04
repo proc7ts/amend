@@ -2,25 +2,25 @@ import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
 import { AmendedClass } from './amended-class';
 import { AmendedProp, AmendedProp$Host, AmendedProp$HostKind } from './impl';
-import { MemberAmendment } from './member-amendment';
+import { StaticAmendment } from './static-amendment';
 
 /**
- * An amended entity representing a class instance member (property) to amend.
+ * An amended entity representing a static class member (static property) to amend.
  *
- * Used by {@link Amendment amendments} to modify the member definition. I.e. its property descriptor.
+ * Used by {@link Amendment amendments} to modify the static member definition. I.e. its property descriptor.
  *
  * @typeParam TValue - Amended member value type.
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
-export interface AmendedMember<
+export interface AmendedStatic<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
     > extends AmendedClass<TClass>{
 
   /**
-   * A key of the instance member.
+   * A key of the static member.
    *
    * Updates to this property are always ignored. The member key can not be changed.
    */
@@ -57,55 +57,55 @@ export interface AmendedMember<
   readonly configurable: boolean;
 
   /**
-   * Reads the value of this member in the target `instance`.
+   * Reads the value of this static member in the target class constructor.
    *
    * Throws if the member is not {@link readable}.
    *
-   * @param instance - Target instance.
+   * @param classConstructor - Target class constructor.
    *
    * @returns Member value.
    */
-  get(this: void, instance: InstanceType<TClass>): TValue;
+  get(this: void, classConstructor: TClass): TValue;
 
   /**
-   * Assigns the value of this member in the target `instance`.
+   * Assigns the value of this static member in the target class constructor.
    *
    * Throw is the member is not {@link writable}.
    *
-   * @param instance - Target instance.
+   * @param classConstructor - Target class constructor.
    * @param update - Updated member value.
    */
-  set(this: void, instance: InstanceType<TClass>, update: TUpdate): void;
+  set(this: void, classConstructor: TClass, update: TUpdate): void;
 
 }
 
 /**
- * Creates an amendment (and decorator) for the class instance member.
+ * Creates an amendment (and decorator) for the static class member.
  *
  * @typeParam TValue - Amended member value type.
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  * @param amendments - Amendments to apply.
  *
- * @returns - New class member amendment instance.
+ * @returns - New static member amendment instance.
  */
-export function AmendedMember<TValue extends TUpdate, TClass extends Class = Class, TUpdate = TValue>(
-    ...amendments: Amendment<AmendedMember<TValue, TClass, TUpdate>>[]
-): MemberAmendment<TValue, TClass, TUpdate> {
-  return AmendedProp<InstanceType<TClass>, TValue, TClass, TUpdate>(AmendedMember$createHost, amendments);
+export function AmendedStatic<TValue extends TUpdate, TClass extends Class = Class, TUpdate = TValue>(
+    ...amendments: Amendment<AmendedStatic<TValue, TClass, TUpdate>>[]
+): StaticAmendment<TValue, TClass, TUpdate> {
+  return AmendedProp<TClass, TValue, TClass, TUpdate>(AmendedStatic$createHost, amendments);
 }
 
-const AmendedMember$HostKind: AmendedProp$HostKind = {
-  pName: 'Property',
-  vDesc: key => `valueOf(${String(key)}`,
+const AmendedStatic$HostKind: AmendedProp$HostKind = {
+  pName: 'Static property',
+  vDesc: key => `staticOf(${String(key)}`,
 };
 
-function AmendedMember$createHost<TClass extends Class>(
-    targetProto: InstanceType<TClass>,
-): AmendedProp$Host<InstanceType<TClass>, TClass> {
+function AmendedStatic$createHost<TClass extends Class>(
+    classConstructor: TClass,
+): AmendedProp$Host<TClass, TClass> {
   return {
-    kind: AmendedMember$HostKind,
-    cls: targetProto.constructor,
-    host: targetProto,
+    kind: AmendedStatic$HostKind,
+    cls: classConstructor,
+    host: classConstructor,
   };
 }

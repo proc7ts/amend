@@ -3,7 +3,7 @@ import { AmendmentSpec } from '../base';
 import { AmendedMember } from './amended-member';
 
 /**
- * An amendment of class instance member (property). Can be used as property decorator.
+ * An amendment of static class member (static property). Can be used as static property decorator.
  *
  * Can also be used as an amendment {@link AmendmentSpec specifier} e.g. to combine it with other amendments.
  *
@@ -11,17 +11,17 @@ import { AmendedMember } from './amended-member';
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
-export interface MemberAmendment<
+export interface StaticAmendment<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
     > extends AmendmentSpec<AmendedMember<TValue, TClass, TUpdate>> {
 
   /**
-   * Applies this amendment to decorated property.
+   * Applies this amendment to decorated static property.
    *
    * @typeParam TMemberValue - Decorated property value type.
-   * @param proto - Decorated class prototype.
+   * @param classConstructor - Decorated class constructor.
    * @param propertyKey - Decorated property key.
    * @param descriptor - Decorated property descriptor, or nothing when decorating an instance field.
    *
@@ -29,7 +29,7 @@ export interface MemberAmendment<
    */
   <TMemberValue extends TValue>(
       this: void,
-      proto: InstanceType<TClass>,
+      classConstructor: TClass,
       propertyKey: string | symbol,
       descriptor?: TypedPropertyDescriptor<TMemberValue>,
   ): void | any;
