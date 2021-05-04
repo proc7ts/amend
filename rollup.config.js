@@ -36,7 +36,7 @@ export default {
       plugins: [
         flatDts({
           tsconfig: 'tsconfig.main.json',
-          lib: true,
+          lib: ['ES2018'],
           compilerOptions: {
             declarationMap: true,
           },
