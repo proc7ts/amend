@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
-import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../../base';
-import { AmendedClass } from '../amended-class';
+import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
+import { AmendedClass } from '../class';
 import { AmendedProp, AmendedProp$Host } from './amended-prop';
 import { AmendedProp$notReadable, AmendedProp$notWritable } from './amended-prop.accessor';
 

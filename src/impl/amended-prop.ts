@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendment, AmendmentSpec, combineAmendments } from '../../base';
-import { AmendedClass } from '../amended-class';
+import { Amendment, AmendmentSpec, combineAmendments } from '../base';
+import { AmendedClass } from '../class';
 import { AmendedProp$accessor } from './amended-prop.accessor';
 import { AmendedProp$createApplicator, AmendedProp$Desc } from './amended-prop.applicator';
 

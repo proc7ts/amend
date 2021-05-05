@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { AmendmentSpec } from '../base';
-import { AmendedMember } from './amended-member';
+import { AmendedStatic } from './amended-static';
 
 /**
  * An amendment of static class member (static property). Can be used as static property decorator.
@@ -15,7 +15,7 @@ export interface StaticAmendment<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
-    > extends AmendmentSpec<AmendedMember<TValue, TClass, TUpdate>> {
+    > extends AmendmentSpec<AmendedStatic<TValue, TClass, TUpdate>> {
 
   /**
    * Applies this amendment to decorated static property.
