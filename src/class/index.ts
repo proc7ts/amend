@@ -1,3 +1,4 @@
+export * from './amend-member-of';
 export * from './amended-class';
 export * from './amended-member';
 export * from './amended-static';

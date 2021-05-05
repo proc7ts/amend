@@ -82,6 +82,39 @@ describe('AmendedMember', () => {
       instance.field = 'other';
       expect(instance.field).toBe('other!');
     });
+    it('converts to accessor without super class', () => {
+
+      class TestClass {
+
+        field = 'initial';
+
+      }
+
+      Reflect.setPrototypeOf(TestClass.prototype, null);
+
+      const desc = AmendedMember<string>(({ get, set, amend }) => {
+        amend({
+          get: instance => get(instance) + '!',
+          set: (instance, update) => set(instance, update),
+        });
+      })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
+
+      expect(desc).toEqual({
+        enumerable: true,
+        configurable: true,
+        get: expect.any(Function),
+        set: expect.any(Function),
+      });
+
+      Reflect.defineProperty(TestClass.prototype, 'field', desc);
+
+      const instance = new TestClass();
+
+      expect(instance.field).toBe('initial!');
+
+      instance.field = 'other';
+      expect(instance.field).toBe('other!');
+    });
     it('converts to read-only accessor', () => {
 
       class BaseClass {
@@ -301,72 +334,6 @@ describe('AmendedMember', () => {
         get: expect.any(Function),
         set: expect.any(Function),
       });
-
-      const instance = new TestClass();
-
-      expect(instance.field).toBe('initial!');
-
-      instance.field = 'other';
-      expect(instance.field).toBe('other!');
-    });
-    it('converts to accessor', () => {
-
-      class TestClass {
-
-        field!: string;
-
-      }
-
-      Reflect.defineProperty(TestClass.prototype, 'field', { value: 'initial', writable: true, configurable: true });
-
-      const desc = AmendedMember<string>(({ get, set, amend }) => {
-        amend({
-          get: instance => get(instance) + '!',
-          set: (instance, update) => set(instance, update),
-        });
-      })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
-
-      expect(desc).toEqual({
-        enumerable: false,
-        configurable: true,
-        get: expect.any(Function),
-        set: expect.any(Function),
-      });
-
-      Reflect.defineProperty(TestClass.prototype, 'field', desc);
-
-      const instance = new TestClass();
-
-      expect(instance.field).toBe('initial!');
-
-      instance.field = 'other';
-      expect(instance.field).toBe('other!');
-    });
-    it('converts to accessor without super class', () => {
-
-      class TestClass {
-
-        field = 'initial';
-
-      }
-
-      Reflect.setPrototypeOf(TestClass.prototype, null);
-
-      const desc = AmendedMember<string>(({ get, set, amend }) => {
-        amend({
-          get: instance => get(instance) + '!',
-          set: (instance, update) => set(instance, update),
-        });
-      })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
-
-      expect(desc).toEqual({
-        enumerable: true,
-        configurable: true,
-        get: expect.any(Function),
-        set: expect.any(Function),
-      });
-
-      Reflect.defineProperty(TestClass.prototype, 'field', desc);
 
       const instance = new TestClass();
 
