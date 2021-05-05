@@ -3,7 +3,7 @@ import { Amendment } from '../base';
 import { AmendedMember } from './amended-member';
 
 /**
- * Amends target class member.
+ * Amends a member (property) of the class.
  *
  * Applies the given amendments to the own property of the target class prototype.
  *
@@ -26,7 +26,7 @@ export function amendMemberOf<TInstance extends object, TKey extends keyof TInst
   const amendedDesc = amender(proto, memberKey as string | symbol, sourceDesc);
 
   if (amendedDesc && sourceDesc) {
-    // Redefine the property
+    // Redefine the property.
     Reflect.defineProperty(proto, memberKey, amendedDesc);
   }
 }
