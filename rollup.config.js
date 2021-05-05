@@ -40,6 +40,7 @@ export default {
           compilerOptions: {
             declarationMap: true,
           },
+          internal: ['**/impl/**', '**/*.impl'],
         }),
       ],
     },
