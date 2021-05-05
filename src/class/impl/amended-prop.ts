@@ -2,7 +2,7 @@ import { Class } from '@proc7ts/primitives';
 import { Amendment, AmendmentSpec, combineAmendments } from '../../base';
 import { AmendedClass } from '../amended-class';
 import { AmendedProp$accessor } from './amended-prop.accessor';
-import { AmendedProp$createBuilder, AmendedProp$Desc } from './amended-prop.builder';
+import { AmendedProp$createApplicator, AmendedProp$Desc } from './amended-prop.applicator';
 
 /**
  * @internal
@@ -78,11 +78,11 @@ export function AmendedProp<THost extends object, TValue extends TUpdate, TClass
       set: (hostInstance, update) => setValue(hostInstance, update),
     };
 
-    const builder = AmendedProp$createBuilder<THost, TValue, TClass, TValue>(host, amender, key, init);
+    const applyAmendment = AmendedProp$createApplicator<THost, TValue, TClass, TValue>(host, amender, key, init);
     let desc!: AmendedProp$Desc<THost, TValue, TUpdate>;
 
     AmendedClass<TClass>(classTarget => {
-      desc = builder(classTarget);
+      desc = applyAmendment(classTarget);
     })(host.cls);
 
     const { enumerable, configurable, get, set } = desc;

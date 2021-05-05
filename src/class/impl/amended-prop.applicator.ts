@@ -19,7 +19,7 @@ export interface AmendedProp$Desc<THost, TValue extends TUpdate, TUpdate> {
 /**
  * @internal
  */
-export function AmendedProp$createBuilder<
+export function AmendedProp$createApplicator<
     THost extends object,
     TValue extends TUpdate,
     TClass extends Class,
