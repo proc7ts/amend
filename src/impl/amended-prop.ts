@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendment, AmendmentSpec, combineAmendments } from '../base';
+import { Amendatory, Amendment, combineAmendments } from '../base';
 import { AmendedClass } from '../class';
 import { AmendedProp$accessor } from './amended-prop.accessor';
 import { AmendedProp$createApplicator, AmendedProp$Desc } from './amended-prop.applicator';
@@ -24,7 +24,7 @@ export interface AmendedProp<THost extends object, TValue extends TUpdate, TClas
  * @internal
  */
 export interface PropAmendment<THost extends object, TValue extends TUpdate, TClass extends Class, TUpdate>
-    extends AmendmentSpec<AmendedProp<THost, TValue, TClass, TUpdate>> {
+    extends Amendatory<AmendedProp<THost, TValue, TClass, TUpdate>> {
 
   <TMemberValue extends TValue>(
       this: void,

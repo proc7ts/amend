@@ -1,7 +1,7 @@
 import { noop } from '@proc7ts/primitives';
 import { AmendedClass } from '../class';
 import { AmendTarget } from './amend-target';
-import { amenderOf, combineAmendments, isAmendmentSpec, noopAmender } from './amendment';
+import { amenderOf, combineAmendments, isAmendatory, noopAmender } from './amendment';
 
 describe('amenderOf', () => {
   it('returns amender as is', () => {
@@ -45,7 +45,7 @@ describe('combineAmendments', () => {
 
 describe('isAmendmentSpec', () => {
   it('is `true` for amendment spec object', () => {
-    expect(isAmendmentSpec({ applyAmendment: noop })).toBe(true);
+    expect(isAmendatory({ applyAmendment: noop })).toBe(true);
   });
   it('is `true` for amendment spec function', () => {
 
@@ -53,15 +53,15 @@ describe('isAmendmentSpec', () => {
 
     amendment.applyAmendment = noop;
 
-    expect(isAmendmentSpec(amendment)).toBe(true);
+    expect(isAmendatory(amendment)).toBe(true);
   });
   it('is `false` for everything else spec', () => {
-    expect(isAmendmentSpec(null)).toBe(false);
-    expect(isAmendmentSpec(undefined)).toBe(false);
-    expect(isAmendmentSpec(noop)).toBe(false);
-    expect(isAmendmentSpec({ applyAmendment: true })).toBe(false);
-    expect(isAmendmentSpec({})).toBe(false);
-    expect(isAmendmentSpec('amendment?')).toBe(false);
+    expect(isAmendatory(null)).toBe(false);
+    expect(isAmendatory(undefined)).toBe(false);
+    expect(isAmendatory(noop)).toBe(false);
+    expect(isAmendatory({ applyAmendment: true })).toBe(false);
+    expect(isAmendatory({})).toBe(false);
+    expect(isAmendatory('amendment?')).toBe(false);
   });
 });
 

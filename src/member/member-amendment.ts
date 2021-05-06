@@ -1,11 +1,11 @@
 import { Class } from '@proc7ts/primitives';
-import { AmendmentSpec } from '../base';
+import { Amendatory } from '../base';
 import { AmendedMember } from './amended-member';
 
 /**
  * An amendment of class instance member (property). Can be used as property decorator.
  *
- * Can also be used as an amendment {@link AmendmentSpec specifier} e.g. to combine it with other amendments.
+ * Can also be used as an amendment {@link Amendatory specifier} e.g. to combine it with other amendments.
  *
  * @typeParam TValue - Amended member value type.
  * @typeParam TClass - A type of amended class.
@@ -15,7 +15,7 @@ export interface MemberAmendment<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
-    > extends AmendmentSpec<AmendedMember<TValue, TClass, TUpdate>> {
+    > extends Amendatory<AmendedMember<TValue, TClass, TUpdate>> {
 
   /**
    * Applies this amendment to decorated property.

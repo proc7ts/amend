@@ -6,14 +6,14 @@ import { AmendTarget } from './amend-target';
  *
  * Applies to amended entities, such as {@link AmendedClass classes} or their {@link AmendedMember members}.
  *
- * May be represented either by amendment {@link Amender action}, or by its {@link AmendmentSpec specifier}.
- * A {@link amenderOf} function can be used to convert any amendment to amendment action.
+ * May be represented either by {@link Amender} function or {@link Amendatory} instance. An {@link amenderOf}
+ * function can be used to convert any amendment to amender.
  *
  * @typeParam TAmended - Amended entity type.
  */
 export type Amendment<TAmended> =
     | Amender<TAmended>
-    | AmendmentSpec<TAmended>;
+    | Amendatory<TAmended>;
 
 /**
  * Amendment action (amender) signature.
@@ -29,11 +29,15 @@ export type Amender<TAmended> =
     (this: void, target: AmendTarget<TAmended>) => void;
 
 /**
- * Amendment specifier.
+ * Amendatory instance.
+ *
+ * May be implemented by any object (or function) to serve as {@link Amendment amendment}.
+ *
+ * Can be converted to {@link Amender} by {@link amenderOf} function.
  *
  * @typeParam TAmended - Amended entity type.
  */
-export interface AmendmentSpec<TAmended> {
+export interface Amendatory<TAmended> {
 
   /**
    * Applies an amendment to the given `target`.
@@ -53,24 +57,24 @@ export interface AmendmentSpec<TAmended> {
  * @typeParam TAmended - Amended entity type.
  * @param amendment - An amendment to convert.
  *
- * @returns Either the `amendment` itself if it is already an amender, or its {@link AmendmentSpec.applyAmendment
+ * @returns Either the `amendment` itself if it is already an amender, or its {@link Amendatory.applyAmendment
  * applyAmendment} method if it is a specifier.
  */
 export function amenderOf<TAmended>(amendment: Amendment<TAmended>): Amender<TAmended> {
-  return amendmentIsSpec(amendment) ? amendment.applyAmendment : amendment;
+  return isAmendatoryAmendment(amendment) ? amendment.applyAmendment : amendment;
 }
 
 /**
- * Checks if the given amendment represented by its {@link AmendmentSpec specifier}.
+ * Checks if the given amendment is represented by {@link Amendatory} instance.
  *
  * @typeParam TAmended - Amended entity type.
  * @param amendment - An amendment to check.
  *
- * @returns `true` if the given `amendment` has an {@link AmendmentSpec.applyAmendment applyAmendment} method,
+ * @returns `true` if the given `amendment` has an {@link Amendatory.applyAmendment applyAmendment} method,
  * or `false` otherwise.
  */
-export function amendmentIsSpec<TAmended>(amendment: Amendment<TAmended>): amendment is AmendmentSpec<TAmended> {
-  return typeof (amendment as Partial<AmendmentSpec<TAmended>>).applyAmendment === 'function';
+function isAmendatoryAmendment<TAmended>(amendment: Amendment<TAmended>): amendment is Amendatory<TAmended> {
+  return typeof (amendment as Partial<Amendatory<TAmended>>).applyAmendment === 'function';
 }
 
 /**
@@ -124,21 +128,21 @@ export function combineAmendments<TAmended>(amendments: Iterable<Amendment<TAmen
 }
 
 /**
- * Checks whether the given value is an amendment {@link AmendmentSpec specifier}.
+ * Checks whether the given value is an {@link Amendatory} instance.
  *
  * @typeParam TAmended - Amended entity type.
  * @typeParam TOther - Another type the `value` may have.
  * @param value - The value to check.
  *
- * @returns `true` if the given `value` is an object or function with {@link AmendmentSpec.applyAmendment
- * applyAmendment} method, or `false` otherwise.
+ * @returns `true` if the given `value` is an object or function with {@link Amendatory.applyAmendment applyAmendment}
+ * method, or `false` otherwise.
  */
-export function isAmendmentSpec<TAmended, TOther = unknown>(
-    value: AmendmentSpec<TAmended> | TOther,
-): value is AmendmentSpec<TAmended> {
+export function isAmendatory<TAmended, TOther = unknown>(
+    value: Amendatory<TAmended> | TOther,
+): value is Amendatory<TAmended> {
   return !!value
       && (typeof value === 'object' || typeof value === 'function')
-      && amendmentIsSpec(value as Amendment<TAmended>);
+      && isAmendatoryAmendment(value as Amendment<TAmended>);
 }
 
 /**
