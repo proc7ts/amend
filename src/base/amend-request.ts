@@ -12,7 +12,7 @@ import { AmendTarget } from './amend-target';
  * @typeParam TAmended - A type of amended entity to modify.
  * @typeParam TExt - A type of amended entity extension.
  */
-export type AmendRequest<TAmended, TExt = AmendRequest.EmptyExtension> = {
+export type AmendRequest<TAmended, TExt = NoneAmended> = {
   [K in keyof TAmended]?: TAmended[K];
 } & {
   [K in Exclude<keyof TExt, keyof TAmended>]: TExt[K];
@@ -20,8 +20,4 @@ export type AmendRequest<TAmended, TExt = AmendRequest.EmptyExtension> = {
   [K in keyof AmendTarget.Core<TAmended & TExt>]?: AmendTarget.Core<TAmended & TExt>[K];
 };
 
-export namespace AmendRequest {
-
-  export type EmptyExtension = { [K in never]: unknown };
-
-}
+export type NoneAmended = { [K in never]: unknown };

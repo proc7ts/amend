@@ -1,5 +1,5 @@
 import { lazyValue, valueProvider } from '@proc7ts/primitives';
-import { AmendRequest } from './amend-request';
+import { AmendRequest, NoneAmended } from './amend-request';
 
 /**
  * Amendment target.
@@ -134,7 +134,7 @@ export function newAmendTarget<TAmended>(
     };
   };
 
-  return nextTarget<TAmended, AmendRequest.EmptyExtension>(valueProvider<TAmended>(base));
+  return nextTarget<TAmended, NoneAmended>(valueProvider<TAmended>(base));
 }
 
 function AmendTarget$default$modify<TBase, TExt>(
