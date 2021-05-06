@@ -31,7 +31,7 @@ export type Amender<TAmended> =
 /**
  * Amendatory instance.
  *
- * May be implemented by any object (or function) to serve as {@link Amendment amendment}.
+ * May be implemented by any object (or function) that is going to serve as an {@link Amendment amendment}.
  *
  * Can be converted to {@link Amender} by {@link amenderOf} function.
  *
