@@ -1,7 +1,7 @@
 import { AmendTarget } from '../base';
 import { AmendedStatic } from './amended-static';
 
-describe('AmendedStatic', () => {
+describe('@AmendedStatic', () => {
   describe('when decorates a static field', () => {
     it('does not update descriptor', () => {
 
