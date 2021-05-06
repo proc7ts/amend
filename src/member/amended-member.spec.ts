@@ -1,7 +1,7 @@
 import { AmendTarget } from '../base';
 import { AmendedMember } from './amended-member';
 
-describe('AmendedMember', () => {
+describe('@AmendedMember', () => {
   describe('when decorates a field', () => {
     it('does not update descriptor', () => {
 
