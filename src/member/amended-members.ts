@@ -7,8 +7,8 @@ import { AmendedMember } from './amended-member';
 /**
  * A map of member amendments to apply by {@link AmendedMembers @AmendedMembers}.
  *
- * Contains amendments of existing members under corresponding member keys. Contains amendments of the members to add
- * under new keys. `null`/`undefined` values are ignored.
+ * Contains amendments of existing members under corresponding keys. Contains amendments of the members to add under new
+ * keys. `null`/`undefined` values are ignored.
  *
  * @typeParam TClass - A type of amended class.
  * @typeParam TExtClass - A type of class extended by the amendment.
