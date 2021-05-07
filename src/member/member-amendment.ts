@@ -1,20 +1,20 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendatory } from '../base';
-import { AmendedMember } from './amended-member';
+import { AeMember } from './ae-member';
 
 /**
  * An amendment of class instance member (property).
  *
- * Can be used as property decorator, unless expects an amended entity other than {@link AmendedMember}.
+ * Can be used as property decorator, unless expects an amended entity other than {@link AeMember}.
  *
  * @typeParam TAmended - A type of entity representing a member to amend.
  */
-export type MemberAmendment<TAmended extends AmendedMember<unknown>> =
-    AmendedMember<any, any, any> extends TAmended
+export type MemberAmendment<TAmended extends AeMember<unknown>> =
+    AeMember<any, any, any> extends TAmended
         ? MemberAmendment.Decorator<
-            AmendedMember.ValueType<TAmended>,
-            AmendedMember.ClassType<TAmended>,
-            AmendedMember.UpdateType<TAmended>>
+            AeMember.ValueType<TAmended>,
+            AeMember.ClassType<TAmended>,
+            AeMember.UpdateType<TAmended>>
         : Amendatory<TAmended>;
 
 export namespace MemberAmendment {
@@ -30,7 +30,7 @@ export namespace MemberAmendment {
       TValue extends TUpdate,
       TClass extends Class = Class,
       TUpdate = TValue,
-      > extends Amendatory<AmendedMember<TValue, TClass, TUpdate>> {
+      > extends Amendatory<AeMember<TValue, TClass, TUpdate>> {
 
     /**
      * Applies this amendment to decorated property.

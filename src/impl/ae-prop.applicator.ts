@@ -1,13 +1,13 @@
 import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
-import { AmendedClass } from '../class';
-import { AmendedMember } from '../member';
-import { AmendedProp, AmendedProp$Host } from './amended-prop';
-import { AmendedProp$notReadable, AmendedProp$notWritable } from './amended-prop.accessor';
+import { AeClass } from '../class';
+import { AeMember } from '../member';
+import { AeProp, AeProp$Host } from './ae-prop';
+import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessor';
 
 /**
  * @internal
  */
-export interface AmendedProp$Desc<THost, TValue extends TUpdate, TUpdate> {
+export interface AeProp$Desc<THost, TValue extends TUpdate, TUpdate> {
   enumerable: boolean;
   configurable: boolean;
   readable: boolean;
@@ -19,22 +19,22 @@ export interface AmendedProp$Desc<THost, TValue extends TUpdate, TUpdate> {
 /**
  * @internal
  */
-export function AmendedProp$createApplicator<THost extends object, TAmended extends AmendedProp<THost, any>>(
-    host: AmendedProp$Host<THost>,
+export function AeProp$createApplicator<THost extends object, TAmended extends AeProp<THost, any>>(
+    host: AeProp$Host<THost>,
     amender: Amender<TAmended>,
     key: string | symbol,
-    init: AmendedProp$Desc<THost, AmendedMember.ValueType<TAmended>, AmendedMember.UpdateType<TAmended>>,
+    init: AeProp$Desc<THost, AeMember.ValueType<TAmended>, AeMember.UpdateType<TAmended>>,
 ): (
-    baseTarget: AmendTarget<AmendedClass<AmendedMember.ClassType<TAmended>>>,
-) => AmendedProp$Desc<THost, AmendedMember.ValueType<TAmended>, AmendedMember.UpdateType<TAmended>> {
+    baseTarget: AmendTarget<AeClass<AeMember.ClassType<TAmended>>>,
+) => AeProp$Desc<THost, AeMember.ValueType<TAmended>, AeMember.UpdateType<TAmended>> {
 
-  type TValue = AmendedMember.ValueType<TAmended>;
-  type TClass = AmendedMember.ClassType<TAmended>;
-  type TUpdate = AmendedMember.UpdateType<TAmended>;
+  type TValue = AeMember.ValueType<TAmended>;
+  type TClass = AeMember.ClassType<TAmended>;
+  type TUpdate = AeMember.UpdateType<TAmended>;
 
   return (
-      baseTarget: AmendTarget<AmendedClass<AmendedMember.ClassType<TAmended>>>,
-  ): AmendedProp$Desc<THost, TValue, TUpdate> => {
+      baseTarget: AmendTarget<AeClass<AeMember.ClassType<TAmended>>>,
+  ): AeProp$Desc<THost, TValue, TUpdate> => {
 
     const result = { ...init };
     const amendNext = <TBase extends TAmended, TExt>(
@@ -42,7 +42,7 @@ export function AmendedProp$createApplicator<THost extends object, TAmended exte
         request = {} as AmendRequest<TBase, TExt>,
     ): () => AmendTarget.Draft<TBase & TExt> => {
 
-      const createClassTarget = baseTarget.amend(request as AmendRequest<AmendedClass<TClass>, TExt>);
+      const createClassTarget = baseTarget.amend(request as AmendRequest<AeClass<TClass>, TExt>);
 
       const {
         enumerable = base.enumerable,
@@ -54,7 +54,7 @@ export function AmendedProp$createApplicator<THost extends object, TAmended exte
 
       if (!set) {
         if (get) {
-          set = AmendedProp$notWritable(host, key);
+          set = AeProp$notWritable(host, key);
           writable = false;
           readable = true;
         } else {
@@ -66,7 +66,7 @@ export function AmendedProp$createApplicator<THost extends object, TAmended exte
         readable = true;
         writable = true;
       } else {
-        get = AmendedProp$notReadable(host, key);
+        get = AeProp$notReadable(host, key);
         readable = false;
         writable = true;
       }

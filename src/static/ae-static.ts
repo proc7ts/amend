@@ -1,7 +1,7 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AmendedClass } from '../class';
-import { AmendedProp, AmendedProp$Host, AmendedProp$HostKind } from '../impl';
+import { AeClass } from '../class';
+import { AeProp, AeProp$Host, AeProp$HostKind } from '../impl';
 import { StaticAmendment } from './static-amendment';
 
 /**
@@ -13,11 +13,11 @@ import { StaticAmendment } from './static-amendment';
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
-export interface AmendedStatic<
+export interface AeStatic<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
-    > extends AmendedClass<TClass>{
+    > extends AeClass<TClass>{
 
   /**
    * A key of the static member.
@@ -89,22 +89,22 @@ export interface AmendedStatic<
  *
  * @returns - New static member amendment instance.
  */
-export function AmendedStatic<TAmended extends AmendedStatic<any, Class, any>>(
+export function AeStatic<TAmended extends AeStatic<any, Class, any>>(
     ...amendments: Amendment<TAmended>[]
 ): StaticAmendment<TAmended> {
-  return AmendedProp(AmendedStatic$createHost, amendments);
+  return AeProp(AeStatic$createHost, amendments);
 }
 
-const AmendedStatic$HostKind: AmendedProp$HostKind = {
+const AeStatic$HostKind: AeProp$HostKind = {
   pName: 'Static property',
   vDesc: key => `staticOf(${String(key)}`,
 };
 
-function AmendedStatic$createHost<TClass extends Class>(
+function AeStatic$createHost<TClass extends Class>(
     classConstructor: TClass,
-): AmendedProp$Host<TClass, TClass> {
+): AeProp$Host<TClass, TClass> {
   return {
-    kind: AmendedStatic$HostKind,
+    kind: AeStatic$HostKind,
     cls: classConstructor,
     host: classConstructor,
   };

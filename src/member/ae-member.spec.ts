@@ -1,15 +1,15 @@
 import { AmendTarget } from '../base';
-import { AmendedMember } from './amended-member';
+import { AeMember } from './ae-member';
 
-describe('@AmendedMember', () => {
+describe('@AeMember', () => {
   describe('when decorates a field', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedMember<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeMember<string, typeof TestClass>> | undefined;
 
       class TestClass {
 
-        @AmendedMember<AmendedMember<string>>(t => {
+        @AeMember<AeMember<string>>(t => {
           target = t;
         })
         field = 'some';
@@ -27,14 +27,14 @@ describe('@AmendedMember', () => {
 
       class TestClass {
 
-        @AmendedMember<AmendedMember<string>>(({ amend }) => {
+        @AeMember<AeMember<string>>(({ amend }) => {
           amend({ enumerable: false });
         })
         field = 'some';
 
       }
 
-      const desc = AmendedMember<AmendedMember<string>>(({ amend }) => {
+      const desc = AeMember<AeMember<string>>(({ amend }) => {
         amend({ configurable: false });
       })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
 
@@ -58,7 +58,7 @@ describe('@AmendedMember', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedMember<AmendedMember<string>>(({ get, set, amend }) => {
+        @AeMember<AeMember<string>>(({ get, set, amend }) => {
           amend({
             get: instance => get(instance) + '!',
             set: (instance, update) => set(instance, update),
@@ -92,7 +92,7 @@ describe('@AmendedMember', () => {
 
       Reflect.setPrototypeOf(TestClass.prototype, null);
 
-      const desc = AmendedMember<AmendedMember<string>>(({ get, set, amend }) => {
+      const desc = AeMember<AeMember<string>>(({ get, set, amend }) => {
         amend({
           get: instance => get(instance) + '!',
           set: (instance, update) => set(instance, update),
@@ -124,7 +124,7 @@ describe('@AmendedMember', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedMember<AmendedMember<string>>(({ get, amend }) => {
+        @AeMember<AeMember<string>>(({ get, amend }) => {
           amend({ get: instance => get(instance) + '!' });
         })
         field!: string;
@@ -149,7 +149,7 @@ describe('@AmendedMember', () => {
 
         update?: string;
 
-        @AmendedMember<AmendedMember<string, typeof TestClass>>(({ amend }) => {
+        @AeMember<AeMember<string, typeof TestClass>>(({ amend }) => {
           amend({ set: (instance, update) => instance.update = update });
         })
         field = 'initial';
@@ -178,7 +178,7 @@ describe('@AmendedMember', () => {
 
       class TestClass {
 
-        @AmendedMember<AmendedMember<string, typeof TestClass>>(({ get }) => {
+        @AeMember<AeMember<string, typeof TestClass>>(({ get }) => {
           getValue = get;
         })
         field!: string;
@@ -205,7 +205,7 @@ describe('@AmendedMember', () => {
 
       }
 
-      AmendedMember<AmendedMember<string, typeof TestClass>>(({ get, set }) => {
+      AeMember<AeMember<string, typeof TestClass>>(({ get, set }) => {
         getValue = get;
         setValue = set;
       })(TestClass.prototype, 'field', { writable: true });
@@ -235,7 +235,7 @@ describe('@AmendedMember', () => {
       }
       Reflect.defineProperty(TestClass.prototype, 'field', { value: 'initial' });
 
-      AmendedMember<AmendedMember<string, typeof TestClass>>(({ get, set }) => {
+      AeMember<AeMember<string, typeof TestClass>>(({ get, set }) => {
         getValue = get;
         setValue = set;
       })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
@@ -255,7 +255,7 @@ describe('@AmendedMember', () => {
 
       class TestClass {
 
-        @AmendedMember<AmendedMember<string>>(
+        @AeMember<AeMember<string>>(
             ({ amend }) => amend({ enumerable: false }),
             ({ get, amend }) => {
               amend({ get: instance => get(instance) + '!' });
@@ -281,11 +281,11 @@ describe('@AmendedMember', () => {
   describe('when decorates accessor', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedMember<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeMember<string, typeof TestClass>> | undefined;
 
       class TestClass {
 
-        @AmendedMember<AmendedMember<string>>(t => {
+        @AeMember<AeMember<string>>(t => {
           target = t;
           t.amend();
         })
@@ -312,7 +312,7 @@ describe('@AmendedMember', () => {
 
         private _field = 'initial';
 
-        @AmendedMember<AmendedMember<string>>(({ get, set, amend }) => {
+        @AeMember<AeMember<string>>(({ get, set, amend }) => {
           amend({
             get: instance => get(instance) + '!',
             set: (instance, update) => set(instance, update),
@@ -351,7 +351,7 @@ describe('@AmendedMember', () => {
 
         private _field = 'initial';
 
-        @AmendedMember<AmendedMember<string>>(({ get, set, amend }) => {
+        @AeMember<AeMember<string>>(({ get, set, amend }) => {
           getValue = get;
           setValue = set;
           amend({
@@ -396,7 +396,7 @@ describe('@AmendedMember', () => {
 
         private _field = 'initial';
 
-        @AmendedMember<AmendedMember<string>>(({ get, set, amend }) => {
+        @AeMember<AeMember<string>>(({ get, set, amend }) => {
           getValue = get;
           setValue = set;
           amend({
@@ -439,7 +439,7 @@ describe('@AmendedMember', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedMember<AmendedMember<string>>(({ get, set, amend }) => {
+        @AeMember<AeMember<string>>(({ get, set, amend }) => {
           amend({
             get: instance => get(instance) + '!',
             set: (instance, update) => set(instance, update),
@@ -472,7 +472,7 @@ describe('@AmendedMember', () => {
 
         _field = 'initial';
 
-        @AmendedMember<AmendedMember<string>>(({ get, set, amend }) => {
+        @AeMember<AeMember<string>>(({ get, set, amend }) => {
           getValue = get;
           setValue = set;
           amend({
@@ -510,7 +510,7 @@ describe('@AmendedMember', () => {
 
         private _field = 'initial';
 
-        @AmendedMember<AmendedMember<string>>(({ get, amend }) => {
+        @AeMember<AeMember<string>>(({ get, amend }) => {
           amend({
             get: instance => get(instance) + '!',
           });
@@ -546,7 +546,7 @@ describe('@AmendedMember', () => {
 
         private _field = 'initial';
 
-        @AmendedMember<AmendedMember<string>>(({ get, amend }) => {
+        @AeMember<AeMember<string>>(({ get, amend }) => {
           amend({
             get: instance => get(instance) + '!',
           });
@@ -577,7 +577,7 @@ describe('@AmendedMember', () => {
     it('updates property descriptor', () => {
       class TestClass {
 
-        @AmendedMember<AmendedMember<string>>(({ amend }) => {
+        @AeMember<AeMember<string>>(({ amend }) => {
           amend({
             enumerable: true,
             configurable: false,

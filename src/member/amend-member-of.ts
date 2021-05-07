@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AmendedMember } from './amended-member';
+import { AeMember } from './ae-member';
 
 /**
  * Amends a member (property) of the class.
@@ -17,10 +17,10 @@ import { AmendedMember } from './amended-member';
 export function amendMemberOf<TInstance extends object, TKey extends keyof TInstance = keyof TInstance>(
     targetClass: Class<TInstance>,
     memberKey: TKey,
-    ...amendments: Amendment<AmendedMember<TInstance[TKey], Class<TInstance>>>[]
+    ...amendments: Amendment<AeMember<TInstance[TKey], Class<TInstance>>>[]
 ): void {
 
-  const amender = AmendedMember(...amendments);
+  const amender = AeMember(...amendments);
   const proto = targetClass.prototype;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(proto, memberKey);
   const amendedDesc = amender(proto, memberKey as string | symbol, sourceDesc);

@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AmendedStatic } from './amended-static';
+import { AeStatic } from './ae-static';
 
 /**
  * Amends a static member (static property) of the class.
@@ -16,10 +16,10 @@ import { AmendedStatic } from './amended-static';
 export function amendStaticOf<TClass extends Class, TKey extends keyof TClass = keyof TClass>(
     targetClass: TClass,
     memberKey: TKey,
-    ...amendments: Amendment<AmendedStatic<TClass[TKey], TClass>>[]
+    ...amendments: Amendment<AeStatic<TClass[TKey], TClass>>[]
 ): void {
 
-  const amender = AmendedStatic(...amendments);
+  const amender = AeStatic(...amendments);
   const sourceDesc = Reflect.getOwnPropertyDescriptor(targetClass, memberKey);
   const amendedDesc = amender(targetClass, memberKey as string | symbol, sourceDesc);
 

@@ -1,10 +1,10 @@
-import { AmendedClass } from '../class';
-import { AmendedStatics } from './amended-statics';
+import { AeClass } from '../class';
+import { AeStatics } from './ae-statics';
 
-describe('@AmendedStatics', () => {
+describe('@AeStatics', () => {
   it('amends static members', () => {
 
-    @AmendedStatics<AmendedClass<typeof TestClass>>({
+    @AeStatics<AeClass<typeof TestClass>>({
       field({ get, set, amend }) {
         amend({
           get(classConstructor) {
@@ -29,7 +29,7 @@ describe('@AmendedStatics', () => {
   });
   it('adds class members', () => {
 
-    @AmendedStatics<AmendedClass<typeof TestClass>, typeof TestClass & { added: string }>({
+    @AeStatics<AeClass<typeof TestClass>, typeof TestClass & { added: string }>({
       added({ amend }) {
         amend({
           get(classConstructor) {
@@ -57,7 +57,7 @@ describe('@AmendedStatics', () => {
   });
   it('skips omitted member amenders', () => {
 
-    @AmendedStatics<AmendedClass<typeof TestClass>>({
+    @AeStatics<AeClass<typeof TestClass>>({
       field: null,
     })
     class TestClass {

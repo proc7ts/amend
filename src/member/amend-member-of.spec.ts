@@ -1,12 +1,12 @@
 import { AmendTarget } from '../base';
+import { AeMember } from './ae-member';
 import { amendMemberOf } from './amend-member-of';
-import { AmendedMember } from './amended-member';
 
 describe('amendMemberOf', () => {
   describe('when applied to field', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedMember<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeMember<string, typeof TestClass>> | undefined;
 
       class TestClass {
 
@@ -29,7 +29,7 @@ describe('amendMemberOf', () => {
 
       class TestClass {
 
-        @AmendedMember<AmendedMember<string>>(({ amend }) => {
+        @AeMember<AeMember<string>>(({ amend }) => {
           amend({ enumerable: false });
         })
         field = 'some';
@@ -57,7 +57,7 @@ describe('amendMemberOf', () => {
   describe('when applied to accessor', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedMember<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeMember<string, typeof TestClass>> | undefined;
 
       class TestClass {
 

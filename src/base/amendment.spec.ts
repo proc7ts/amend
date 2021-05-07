@@ -1,18 +1,18 @@
 import { noop } from '@proc7ts/primitives';
-import { AmendedClass } from '../class';
+import { AeClass } from '../class';
 import { AmendTarget } from './amend-target';
 import { amenderOf, combineAmendments, isAmendatory, noopAmender } from './amendment';
 
 describe('amenderOf', () => {
   it('returns amender as is', () => {
 
-    const amender = (_target: AmendTarget<AmendedClass>): void => { /* amend */ };
+    const amender = (_target: AmendTarget<AeClass>): void => { /* amend */ };
 
     expect(amenderOf(amender)).toBe(amender);
   });
   it('returns amendment action for amendment spec function', () => {
 
-    const applyAmendment = (_target: AmendTarget<AmendedClass>): void => { /* amend */ };
+    const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
     const amendment = (): void => { /* fn */ };
 
     amendment.applyAmendment = applyAmendment;
@@ -21,7 +21,7 @@ describe('amenderOf', () => {
   });
   it('returns amendment action for amendment spec object', () => {
 
-    const applyAmendment = (_target: AmendTarget<AmendedClass>): void => { /* amend */ };
+    const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
     const amendment = { applyAmendment };
 
     expect(amenderOf(amendment)).toBe(applyAmendment);
@@ -34,7 +34,7 @@ describe('combineAmendments', () => {
   });
   it('returns singleton amendment action', () => {
 
-    const applyAmendment = (_target: AmendTarget<AmendedClass>): void => { /* amend */ };
+    const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
     const amendment = (): void => { /* fn */ };
 
     amendment.applyAmendment = applyAmendment;

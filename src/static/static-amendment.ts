@@ -1,20 +1,20 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendatory } from '../base';
-import { AmendedMember } from '../member';
-import { AmendedStatic } from './amended-static';
+import { AeMember } from '../member';
+import { AeStatic } from './ae-static';
 
 /**
  * An amendment of static class member (static property).
  *
- * Can be used as static property decorator, unless expects an amended entity other than {@link AmendedStatic}.
+ * Can be used as static property decorator, unless expects an amended entity other than {@link AeStatic}.
  *
  * @typeParam TAmended - A type of entity representing a static member to amend.
  */
-export type StaticAmendment<TAmended extends AmendedStatic<unknown>> = AmendedStatic<any, any, any> extends TAmended
+export type StaticAmendment<TAmended extends AeStatic<unknown>> = AeStatic<any, any, any> extends TAmended
     ? StaticAmendment.Decorator<
-        AmendedMember.ValueType<TAmended>,
-        AmendedMember.ClassType<TAmended>,
-        AmendedMember.UpdateType<TAmended>>
+        AeMember.ValueType<TAmended>,
+        AeMember.ClassType<TAmended>,
+        AeMember.UpdateType<TAmended>>
     : Amendatory<TAmended>;
 
 export namespace StaticAmendment {
@@ -30,7 +30,7 @@ export namespace StaticAmendment {
       TValue extends TUpdate,
       TClass extends Class = Class,
       TUpdate = TValue,
-      > extends Amendatory<AmendedStatic<TValue, TClass, TUpdate>> {
+      > extends Amendatory<AeStatic<TValue, TClass, TUpdate>> {
 
     /**
      * Applies this amendment to decorated static property.

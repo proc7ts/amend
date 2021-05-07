@@ -9,7 +9,7 @@ import { ClassAmendment } from './class-amendment';
  *
  * @typeParam TClass - A type of amended class.
  */
-export interface AmendedClass<TClass extends Class = Class> {
+export interface AeClass<TClass extends Class = Class> {
 
   /**
    * Amended class constructor.
@@ -20,12 +20,12 @@ export interface AmendedClass<TClass extends Class = Class> {
 
 type GenericInstanceType<T extends new (...args: any) => any> = InstanceType<T>;
 
-export namespace AmendedClass {
+export namespace AeClass {
 
-  export type ClassType<TAmended extends AmendedClass<any>> =
-      TAmended extends AmendedClass<infer TClass> ? TClass : never;
+  export type ClassType<TAmended extends AeClass<any>> =
+      TAmended extends AeClass<infer TClass> ? TClass : never;
 
-  export type InstanceType<TAmended extends AmendedClass<any>> = GenericInstanceType<ClassType<TAmended>>;
+  export type InstanceType<TAmended extends AeClass<any>> = GenericInstanceType<ClassType<TAmended>>;
 
 }
 
@@ -37,12 +37,12 @@ export namespace AmendedClass {
  *
  * @returns - New class amendment instance.
  */
-export function AmendedClass<TAmended extends AmendedClass<any> = AmendedClass>(
+export function AeClass<TAmended extends AeClass<any> = AeClass>(
     ...amendments: Amendment<TAmended>[]
 ): ClassAmendment<TAmended> {
 
   const amender = combineAmendments(amendments);
-  const decorator = ((target: AmendedClass.ClassType<TAmended>): void => {
+  const decorator = ((target: AeClass.ClassType<TAmended>): void => {
     amender(newAmendTarget({
       base: { class: target } as TAmended,
       amend: noop,

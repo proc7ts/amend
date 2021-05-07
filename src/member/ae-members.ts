@@ -1,10 +1,10 @@
 import { Amendment } from '../base';
-import { AmendedClass, ClassAmendment } from '../class';
+import { AeClass, ClassAmendment } from '../class';
+import { AeMember } from './ae-member';
 import { amendMemberOf } from './amend-member-of';
-import { AmendedMember } from './amended-member';
 
 /**
- * A map of member amendments to apply by {@link AmendedMembers @AmendedMembers}.
+ * A map of member amendments to apply by {@link AeMembers @AeMembers}.
  *
  * Contains amendments of existing members under corresponding keys. Contains amendments of the members to add under new
  * keys. `null`/`undefined` values are ignored.
@@ -13,12 +13,12 @@ import { AmendedMember } from './amended-member';
  * @typeParam TExtClass - A type of class extended by the amendment.
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
-export type AmendedMembersDef<
-    TAmended extends AmendedClass,
-    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>> = {
+export type AeMembersDef<
+    TAmended extends AeClass,
+    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>> = {
   [K in keyof InstanceType<TExtClass>]?: Amendment<
       & TAmended
-      & AmendedMember<InstanceType<TExtClass>[K], TExtClass>> | null;
+      & AeMember<InstanceType<TExtClass>[K], TExtClass>> | null;
 };
 
 /**
@@ -30,12 +30,12 @@ export type AmendedMembersDef<
  *
  * @returns New class amendment instance.
  */
-export function AmendedMembers<
-    TAmended extends AmendedClass,
-    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>>(
-    def: AmendedMembersDef<TAmended, TExtClass>,
+export function AeMembers<
+    TAmended extends AeClass,
+    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>>(
+    def: AeMembersDef<TAmended, TExtClass>,
 ): ClassAmendment<TAmended> {
-  return AmendedClass(target => {
+  return AeClass(target => {
     for (const key of Reflect.ownKeys(def)) {
 
       const amendment = def[key as string] as Amendment<any> | undefined;

@@ -1,10 +1,10 @@
 import { Amendment } from '../base';
-import { AmendedClass, ClassAmendment } from '../class';
+import { AeClass, ClassAmendment } from '../class';
+import { AeStatic } from './ae-static';
 import { amendStaticOf } from './amend-static-of';
-import { AmendedStatic } from './amended-static';
 
 /**
- * A map of static member amendments to apply by {@link AmendedStatics @AmendedStatics}.
+ * A map of static member amendments to apply by {@link AeStatics @AeStatics}.
  *
  * Contains amendments of existing static members under corresponding keys. Contains amendments of static members to add
  * under new keys. `null`/`undefined` values are ignored.
@@ -13,12 +13,12 @@ import { AmendedStatic } from './amended-static';
  * @typeParam TExtClass - A type of class extended by the amendment.
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
-export type AmendedStaticsDef<
-    TAmended extends AmendedClass,
-    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>> = {
+export type AeStaticsDef<
+    TAmended extends AeClass,
+    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>> = {
   [K in keyof TExtClass]?: Amendment<
       & TAmended
-      & AmendedStatic<TExtClass[K], TExtClass>> | null;
+      & AeStatic<TExtClass[K], TExtClass>> | null;
 };
 
 /**
@@ -30,12 +30,12 @@ export type AmendedStaticsDef<
  *
  * @returns New class amendment instance.
  */
-export function AmendedStatics<
-    TAmended extends AmendedClass,
-    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>>(
-    def: AmendedStaticsDef<TAmended, TExtClass>,
+export function AeStatics<
+    TAmended extends AeClass,
+    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>>(
+    def: AeStaticsDef<TAmended, TExtClass>,
 ): ClassAmendment<TAmended> {
-  return AmendedClass(target => {
+  return AeClass(target => {
     for (const key of Reflect.ownKeys(def)) {
 
       const amendment = def[key as keyof TExtClass] as Amendment<any> | undefined;

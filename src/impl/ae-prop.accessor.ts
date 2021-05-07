@@ -1,11 +1,11 @@
 import { noop } from '@proc7ts/primitives';
-import { AmendedProp$Host } from './amended-prop';
+import { AeProp$Host } from './ae-prop';
 
 /**
  * @internal
  */
-export function AmendedProp$accessor<THost extends object, TValue extends TUpdate, TUpdate>(
-    host: AmendedProp$Host<THost>,
+export function AeProp$accessor<THost extends object, TValue extends TUpdate, TUpdate>(
+    host: AeProp$Host<THost>,
     key: string | symbol,
     descriptor: TypedPropertyDescriptor<TValue> | undefined,
 ): [
@@ -21,10 +21,10 @@ export function AmendedProp$accessor<THost extends object, TValue extends TUpdat
       return [
         get
             ? instance => get.call(instance)
-            : AmendedProp$notReadable(host, key),
+            : AeProp$notReadable(host, key),
         set
             ? (instance, update) => set.call(instance, update as TValue)
-            : AmendedProp$notWritable(host, key),
+            : AeProp$notWritable(host, key),
         noop,
       ];
     }
@@ -61,7 +61,7 @@ export function AmendedProp$accessor<THost extends object, TValue extends TUpdat
         setValue = writeValue;
       };
     } else {
-      setValue = AmendedProp$notWritable(host, key);
+      setValue = AeProp$notWritable(host, key);
       toAccessor = noop;
     }
   } else {
@@ -94,8 +94,8 @@ export function AmendedProp$accessor<THost extends object, TValue extends TUpdat
 /**
  * @internal
  */
-export function AmendedProp$notReadable(
-    host: AmendedProp$Host,
+export function AeProp$notReadable(
+    host: AeProp$Host,
     key: string | symbol,
 ): (instance: unknown) => never {
   return _instance => {
@@ -108,8 +108,8 @@ export function AmendedProp$notReadable(
 /**
  * @internal
  */
-export function AmendedProp$notWritable(
-    host: AmendedProp$Host,
+export function AeProp$notWritable(
+    host: AeProp$Host,
     key: string | symbol,
 ): (instance: unknown, update: unknown) => never {
   return (_instance, _update) => {
@@ -119,11 +119,11 @@ export function AmendedProp$notWritable(
   };
 }
 
-const AmendedProp$idPattern = /^[a-z_$][a-z0-9_$]*$/i;
+const AeProp$idPattern = /^[a-z_$][a-z0-9_$]*$/i;
 
 function AmendProp$accessString(key: string | symbol): string {
   if (typeof key === 'string') {
-    return AmendedProp$idPattern.test(key) ? `.${key}` : `[${JSON.stringify(key)}]`;
+    return AeProp$idPattern.test(key) ? `.${key}` : `[${JSON.stringify(key)}]`;
   }
   return `[${String(key)}]`;
 }

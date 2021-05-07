@@ -1,7 +1,7 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AmendedClass } from '../class';
-import { AmendedProp, AmendedProp$Host, AmendedProp$HostKind } from '../impl';
+import { AeClass } from '../class';
+import { AeProp, AeProp$Host, AeProp$HostKind } from '../impl';
 import { MemberAmendment } from './member-amendment';
 
 /**
@@ -13,11 +13,11 @@ import { MemberAmendment } from './member-amendment';
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
-export interface AmendedMember<
+export interface AeMember<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
-    > extends AmendedClass<TClass>{
+    > extends AeClass<TClass>{
 
   /**
    * A key of the instance member.
@@ -79,19 +79,19 @@ export interface AmendedMember<
 
 }
 
-export namespace AmendedMember {
+export namespace AeMember {
 
-  export type ClassType<TAmended extends AmendedMember<any, any, any>> = AmendedClass.ClassType<TAmended>;
+  export type ClassType<TAmended extends AeMember<any, any, any>> = AeClass.ClassType<TAmended>;
 
-  export type InstanceType<TAmended extends AmendedMember<any, any, any>> = AmendedClass.InstanceType<TAmended>;
+  export type InstanceType<TAmended extends AeMember<any, any, any>> = AeClass.InstanceType<TAmended>;
 
-  export type ValueType<TAmended extends AmendedMember<any, any, any>> =
-    TAmended extends AmendedMember<infer TValue, any, any>
+  export type ValueType<TAmended extends AeMember<any, any, any>> =
+    TAmended extends AeMember<infer TValue, any, any>
         ? TValue
         : never;
 
-  export type UpdateType<TAmended extends AmendedMember<any, any, any>> =
-      TAmended extends AmendedMember<any, any, infer TUpdate>
+  export type UpdateType<TAmended extends AeMember<any, any, any>> =
+      TAmended extends AeMember<any, any, infer TUpdate>
           ? TUpdate
           : never;
 
@@ -107,22 +107,22 @@ export namespace AmendedMember {
  *
  * @returns - New class member amendment instance.
  */
-export function AmendedMember<TAmended extends AmendedMember<any, Class, any>>(
+export function AeMember<TAmended extends AeMember<any, Class, any>>(
     ...amendments: Amendment<TAmended>[]
 ): MemberAmendment<TAmended> {
-  return AmendedProp(AmendedMember$createHost, amendments);
+  return AeProp(AeMember$createHost, amendments);
 }
 
-const AmendedMember$HostKind: AmendedProp$HostKind = {
+const AeMember$HostKind: AeProp$HostKind = {
   pName: 'Property',
   vDesc: key => `valueOf(${String(key)}`,
 };
 
-function AmendedMember$createHost<TClass extends Class>(
+function AeMember$createHost<TClass extends Class>(
     targetProto: InstanceType<TClass>,
-): AmendedProp$Host<InstanceType<TClass>, TClass> {
+): AeProp$Host<InstanceType<TClass>, TClass> {
   return {
-    kind: AmendedMember$HostKind,
+    kind: AeMember$HostKind,
     cls: targetProto.constructor,
     host: targetProto,
   };

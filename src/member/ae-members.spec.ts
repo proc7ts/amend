@@ -1,11 +1,11 @@
 import { Class } from '@proc7ts/primitives';
-import { AmendedClass } from '../class';
-import { AmendedMembers } from './amended-members';
+import { AeClass } from '../class';
+import { AeMembers } from './ae-members';
 
-describe('@AmendedMembers', () => {
+describe('@AeMembers', () => {
   it('amends class members', () => {
 
-    @AmendedMembers<AmendedClass<typeof TestClass>>({
+    @AeMembers<AeClass<typeof TestClass>>({
       field({ get, set, amend }) {
         amend({
           get(instance) {
@@ -32,7 +32,7 @@ describe('@AmendedMembers', () => {
   });
   it('adds class members', () => {
 
-    @AmendedMembers<AmendedClass<typeof TestClass>, Class<TestClass & { added: string }>>({
+    @AeMembers<AeClass<typeof TestClass>, Class<TestClass & { added: string }>>({
       added({ amend }) {
         amend({
           get(instance) {
@@ -61,7 +61,7 @@ describe('@AmendedMembers', () => {
   });
   it('skips omitted member amenders', () => {
 
-    @AmendedMembers<AmendedClass<typeof TestClass>>({
+    @AeMembers<AeClass<typeof TestClass>>({
       field: null,
     })
     class TestClass {
