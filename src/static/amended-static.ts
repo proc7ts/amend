@@ -89,10 +89,10 @@ export interface AmendedStatic<
  *
  * @returns - New static member amendment instance.
  */
-export function AmendedStatic<TValue extends TUpdate, TClass extends Class = Class, TUpdate = TValue>(
-    ...amendments: Amendment<AmendedStatic<TValue, TClass, TUpdate>>[]
-): StaticAmendment<TValue, TClass, TUpdate> {
-  return AmendedProp<TClass, TValue, TClass, TUpdate>(AmendedStatic$createHost, amendments);
+export function AmendedStatic<TAmended extends AmendedStatic<any, Class, any>>(
+    ...amendments: Amendment<TAmended>[]
+): StaticAmendment<TAmended> {
+  return AmendedProp(AmendedStatic$createHost, amendments);
 }
 
 const AmendedStatic$HostKind: AmendedProp$HostKind = {

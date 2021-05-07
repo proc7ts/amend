@@ -1,9 +1,10 @@
+import { AmendedClass } from '../class';
 import { AmendedStatics } from './amended-statics';
 
 describe('@AmendedStatics', () => {
   it('amends static members', () => {
 
-    @AmendedStatics<typeof TestClass>({
+    @AmendedStatics<AmendedClass<typeof TestClass>>({
       field({ get, set, amend }) {
         amend({
           get(classConstructor) {
@@ -28,7 +29,7 @@ describe('@AmendedStatics', () => {
   });
   it('adds class members', () => {
 
-    @AmendedStatics<typeof TestClass, typeof TestClass & { added: string }>({
+    @AmendedStatics<AmendedClass<typeof TestClass>, typeof TestClass & { added: string }>({
       added({ amend }) {
         amend({
           get(classConstructor) {
@@ -56,7 +57,7 @@ describe('@AmendedStatics', () => {
   });
   it('skips omitted member amenders', () => {
 
-    @AmendedStatics<typeof TestClass>({
+    @AmendedStatics<AmendedClass<typeof TestClass>>({
       field: null,
     })
     class TestClass {

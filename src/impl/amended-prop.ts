@@ -1,14 +1,19 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendatory, Amendment, combineAmendments } from '../base';
 import { AmendedClass } from '../class';
+import { AmendedMember } from '../member';
 import { AmendedProp$accessor } from './amended-prop.accessor';
 import { AmendedProp$createApplicator, AmendedProp$Desc } from './amended-prop.applicator';
 
 /**
  * @internal
  */
-export interface AmendedProp<THost extends object, TValue extends TUpdate, TClass extends Class, TUpdate>
-    extends AmendedClass<TClass>{
+export interface AmendedProp<
+    THost extends object,
+    TValue extends TUpdate,
+    TClass extends Class = Class,
+    TUpdate = TValue
+    > extends AmendedClass<TClass>{
 
   readonly key: string | symbol;
   readonly readable: boolean;
@@ -23,14 +28,28 @@ export interface AmendedProp<THost extends object, TValue extends TUpdate, TClas
 /**
  * @internal
  */
-export interface PropAmendment<THost extends object, TValue extends TUpdate, TClass extends Class, TUpdate>
+export type PropAmendment<
+    THost extends object,
+    TAmended extends AmendedProp<THost, any>> =
+    AmendedProp<THost, any, any, any> extends TAmended
+        ? PropAmendment$Decorator<
+            THost,
+            AmendedMember.ValueType<TAmended>,
+            AmendedMember.ClassType<TAmended>,
+            AmendedMember.UpdateType<TAmended>>
+        : Amendatory<TAmended>;
+
+/**
+ * @internal
+ */
+export interface PropAmendment$Decorator<THost extends object, TValue extends TUpdate, TClass extends Class, TUpdate>
     extends Amendatory<AmendedProp<THost, TValue, TClass, TUpdate>> {
 
-  <TMemberValue extends TValue>(
+  <TPropValue extends TValue>(
       this: void,
       host: THost,
       propertyKey: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TMemberValue>,
+      descriptor?: TypedPropertyDescriptor<TPropValue>,
   ): void | any;
 
 }
@@ -55,17 +74,21 @@ export interface AmendedProp$HostKind {
 /**
  * @internal
  */
-export function AmendedProp<THost extends object, TValue extends TUpdate, TClass extends Class, TUpdate>(
-    createHost: (hostInstance: THost) => AmendedProp$Host<THost, TClass>,
-    amendments: Amendment<AmendedProp<THost, TValue, TClass, TUpdate>>[],
-): PropAmendment<THost, TValue, TClass, TUpdate> {
+export function AmendedProp<THost extends object, TAmended extends AmendedProp<THost, any, any, any>>(
+    createHost: (hostInstance: THost) => AmendedProp$Host<THost, AmendedClass.ClassType<TAmended>>,
+    amendments: Amendment<TAmended>[],
+): PropAmendment<THost, TAmended> {
+
+  type TValue = AmendedMember.ValueType<TAmended>;
+  type TClass = AmendedMember.ClassType<TAmended>;
+  type TUpdate = AmendedMember.UpdateType<TAmended>;
 
   const amender = combineAmendments(amendments);
-  const decorator = <TMemberValue extends TValue>(
+  const decorator = (<TPropValue extends TValue>(
       targetHost: THost,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TMemberValue>,
-  ): TypedPropertyDescriptor<TMemberValue> | void => {
+      descriptor?: TypedPropertyDescriptor<TPropValue>,
+  ): TypedPropertyDescriptor<TPropValue> | void => {
 
     const host = createHost(targetHost);
     const [getValue, setValue, toAccessor] = AmendedProp$accessor(host, key, descriptor);
@@ -78,22 +101,22 @@ export function AmendedProp<THost extends object, TValue extends TUpdate, TClass
       set: (hostInstance, update) => setValue(hostInstance, update),
     };
 
-    const applyAmendment = AmendedProp$createApplicator<THost, TValue, TClass, TValue>(host, amender, key, init);
+    const applyAmendment = AmendedProp$createApplicator<THost, TAmended>(host, amender, key, init);
     let desc!: AmendedProp$Desc<THost, TValue, TUpdate>;
 
-    AmendedClass<TClass>(classTarget => {
+    AmendedClass<AmendedClass<TClass>>(classTarget => {
       desc = applyAmendment(classTarget);
     })(host.cls);
 
     const { enumerable, configurable, get, set } = desc;
-    let newDescriptor: TypedPropertyDescriptor<TMemberValue> | undefined;
+    let newDescriptor: TypedPropertyDescriptor<TPropValue> | undefined;
 
     if (set !== init.set || get !== init.get) {
       newDescriptor = {
         enumerable,
         configurable,
-        get(this: THost): TMemberValue {
-          return get(this) as TMemberValue;
+        get(this: THost): TPropValue {
+          return get(this) as TPropValue;
         },
         set(this: THost, update: TUpdate): void {
           set(this, update);
@@ -125,7 +148,7 @@ export function AmendedProp<THost extends object, TValue extends TUpdate, TClass
     }
 
     return newDescriptor;
-  };
+  }) as PropAmendment<THost, TAmended>;
 
   decorator.applyAmendment = amender;
 

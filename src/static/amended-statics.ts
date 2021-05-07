@@ -1,5 +1,4 @@
-import { Class } from '@proc7ts/primitives';
-import { Amender, Amendment } from '../base';
+import { Amendment } from '../base';
 import { AmendedClass, ClassAmendment } from '../class';
 import { amendStaticOf } from './amend-static-of';
 import { AmendedStatic } from './amended-static';
@@ -15,9 +14,8 @@ import { AmendedStatic } from './amended-static';
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
 export type AmendedStaticsDef<
-    TClass extends Class,
-    TExtClass extends TClass = TClass,
-    TAmended extends AmendedClass<TClass> = AmendedClass<TClass>> = {
+    TAmended extends AmendedClass,
+    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>> = {
   [K in keyof TExtClass]?: Amendment<
       & TAmended
       & AmendedStatic<TExtClass[K], TExtClass>> | null;
@@ -32,30 +30,12 @@ export type AmendedStaticsDef<
  *
  * @returns New class amendment instance.
  */
-export function AmendedStatics<TClass extends Class, TExtClass extends TClass = TClass>(
-    def: AmendedStaticsDef<TClass, TExtClass>,
-): ClassAmendment<TClass> {
-  return AmendedClass(amenderOfStatics<TClass, TExtClass>(def));
-}
-
-/**
- * Creates an amender that amends class static members.
- *
- * @typeParam TClass - A type of amended class.
- * @typeParam TExtClass - A type of class extended by the amendment.
- * @typeParam TAmended - Amended entity type representing a class to amend.
- * @param def - A map of static member amendments.
- *
- * @returns New class amender.
- */
-export function amenderOfStatics<
-    TClass extends Class,
-    TExtClass extends TClass = TClass,
-    TAmended extends AmendedClass<TClass> = AmendedClass<TClass>,
-    >(
-    def: AmendedStaticsDef<TClass, TExtClass, TAmended>,
-): Amender<TAmended> {
-  return target => {
+export function AmendedStatics<
+    TAmended extends AmendedClass,
+    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>>(
+    def: AmendedStaticsDef<TAmended, TExtClass>,
+): ClassAmendment<TAmended> {
+  return AmendedClass(target => {
     for (const key of Reflect.ownKeys(def)) {
 
       const amendment = def[key as keyof TExtClass] as Amendment<any> | undefined;
@@ -64,5 +44,5 @@ export function amenderOfStatics<
         amendStaticOf(target.class, key as any, amendment);
       }
     }
-  };
+  });
 }

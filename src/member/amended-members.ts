@@ -1,5 +1,4 @@
-import { Class } from '@proc7ts/primitives';
-import { Amender, Amendment } from '../base';
+import { Amendment } from '../base';
 import { AmendedClass, ClassAmendment } from '../class';
 import { amendMemberOf } from './amend-member-of';
 import { AmendedMember } from './amended-member';
@@ -15,9 +14,8 @@ import { AmendedMember } from './amended-member';
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
 export type AmendedMembersDef<
-    TClass extends Class,
-    TExtClass extends TClass = TClass,
-    TAmended extends AmendedClass<TClass> = AmendedClass<TClass>> = {
+    TAmended extends AmendedClass,
+    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>> = {
   [K in keyof InstanceType<TExtClass>]?: Amendment<
       & TAmended
       & AmendedMember<InstanceType<TExtClass>[K], TExtClass>> | null;
@@ -32,30 +30,12 @@ export type AmendedMembersDef<
  *
  * @returns New class amendment instance.
  */
-export function AmendedMembers<TClass extends Class, TExtClass extends TClass = TClass>(
-    def: AmendedMembersDef<TClass, TExtClass>,
-): ClassAmendment<TClass> {
-  return AmendedClass(amenderOfMembers<TClass, TExtClass>(def));
-}
-
-/**
- * Creates an amender that amends class members.
- *
- * @typeParam TClass - A type of amended class.
- * @typeParam TExtClass - A type of class extended by the amendment.
- * @typeParam TAmended - Amended entity type representing a class to amend.
- * @param def - A map of member amendments.
- *
- * @returns New class amender.
- */
-export function amenderOfMembers<
-    TClass extends Class,
-    TExtClass extends TClass = TClass,
-    TAmended extends AmendedClass<TClass> = AmendedClass<TClass>,
-    >(
-    def: AmendedMembersDef<TClass, TExtClass, TAmended>,
-): Amender<TAmended> {
-  return target => {
+export function AmendedMembers<
+    TAmended extends AmendedClass,
+    TExtClass extends AmendedClass.ClassType<TAmended> = AmendedClass.ClassType<TAmended>>(
+    def: AmendedMembersDef<TAmended, TExtClass>,
+): ClassAmendment<TAmended> {
+  return AmendedClass(target => {
     for (const key of Reflect.ownKeys(def)) {
 
       const amendment = def[key as string] as Amendment<any> | undefined;
@@ -64,5 +44,5 @@ export function amenderOfMembers<
         amendMemberOf(target.class, key as string, amendment);
       }
     }
-  };
+  });
 }

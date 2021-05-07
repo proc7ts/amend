@@ -79,6 +79,24 @@ export interface AmendedMember<
 
 }
 
+export namespace AmendedMember {
+
+  export type ClassType<TAmended extends AmendedMember<any, any, any>> = AmendedClass.ClassType<TAmended>;
+
+  export type InstanceType<TAmended extends AmendedMember<any, any, any>> = AmendedClass.InstanceType<TAmended>;
+
+  export type ValueType<TAmended extends AmendedMember<any, any, any>> =
+    TAmended extends AmendedMember<infer TValue, any, any>
+        ? TValue
+        : never;
+
+  export type UpdateType<TAmended extends AmendedMember<any, any, any>> =
+      TAmended extends AmendedMember<any, any, infer TUpdate>
+          ? TUpdate
+          : never;
+
+}
+
 /**
  * Creates an amendment (and decorator) for the class instance member.
  *
@@ -89,10 +107,10 @@ export interface AmendedMember<
  *
  * @returns - New class member amendment instance.
  */
-export function AmendedMember<TValue extends TUpdate, TClass extends Class = Class, TUpdate = TValue>(
-    ...amendments: Amendment<AmendedMember<TValue, TClass, TUpdate>>[]
-): MemberAmendment<TValue, TClass, TUpdate> {
-  return AmendedProp<InstanceType<TClass>, TValue, TClass, TUpdate>(AmendedMember$createHost, amendments);
+export function AmendedMember<TAmended extends AmendedMember<any, Class, any>>(
+    ...amendments: Amendment<TAmended>[]
+): MemberAmendment<TAmended> {
+  return AmendedProp(AmendedMember$createHost, amendments);
 }
 
 const AmendedMember$HostKind: AmendedProp$HostKind = {

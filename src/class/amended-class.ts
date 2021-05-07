@@ -18,6 +18,17 @@ export interface AmendedClass<TClass extends Class = Class> {
 
 }
 
+type GenericInstanceType<T extends new (...args: any) => any> = InstanceType<T>;
+
+export namespace AmendedClass {
+
+  export type ClassType<TAmended extends AmendedClass<any>> =
+      TAmended extends AmendedClass<infer TClass> ? TClass : never;
+
+  export type InstanceType<TAmended extends AmendedClass<any>> = GenericInstanceType<ClassType<TAmended>>;
+
+}
+
 /**
  * Creates an amendment (and decorator) for a class.
  *
@@ -26,17 +37,17 @@ export interface AmendedClass<TClass extends Class = Class> {
  *
  * @returns - New class amendment instance.
  */
-export function AmendedClass<TClass extends Class>(
-    ...amendments: Amendment<AmendedClass<TClass>>[]
-): ClassAmendment<TClass> {
+export function AmendedClass<TAmended extends AmendedClass<any> = AmendedClass>(
+    ...amendments: Amendment<TAmended>[]
+): ClassAmendment<TAmended> {
 
   const amender = combineAmendments(amendments);
-  const decorator = (target: TClass): void => {
+  const decorator = ((target: AmendedClass.ClassType<TAmended>): void => {
     amender(newAmendTarget({
-      base: { class: target },
+      base: { class: target } as TAmended,
       amend: noop,
     }));
-  };
+  }) as ClassAmendment<TAmended>;
 
   decorator.applyAmendment = amender;
 

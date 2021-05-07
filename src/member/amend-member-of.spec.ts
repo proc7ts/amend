@@ -29,7 +29,7 @@ describe('amendMemberOf', () => {
 
       class TestClass {
 
-        @AmendedMember<string>(({ amend }) => {
+        @AmendedMember<AmendedMember<string>>(({ amend }) => {
           amend({ enumerable: false });
         })
         field = 'some';

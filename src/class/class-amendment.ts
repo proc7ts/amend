@@ -3,19 +3,34 @@ import { Amendatory } from '../base';
 import { AmendedClass } from './amended-class';
 
 /**
- * Class amendment. Can be used as class decorator.
+ * Class amendment.
  *
- * Can also be used as an amendment {@link Amendatory specifier} e.g. to combine it with other amendments.
+ * Can be used as class decorator, unless expects an amended entity other than {@link AmendedClass}.
  *
  * @typeParam TClass - A type of amended class.
+ * @typeParam TAmended - A type of amended entity representing a class to amend.
  */
-export interface ClassAmendment<TClass extends Class> extends Amendatory<AmendedClass<TClass>> {
+export type ClassAmendment<TAmended extends AmendedClass = AmendedClass> =
+    AmendedClass<any> extends TAmended
+        ? ClassAmendment.Decorator<AmendedClass.ClassType<TAmended>>
+        : Amendatory<TAmended>;
+
+export namespace ClassAmendment {
 
   /**
-   * Applies this amendment to decorated class.
+   * Class amendment that can be used as class decorator.
    *
-   * @param classConstructor - Decorated class constructor.
+   * @typeParam TClass - A type of amended class.
    */
-  (this: void, classConstructor: TClass): void;
+  export interface Decorator<TClass extends Class> extends Amendatory<AmendedClass<TClass>> {
+
+    /**
+     * Applies this amendment to decorated class.
+     *
+     * @param classConstructor - Decorated class constructor.
+     */
+    (this: void, classConstructor: TClass): void;
+
+  }
 
 }

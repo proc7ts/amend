@@ -9,7 +9,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass {
 
-        @AmendedStatic<string, typeof TestClass>(t => {
+        @AmendedStatic<AmendedStatic<string, typeof TestClass>>(t => {
           target = t;
         })
         static field = 'some';
@@ -30,14 +30,14 @@ describe('@AmendedStatic', () => {
 
       class TestClass {
 
-        @AmendedStatic<string>(({ amend }) => {
+        @AmendedStatic<AmendedStatic<string>>(({ amend }) => {
           amend({ enumerable: false });
         })
         static field = 'some';
 
       }
 
-      const desc = AmendedStatic<string>(({ amend }) => {
+      const desc = AmendedStatic<AmendedStatic<string>>(({ amend }) => {
         amend({ configurable: false });
       })(TestClass, 'field', Reflect.getOwnPropertyDescriptor(TestClass, 'field'));
 
@@ -58,7 +58,7 @@ describe('@AmendedStatic', () => {
 
       }
 
-      const desc = AmendedStatic<string>(({ get, set, amend }) => {
+      const desc = AmendedStatic<AmendedStatic<string>>(({ get, set, amend }) => {
         amend({
           get: targetClass => get(targetClass) + '!',
           set: (targetClass, update) => set(targetClass, update),
@@ -89,7 +89,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedStatic<string>(({ get, set, amend }) => {
+        @AmendedStatic<AmendedStatic<string>>(({ get, set, amend }) => {
           amend({
             get: instance => get(instance) + '!',
             set: (instance, update) => set(instance, update),
@@ -123,7 +123,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedStatic<string, typeof TestClass>(({ get }) => {
+        @AmendedStatic<AmendedStatic<string, typeof TestClass>>(({ get }) => {
           getValue = get;
         })
         static field: string;
@@ -145,7 +145,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass {
 
-        @AmendedStatic<string, typeof TestClass>(t => {
+        @AmendedStatic<AmendedStatic<string, typeof TestClass>>(t => {
           target = t;
           t.amend();
         })
@@ -170,7 +170,7 @@ describe('@AmendedStatic', () => {
 
         private static _field = 'initial';
 
-        @AmendedStatic<string>(({ get, set, amend }) => {
+        @AmendedStatic<AmendedStatic<string>>(({ get, set, amend }) => {
           amend({
             get: targetClass => get(targetClass) + '!',
             set: (targetClass, update) => set(targetClass, update),
@@ -210,7 +210,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedStatic<string>(({ get, set, amend }) => {
+        @AmendedStatic<AmendedStatic<string>>(({ get, set, amend }) => {
           amend({
             get: targetClass => get(targetClass) + '!',
             set: (targetClass, update) => set(targetClass, update),

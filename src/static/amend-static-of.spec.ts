@@ -32,7 +32,7 @@ describe('amendStaticOf', () => {
 
       class TestClass {
 
-        @AmendedStatic<string>(({ amend }) => {
+        @AmendedStatic<AmendedStatic<string>>(({ amend }) => {
           amend({ enumerable: false });
         })
         static field = 'some';
