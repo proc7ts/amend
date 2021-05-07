@@ -14,7 +14,7 @@ import { AmendedMember } from './amended-member';
  * @typeParam TExtClass - A type of class extended by the amendment.
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
-export type MembersToAmend<
+export type AmendedMembersDef<
     TClass extends Class,
     TExtClass extends TClass = TClass,
     TAmended extends AmendedClass<TClass> = AmendedClass<TClass>> = {
@@ -28,14 +28,14 @@ export type MembersToAmend<
  *
  * @typeParam TClass - A type of amended class.
  * @typeParam TExtClass - A type of class extended by the amendment.
- * @param members - A map of member amendments.
+ * @param def - A map of member amendments.
  *
  * @returns New class amendment instance.
  */
 export function AmendedMembers<TClass extends Class, TExtClass extends TClass = TClass>(
-    members: MembersToAmend<TClass, TExtClass>,
+    def: AmendedMembersDef<TClass, TExtClass>,
 ): ClassAmendment<TClass> {
-  return AmendedClass(amenderOfMembers<TClass, TExtClass>(members));
+  return AmendedClass(amenderOfMembers<TClass, TExtClass>(def));
 }
 
 /**
@@ -44,7 +44,7 @@ export function AmendedMembers<TClass extends Class, TExtClass extends TClass = 
  * @typeParam TClass - A type of amended class.
  * @typeParam TExtClass - A type of class extended by the amendment.
  * @typeParam TAmended - Amended entity type representing a class to amend.
- * @param members - A map of member amendments.
+ * @param def - A map of member amendments.
  *
  * @returns New class amender.
  */
@@ -53,12 +53,12 @@ export function amenderOfMembers<
     TExtClass extends TClass = TClass,
     TAmended extends AmendedClass<TClass> = AmendedClass<TClass>,
     >(
-    members: MembersToAmend<TClass, TExtClass, TAmended>,
+    def: AmendedMembersDef<TClass, TExtClass, TAmended>,
 ): Amender<TAmended> {
   return target => {
-    for (const key of Reflect.ownKeys(members)) {
+    for (const key of Reflect.ownKeys(def)) {
 
-      const amendment = members[key as string] as Amendment<any> | undefined;
+      const amendment = def[key as string] as Amendment<any> | undefined;
 
       if (amendment) {
         amendMemberOf(target.class, key as string, amendment);
