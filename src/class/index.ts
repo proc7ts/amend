@@ -1,2 +1,2 @@
-export * from './amended-class';
+export * from './ae-class';
 export * from './class-amendment';

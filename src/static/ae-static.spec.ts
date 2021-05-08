@@ -1,22 +1,22 @@
 import { AmendTarget } from '../base';
-import { AmendedStatic } from './amended-static';
+import { AeStatic } from './ae-static';
 
-describe('@AmendedStatic', () => {
+describe('@AeStatic', () => {
   describe('when decorates a static field', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedStatic<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
 
       class TestClass {
 
-        @AmendedStatic<string, typeof TestClass>(t => {
+        @AeStatic<string, typeof TestClass>(t => {
           target = t;
         })
         static field = 'some';
 
       }
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         configurable: true,
         enumerable: true,
@@ -30,14 +30,14 @@ describe('@AmendedStatic', () => {
 
       class TestClass {
 
-        @AmendedStatic<string>(({ amend }) => {
+        @AeStatic<AeStatic<string>>(({ amend }) => {
           amend({ enumerable: false });
         })
         static field = 'some';
 
       }
 
-      const desc = AmendedStatic<string>(({ amend }) => {
+      const desc = AeStatic<AeStatic<string>>(({ amend }) => {
         amend({ configurable: false });
       })(TestClass, 'field', Reflect.getOwnPropertyDescriptor(TestClass, 'field'));
 
@@ -58,7 +58,7 @@ describe('@AmendedStatic', () => {
 
       }
 
-      const desc = AmendedStatic<string>(({ get, set, amend }) => {
+      const desc = AeStatic<string>(({ get, set, amend }) => {
         amend({
           get: targetClass => get(targetClass) + '!',
           set: (targetClass, update) => set(targetClass, update),
@@ -89,7 +89,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedStatic<string>(({ get, set, amend }) => {
+        @AeStatic<string>(({ get, set, amend }) => {
           amend({
             get: instance => get(instance) + '!',
             set: (instance, update) => set(instance, update),
@@ -123,7 +123,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedStatic<string, typeof TestClass>(({ get }) => {
+        @AeStatic<string, typeof TestClass>(({ get }) => {
           getValue = get;
         })
         static field: string;
@@ -141,11 +141,11 @@ describe('@AmendedStatic', () => {
   describe('when decorates a static accessor', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedStatic<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
 
       class TestClass {
 
-        @AmendedStatic<string, typeof TestClass>(t => {
+        @AeStatic<string, typeof TestClass>(t => {
           target = t;
           t.amend();
         })
@@ -155,7 +155,7 @@ describe('@AmendedStatic', () => {
 
       }
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         enumerable: false,
         configurable: true,
@@ -170,7 +170,7 @@ describe('@AmendedStatic', () => {
 
         private static _field = 'initial';
 
-        @AmendedStatic<string>(({ get, set, amend }) => {
+        @AeStatic<string>(({ get, set, amend }) => {
           amend({
             get: targetClass => get(targetClass) + '!',
             set: (targetClass, update) => set(targetClass, update),
@@ -210,7 +210,7 @@ describe('@AmendedStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AmendedStatic<string>(({ get, set, amend }) => {
+        @AeStatic<string>(({ get, set, amend }) => {
           amend({
             get: targetClass => get(targetClass) + '!',
             set: (targetClass, update) => set(targetClass, update),

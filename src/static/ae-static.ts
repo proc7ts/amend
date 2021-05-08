@@ -1,7 +1,7 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AmendedClass } from '../class';
-import { AmendedProp, AmendedProp$Host, AmendedProp$HostKind } from '../impl';
+import { AeClass } from '../class';
+import { AeProp, AeProp$Host, AeProp$HostKind } from '../impl';
 import { StaticAmendment } from './static-amendment';
 
 /**
@@ -13,11 +13,11 @@ import { StaticAmendment } from './static-amendment';
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
-export interface AmendedStatic<
+export interface AeStatic<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
-    > extends AmendedClass<TClass>{
+    > extends AeClass<TClass>{
 
   /**
    * A key of the static member.
@@ -80,32 +80,59 @@ export interface AmendedStatic<
 }
 
 /**
+ * An amended entity representing a class containing a static member to decorate.
+ *
+ * Contains a data required for static member {@link StaticAmendatory.decorateAmended decoration}.
+ *
+ * Contains a class to amend, as well as arbitrary amended entity data.
+ *
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
+ */
+export type DecoratedAeStatic<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
+  [K in Exclude<keyof TAmended, keyof AeStatic<unknown>>]: TAmended[K];
+} & {
+  readonly amendedClass: TClass;
+};
+
+/**
  * Creates an amendment (and decorator) for the static class member.
  *
  * @typeParam TValue - Amended member value type.
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a static member to amend.
  * @param amendments - Amendments to apply.
  *
  * @returns - New static member amendment instance.
  */
-export function AmendedStatic<TValue extends TUpdate, TClass extends Class = Class, TUpdate = TValue>(
-    ...amendments: Amendment<AmendedStatic<TValue, TClass, TUpdate>>[]
-): StaticAmendment<TValue, TClass, TUpdate> {
-  return AmendedProp<TClass, TValue, TClass, TUpdate>(AmendedStatic$createHost, amendments);
+export function AeStatic<
+    TValue extends TUpdate,
+    TClass extends Class = Class,
+    TUpdate = TValue,
+    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>>(
+    ...amendments: Amendment<TAmended>[]
+): StaticAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeProp(AeStatic$createHost, AeStatic$hostClass, amendments);
 }
 
-const AmendedStatic$HostKind: AmendedProp$HostKind = {
+const AeStatic$HostKind: AeProp$HostKind = {
   pName: 'Static property',
   vDesc: key => `staticOf(${String(key)}`,
 };
 
-function AmendedStatic$createHost<TClass extends Class>(
-    classConstructor: TClass,
-): AmendedProp$Host<TClass, TClass> {
+function AeStatic$createHost<TClass extends Class>(
+    { amendedClass }: AeClass<TClass>,
+): AeProp$Host<TClass, TClass> {
   return {
-    kind: AmendedStatic$HostKind,
-    cls: classConstructor,
-    host: classConstructor,
+    kind: AeStatic$HostKind,
+    cls: amendedClass,
+    host: amendedClass,
   };
+}
+
+function AeStatic$hostClass<TClass extends Class>(
+    classConstructor: TClass,
+): TClass {
+  return classConstructor;
 }

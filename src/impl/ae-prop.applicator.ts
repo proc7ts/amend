@@ -1,13 +1,13 @@
 import { Class } from '@proc7ts/primitives';
 import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
-import { AmendedClass } from '../class';
-import { AmendedProp, AmendedProp$Host } from './amended-prop';
-import { AmendedProp$notReadable, AmendedProp$notWritable } from './amended-prop.accessor';
+import { AeClass } from '../class';
+import { AeProp, AeProp$Host } from './ae-prop';
+import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessor';
 
 /**
  * @internal
  */
-export interface AmendedProp$Desc<THost, TValue extends TUpdate, TUpdate> {
+export interface AeProp$Desc<THost, TValue extends TUpdate, TUpdate> {
   enumerable: boolean;
   configurable: boolean;
   readable: boolean;
@@ -19,29 +19,31 @@ export interface AmendedProp$Desc<THost, TValue extends TUpdate, TUpdate> {
 /**
  * @internal
  */
-export function AmendedProp$createApplicator<
+export function AeProp$createApplicator<
     THost extends object,
     TValue extends TUpdate,
     TClass extends Class,
-    TUpdate>(
-    host: AmendedProp$Host<THost>,
-    amender: Amender<AmendedProp<THost, TValue, TClass, TUpdate>>,
+    TUpdate,
+    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
+    host: AeProp$Host<THost, TClass>,
+    amender: Amender<TAmended>,
     key: string | symbol,
-    init: AmendedProp$Desc<THost, TValue, TUpdate>,
+    init: AeProp$Desc<THost, TValue, TUpdate>,
 ): (
-    classTarget: AmendTarget<AmendedClass<TClass>>,
-) => AmendedProp$Desc<THost, TValue, TUpdate> {
+    baseTarget: AmendTarget<AeClass<TClass>>,
+) => AeProp$Desc<THost, TValue, TUpdate> {
+
   return (
-      classTarget: AmendTarget<AmendedClass<TClass>>,
-  ): AmendedProp$Desc<THost, TValue, TUpdate> => {
+      baseTarget: AmendTarget<AeClass<TClass>>,
+  ): AeProp$Desc<THost, TValue, TUpdate> => {
 
     const result = { ...init };
-    const amendNext = <TBase extends AmendedProp<THost, TValue, TClass, TUpdate>, TExt>(
+    const amendNext = <TBase extends TAmended, TExt>(
         base: TBase,
         request = {} as AmendRequest<TBase, TExt>,
     ): () => AmendTarget.Draft<TBase & TExt> => {
 
-      const createClassTarget = classTarget.amend(request as AmendRequest<AmendedClass<TClass>, TExt>);
+      const createClassTarget = baseTarget.amend(request as AmendRequest<AeClass<TClass>, TExt>);
 
       const {
         enumerable = base.enumerable,
@@ -53,7 +55,7 @@ export function AmendedProp$createApplicator<
 
       if (!set) {
         if (get) {
-          set = AmendedProp$notWritable(host, key);
+          set = AeProp$notWritable(host, key);
           writable = false;
           readable = true;
         } else {
@@ -65,7 +67,7 @@ export function AmendedProp$createApplicator<
         readable = true;
         writable = true;
       } else {
-        get = AmendedProp$notReadable(host, key);
+        get = AeProp$notReadable(host, key);
         readable = false;
         writable = true;
       }
@@ -88,12 +90,12 @@ export function AmendedProp$createApplicator<
         configurable,
         get,
         set,
-      } as AmendTarget.Draft<TBase & TExt>);
+      } as unknown as AmendTarget.Draft<TBase & TExt>);
     };
 
     amender(newAmendTarget({
       base: {
-        ...classTarget,
+        ...baseTarget as unknown as TAmended,
         key,
         ...init,
       },

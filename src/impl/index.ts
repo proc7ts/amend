@@ -1,1 +1,1 @@
-export * from './amended-prop';
+export * from './ae-prop';

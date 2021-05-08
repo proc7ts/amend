@@ -1,12 +1,12 @@
 import { AmendTarget } from '../base';
+import { AeStatic } from './ae-static';
 import { amendStaticOf } from './amend-static-of';
-import { AmendedStatic } from './amended-static';
 
 describe('amendStaticOf', () => {
   describe('when applied to static field', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedStatic<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
 
       class TestClass {
 
@@ -14,11 +14,11 @@ describe('amendStaticOf', () => {
 
       }
 
-      amendStaticOf(TestClass, 'field', t => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
       });
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         configurable: true,
         enumerable: true,
@@ -32,14 +32,14 @@ describe('amendStaticOf', () => {
 
       class TestClass {
 
-        @AmendedStatic<string>(({ amend }) => {
+        @AeStatic<AeStatic<string>>(({ amend }) => {
           amend({ enumerable: false });
         })
         static field = 'some';
 
       }
 
-      amendStaticOf(TestClass, 'field', ({ amend }) => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', ({ amend }) => {
         amend({ configurable: false });
       });
 
@@ -58,7 +58,7 @@ describe('amendStaticOf', () => {
   describe('when applied to static accessor', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AmendedStatic<string, typeof TestClass>> | undefined;
+      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
 
       class TestClass {
 
@@ -68,12 +68,12 @@ describe('amendStaticOf', () => {
 
       }
 
-      amendStaticOf(TestClass, 'field', t => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
         t.amend();
       });
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         enumerable: false,
         configurable: true,
@@ -98,7 +98,7 @@ describe('amendStaticOf', () => {
 
       }
 
-      amendStaticOf(TestClass, 'field', ({ get, set, amend }) => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', ({ get, set, amend }) => {
         amend({
           get: targetClass => get(targetClass) + '!',
           set: (targetClass, update) => set(targetClass, update),

@@ -4,7 +4,7 @@ import { AmendTarget } from './amend-target';
 /**
  * An amendment of some entity.
  *
- * Applies to amended entities, such as {@link AmendedClass classes} or their {@link AmendedMember members}.
+ * Applies to amended entities, such as {@link AeClass classes} or their {@link AeMember members}.
  *
  * May be represented either by {@link Amender} function or {@link Amendatory} instance. An {@link amenderOf}
  * function can be used to convert any amendment to amender.
