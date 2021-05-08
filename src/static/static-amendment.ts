@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendatory } from '../base';
+import { AmendablePropertyDescriptor, Amendatory } from '../base';
 import { AeStatic, DecoratedAeStatic } from './ae-static';
 
 /**
@@ -49,8 +49,8 @@ export interface StaticAmendatory<
       this: void,
       decorated: DecoratedAeStatic<TClass, TAmended>,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TMemberValue>
-  ): void | TypedPropertyDescriptor<TMemberValue>;
+      descriptor?: AmendablePropertyDescriptor<TMemberValue, TClass, TUpdate>
+  ): void | AmendablePropertyDescriptor<TMemberValue, TClass, TUpdate>;
 
 }
 
@@ -81,7 +81,7 @@ export interface StaticAmendmentDecorator<
       this: void,
       classConstructor: TClass,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TMemberValue>,
+      descriptor?: AmendablePropertyDescriptor<TMemberValue, TClass, TUpdate>,
   ): void | any;
 
 }

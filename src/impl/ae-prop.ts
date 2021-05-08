@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendatory, Amendment, combineAmendments } from '../base';
+import { AmendablePropertyDescriptor, Amendatory, Amendment, combineAmendments } from '../base';
 import { AeClass, DecoratedAeClass } from '../class';
 import { DecoratedAeMember } from '../member';
 import { AeProp$accessor } from './ae-prop.accessor';
@@ -46,12 +46,12 @@ export interface PropAmendatory<
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>
     extends Amendatory<TAmended> {
 
-  decorateAmended<TMemberValue extends TValue>(
+  decorateAmended<TPropValue extends TValue>(
       this: void,
       decorated: DecoratedAeMember<TClass, TAmended>,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TMemberValue>,
-  ): void | TypedPropertyDescriptor<TMemberValue>;
+      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
+  ): void | AmendablePropertyDescriptor<TPropValue, THost, TUpdate>;
 
 }
 
@@ -70,7 +70,7 @@ export interface PropAmendment$Decorator<
       this: void,
       host: THost,
       propertyKey: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TPropValue>,
+      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
   ): void | any;
 
 }
@@ -110,8 +110,8 @@ export function AeProp<
   const decorateAmended = <TPropValue extends TValue>(
       decorated: DecoratedAeMember<TClass, TAmended>,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TPropValue>,
-  ): void | TypedPropertyDescriptor<TPropValue> => {
+      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
+  ): void | AmendablePropertyDescriptor<TPropValue, THost, TUpdate> => {
 
     const host = createHost(decorated);
     const [getValue, setValue, toAccessor] = AeProp$accessor(host, key, descriptor);
@@ -132,7 +132,7 @@ export function AeProp<
     }).decorateAmended(decorated as DecoratedAeClass<TClass, TAmended>);
 
     const { enumerable, configurable, get, set } = desc;
-    let newDescriptor: TypedPropertyDescriptor<TPropValue> | undefined;
+    let newDescriptor: AmendablePropertyDescriptor<TPropValue, THost, TUpdate> | undefined;
 
     if (set !== init.set || get !== init.get) {
       newDescriptor = {
@@ -175,8 +175,8 @@ export function AeProp<
   const decorator = (<TPropValue extends TValue>(
       targetHost: THost,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TPropValue>,
-  ): void | TypedPropertyDescriptor<TPropValue> => {
+      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
+  ): void | AmendablePropertyDescriptor<TPropValue, THost, TUpdate> => {
 
     const aeClass: AeClass<TClass> = { amendedClass: hostClass(targetHost) };
 

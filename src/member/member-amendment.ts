@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendatory } from '../base';
+import { AmendablePropertyDescriptor, Amendatory } from '../base';
 import { AeMember, DecoratedAeMember } from './ae-member';
 
 /**
@@ -49,8 +49,8 @@ export interface MemberAmendatory<
       this: void,
       decorated: DecoratedAeMember<TClass, TAmended>,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TMemberValue>
-  ): void | TypedPropertyDescriptor<TMemberValue>;
+      descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>
+  ): void | AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>;
 
 }
 
@@ -81,7 +81,7 @@ export interface MemberAmendmentDecorator<
       this: void,
       proto: InstanceType<TClass>,
       key: string | symbol,
-      descriptor?: TypedPropertyDescriptor<TMemberValue>,
+      descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>,
   ): void | any;
 
 }

@@ -1,4 +1,5 @@
 import { noop } from '@proc7ts/primitives';
+import { AmendablePropertyDescriptor } from '../base';
 import { AeProp$Host } from './ae-prop';
 
 /**
@@ -7,7 +8,7 @@ import { AeProp$Host } from './ae-prop';
 export function AeProp$accessor<THost extends object, TValue extends TUpdate, TUpdate>(
     host: AeProp$Host<THost>,
     key: string | symbol,
-    descriptor: TypedPropertyDescriptor<TValue> | undefined,
+    descriptor: AmendablePropertyDescriptor<TValue, THost, TUpdate> | undefined,
 ): [
   getValue: (host: THost) => TValue,
   setValue: (host: THost, update: TUpdate) => void,
