@@ -1,29 +1,36 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AeMember } from './ae-member';
+import { AeMember, DecoratedAeMember } from './ae-member';
 
 /**
  * Amends a member (property) of the class.
  *
  * Applies the given amendments to the own property of the target class prototype.
  *
- * @typeParam TInstance - A type of amended class instance.
- * @typeParam TKey - A type of amended member key.
  * @typeParam TClass - A type of amended class.
- * @param targetClass - A constructor of the class to amend.
+ * @typeParam TKey - A type of amended member key.
+ * @typeParam TAmended - A type of the entity representing a member to amend.
+ * @param decorated - Decorated class representation.
  * @param memberKey - A key of the member to amend.
  * @param amendments - Amendment to apply.
  */
-export function amendMemberOf<TInstance extends object, TKey extends keyof TInstance = keyof TInstance>(
-    targetClass: Class<TInstance>,
+export function amendMemberOf<
+    TClass extends Class,
+    TKey extends keyof InstanceType<TClass> = keyof InstanceType<TClass>,
+    TAmended extends AeMember<InstanceType<TClass>[TKey], TClass> = AeMember<InstanceType<TClass>[TKey], TClass>>(
+    decorated: DecoratedAeMember<TClass, TAmended>,
     memberKey: TKey,
-    ...amendments: Amendment<AeMember<TInstance[TKey], Class<TInstance>>>[]
+    ...amendments: Amendment<TAmended>[]
 ): void {
 
-  const amender = AeMember(...amendments);
-  const proto = targetClass.prototype;
+  const amendment = AeMember(...amendments);
+  const proto = decorated.amendedClass.prototype;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(proto, memberKey);
-  const amendedDesc = amender(proto, memberKey as string | symbol, sourceDesc);
+  const amendedDesc = amendment.decorateAmended(
+      decorated as DecoratedAeMember<TClass, TAmended & AeMember<InstanceType<TClass>[TKey], TClass>>,
+      memberKey as string | symbol,
+      sourceDesc,
+  );
 
   if (amendedDesc && sourceDesc) {
     // Redefine the property.

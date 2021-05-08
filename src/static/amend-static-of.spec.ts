@@ -14,11 +14,11 @@ describe('amendStaticOf', () => {
 
       }
 
-      amendStaticOf(TestClass, 'field', t => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
       });
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         configurable: true,
         enumerable: true,
@@ -39,7 +39,7 @@ describe('amendStaticOf', () => {
 
       }
 
-      amendStaticOf(TestClass, 'field', ({ amend }) => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', ({ amend }) => {
         amend({ configurable: false });
       });
 
@@ -68,12 +68,12 @@ describe('amendStaticOf', () => {
 
       }
 
-      amendStaticOf(TestClass, 'field', t => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
         t.amend();
       });
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         enumerable: false,
         configurable: true,
@@ -98,7 +98,7 @@ describe('amendStaticOf', () => {
 
       }
 
-      amendStaticOf(TestClass, 'field', ({ get, set, amend }) => {
+      amendStaticOf({ amendedClass: TestClass }, 'field', ({ get, set, amend }) => {
         amend({
           get: targetClass => get(targetClass) + '!',
           set: (targetClass, update) => set(targetClass, update),

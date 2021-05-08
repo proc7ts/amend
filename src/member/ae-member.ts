@@ -79,23 +79,21 @@ export interface AeMember<
 
 }
 
-export namespace AeMember {
-
-  export type ClassType<TAmended extends AeMember<any, any, any>> = AeClass.ClassType<TAmended>;
-
-  export type InstanceType<TAmended extends AeMember<any, any, any>> = AeClass.InstanceType<TAmended>;
-
-  export type ValueType<TAmended extends AeMember<any, any, any>> =
-    TAmended extends AeMember<infer TValue, any, any>
-        ? TValue
-        : never;
-
-  export type UpdateType<TAmended extends AeMember<any, any, any>> =
-      TAmended extends AeMember<any, any, infer TUpdate>
-          ? TUpdate
-          : never;
-
-}
+/**
+ * An amended entity representing a class containing a member to decorate.
+ *
+ * Contains a data required for member {@link MemberAmendatory.decorateAmended decoration}.
+ *
+ * Contains a class to amend, as well as arbitrary amended entity data.
+ *
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
+ */
+export type DecoratedAeMember<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
+  [K in Exclude<keyof TAmended, keyof AeMember<unknown>>]: TAmended[K];
+} & {
+  readonly amendedClass: TClass;
+};
 
 /**
  * Creates an amendment (and decorator) for the class instance member.
@@ -103,14 +101,19 @@ export namespace AeMember {
  * @typeParam TValue - Amended member value type.
  * @typeParam TClass - A type of amended class.
  * @typeParam TUpdate - Amended member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a member to amend.
  * @param amendments - Amendments to apply.
  *
  * @returns - New class member amendment instance.
  */
-export function AeMember<TAmended extends AeMember<any, Class, any>>(
+export function AeMember<
+    TValue extends TUpdate,
+    TClass extends Class = Class,
+    TUpdate = TValue,
+    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>>(
     ...amendments: Amendment<TAmended>[]
-): MemberAmendment<TAmended> {
-  return AeProp(AeMember$createHost, amendments);
+): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeProp(AeMember$createHost, AeMember$hostClass, amendments);
 }
 
 const AeMember$HostKind: AeProp$HostKind = {
@@ -119,11 +122,17 @@ const AeMember$HostKind: AeProp$HostKind = {
 };
 
 function AeMember$createHost<TClass extends Class>(
-    targetProto: InstanceType<TClass>,
+    { amendedClass }: AeClass<TClass>,
 ): AeProp$Host<InstanceType<TClass>, TClass> {
   return {
     kind: AeMember$HostKind,
-    cls: targetProto.constructor,
-    host: targetProto,
+    cls: amendedClass,
+    host: amendedClass.prototype,
   };
+}
+
+function AeMember$hostClass<TClass extends Class>(
+    proto: InstanceType<TClass>,
+): TClass {
+  return proto.constructor;
 }

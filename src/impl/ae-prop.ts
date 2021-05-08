@@ -1,7 +1,7 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendatory, Amendment, combineAmendments } from '../base';
-import { AeClass } from '../class';
-import { AeMember } from '../member';
+import { AeClass, DecoratedAeClass } from '../class';
+import { DecoratedAeMember } from '../member';
 import { AeProp$accessor } from './ae-prop.accessor';
 import { AeProp$createApplicator, AeProp$Desc } from './ae-prop.applicator';
 
@@ -30,20 +30,41 @@ export interface AeProp<
  */
 export type PropAmendment<
     THost extends object,
-    TAmended extends AeProp<THost, any>> =
+    TValue extends TUpdate,
+    TClass extends Class,
+    TUpdate,
+    TAmended extends AeProp<THost, TValue, TClass, TUpdate>> =
     AeProp<THost, any, any, any> extends TAmended
-        ? PropAmendment$Decorator<
-            THost,
-            AeMember.ValueType<TAmended>,
-            AeMember.ClassType<TAmended>,
-            AeMember.UpdateType<TAmended>>
-        : Amendatory<TAmended>;
+        ? PropAmendment$Decorator<THost, TValue, TClass, TUpdate, TAmended>
+        : PropAmendatory<THost, TValue, TClass, TUpdate, TAmended>;
+
+export interface PropAmendatory<
+    THost extends object,
+    TValue extends TUpdate,
+    TClass extends Class,
+    TUpdate,
+    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>
+    extends Amendatory<TAmended> {
+
+  decorateAmended<TMemberValue extends TValue>(
+      this: void,
+      decorated: DecoratedAeMember<TClass, TAmended>,
+      key: string | symbol,
+      descriptor?: TypedPropertyDescriptor<TMemberValue>,
+  ): void | TypedPropertyDescriptor<TMemberValue>;
+
+}
 
 /**
  * @internal
  */
-export interface PropAmendment$Decorator<THost extends object, TValue extends TUpdate, TClass extends Class, TUpdate>
-    extends Amendatory<AeProp<THost, TValue, TClass, TUpdate>> {
+export interface PropAmendment$Decorator<
+    THost extends object,
+    TValue extends TUpdate,
+    TClass extends Class,
+    TUpdate,
+    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>
+    extends PropAmendatory<THost, TValue, TClass, TUpdate, TAmended> {
 
   <TPropValue extends TValue>(
       this: void,
@@ -74,23 +95,25 @@ export interface AeProp$HostKind {
 /**
  * @internal
  */
-export function AeProp<THost extends object, TAmended extends AeProp<THost, any, any, any>>(
-    createHost: (hostInstance: THost) => AeProp$Host<THost, AeClass.ClassType<TAmended>>,
+export function AeProp<
+    THost extends object,
+    TValue extends TUpdate,
+    TClass extends Class,
+    TUpdate,
+    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
+    createHost: (decorated: AeClass<TClass>) => AeProp$Host<THost, TClass>,
+    hostClass: (host: THost) => TClass,
     amendments: Amendment<TAmended>[],
-): PropAmendment<THost, TAmended> {
-
-  type TValue = AeMember.ValueType<TAmended>;
-  type TClass = AeMember.ClassType<TAmended>;
-  type TUpdate = AeMember.UpdateType<TAmended>;
+): PropAmendment<THost, TValue, TClass, TUpdate, TAmended> {
 
   const amender = combineAmendments(amendments);
-  const decorator = (<TPropValue extends TValue>(
-      targetHost: THost,
+  const decorateAmended = <TPropValue extends TValue>(
+      decorated: DecoratedAeMember<TClass, TAmended>,
       key: string | symbol,
       descriptor?: TypedPropertyDescriptor<TPropValue>,
-  ): TypedPropertyDescriptor<TPropValue> | void => {
+  ): void | TypedPropertyDescriptor<TPropValue> => {
 
-    const host = createHost(targetHost);
+    const host = createHost(decorated);
     const [getValue, setValue, toAccessor] = AeProp$accessor(host, key, descriptor);
     const init: AeProp$Desc<THost, TValue, TUpdate> = {
       enumerable: !descriptor || !!descriptor.enumerable,
@@ -101,12 +124,12 @@ export function AeProp<THost extends object, TAmended extends AeProp<THost, any,
       set: (hostInstance, update) => setValue(hostInstance, update),
     };
 
-    const applyAmendment = AeProp$createApplicator<THost, TAmended>(host, amender, key, init);
+    const applyAmendment = AeProp$createApplicator<THost, TValue, TClass, TUpdate, TAmended>(host, amender, key, init);
     let desc!: AeProp$Desc<THost, TValue, TUpdate>;
 
-    AeClass<AeClass<TClass>>(classTarget => {
+    AeClass<TClass, TAmended>(classTarget => {
       desc = applyAmendment(classTarget);
-    })(host.cls);
+    }).decorateAmended(decorated as DecoratedAeClass<TClass, TAmended>);
 
     const { enumerable, configurable, get, set } = desc;
     let newDescriptor: TypedPropertyDescriptor<TPropValue> | undefined;
@@ -144,12 +167,23 @@ export function AeProp<THost extends object, TAmended extends AeProp<THost, any,
     if (newDescriptor && !descriptor) {
       // Decorated field.
       // Declare accessor.
-      Reflect.defineProperty(targetHost, key, newDescriptor);
+      Reflect.defineProperty(host.host, key, newDescriptor);
     }
 
     return newDescriptor;
-  }) as PropAmendment<THost, TAmended>;
+  };
+  const decorator = (<TPropValue extends TValue>(
+      targetHost: THost,
+      key: string | symbol,
+      descriptor?: TypedPropertyDescriptor<TPropValue>,
+  ): void | TypedPropertyDescriptor<TPropValue> => {
 
+    const aeClass: AeClass<TClass> = { amendedClass: hostClass(targetHost) };
+
+    return decorateAmended<TPropValue>(aeClass as DecoratedAeMember<TClass, TAmended>, key, descriptor);
+  }) as PropAmendment<THost, TValue, TClass, TUpdate, TAmended>;
+
+  decorator.decorateAmended = decorateAmended;
   decorator.applyAmendment = amender;
 
   return decorator;

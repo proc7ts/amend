@@ -14,42 +14,49 @@ export interface AeClass<TClass extends Class = Class> {
   /**
    * Amended class constructor.
    */
-  readonly class: TClass;
+  readonly amendedClass: TClass;
 
 }
 
-type GenericInstanceType<T extends new (...args: any) => any> = InstanceType<T>;
-
-export namespace AeClass {
-
-  export type ClassType<TAmended extends AeClass<any>> =
-      TAmended extends AeClass<infer TClass> ? TClass : never;
-
-  export type InstanceType<TAmended extends AeClass<any>> = GenericInstanceType<ClassType<TAmended>>;
-
-}
+/**
+ * An amended entity representing a class to decorate.
+ *
+ * Contains a data required for class {@link ClassAmendatory.decorateAmended decoration}.
+ *
+ * Contains a class to amend, as well as arbitrary amended entity data.
+ *
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
+ */
+export type DecoratedAeClass<TClass extends Class, TAmended extends AeClass<TClass>> = {
+  [K in Exclude<keyof TAmended, keyof AeClass<TClass>>]: TAmended[K];
+} & {
+  readonly amendedClass: TClass;
+};
 
 /**
  * Creates an amendment (and decorator) for a class.
  *
  * @typeParam TClass - A type of amended class.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
  * @param amendments - Amendments to apply.
  *
  * @returns - New class amendment instance.
  */
-export function AeClass<TAmended extends AeClass<any> = AeClass>(
+export function AeClass<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>>(
     ...amendments: Amendment<TAmended>[]
-): ClassAmendment<TAmended> {
+): ClassAmendment<TClass, TAmended> {
 
   const amender = combineAmendments(amendments);
-  const decorator = ((target: AeClass.ClassType<TAmended>): void => {
-    amender(newAmendTarget({
-      base: { class: target } as TAmended,
-      amend: noop,
-    }));
-  }) as ClassAmendment<TAmended>;
+  const decorateAmended = (base: TAmended): void => {
+    amender(newAmendTarget({ base, amend: noop }));
+  };
+  const decorator = ((target: TClass): void => {
+    decorateAmended({ amendedClass: target } as TAmended);
+  }) as ClassAmendment<TClass, TAmended>;
 
   decorator.applyAmendment = amender;
+  decorator.decorateAmended = decorateAmended;
 
   return decorator;
 }

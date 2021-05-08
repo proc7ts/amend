@@ -1,54 +1,87 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendatory } from '../base';
-import { AeMember } from './ae-member';
+import { AeMember, DecoratedAeMember } from './ae-member';
 
 /**
  * An amendment of class instance member (property).
  *
  * Can be used as property decorator, unless expects an amended entity other than {@link AeMember}.
  *
- * @typeParam TAmended - A type of entity representing a member to amend.
+ * @typeParam TValue - Amended member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Amended member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a member to amend.
  */
-export type MemberAmendment<TAmended extends AeMember<unknown>> =
+export type MemberAmendment<
+    TValue extends TUpdate,
+    TClass extends Class = Class,
+    TUpdate = TValue,
+    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
     AeMember<any, any, any> extends TAmended
-        ? MemberAmendment.Decorator<
-            AeMember.ValueType<TAmended>,
-            AeMember.ClassType<TAmended>,
-            AeMember.UpdateType<TAmended>>
-        : Amendatory<TAmended>;
+        ? MemberAmendmentDecorator<TValue, TClass, TUpdate>
+        : MemberAmendatory<TValue, TClass, TUpdate, TAmended>;
 
-export namespace MemberAmendment {
+/**
+ * Class instance member amendatory instance.
+ *
+ * @typeParam TValue - Amended member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Amended member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a member to amend.
+ */
+export interface MemberAmendatory<
+    TValue extends TUpdate,
+    TClass extends Class = Class,
+    TUpdate = TValue,
+    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
+    > extends Amendatory<TAmended> {
 
   /**
-   * An amendment of class instance member (property) thant can be used as property decorator.
+   * Decorates the given member.
    *
-   * @typeParam TValue - Amended member value type.
-   * @typeParam TClass - A type of amended class.
-   * @typeParam TUpdate - Amended member update type accepted by its setter.
+   * @param decorated - Decorated member representation.
+   * @param key - Decorated property key.
+   * @param descriptor - Decorated property descriptor, or nothing when decorating an instance field.
+   *
+   * @returns Either nothing, or updated property descriptor.
    */
-  export interface Decorator<
-      TValue extends TUpdate,
-      TClass extends Class = Class,
-      TUpdate = TValue,
-      > extends Amendatory<AeMember<TValue, TClass, TUpdate>> {
+  decorateAmended<TMemberValue extends TValue>(
+      this: void,
+      decorated: DecoratedAeMember<TClass, TAmended>,
+      key: string | symbol,
+      descriptor?: TypedPropertyDescriptor<TMemberValue>
+  ): void | TypedPropertyDescriptor<TMemberValue>;
 
-    /**
-     * Applies this amendment to decorated property.
-     *
-     * @typeParam TMemberValue - Decorated property value type.
-     * @param proto - Decorated class prototype.
-     * @param propertyKey - Decorated property key.
-     * @param descriptor - Decorated property descriptor, or nothing when decorating an instance field.
-     *
-     * @returns Either nothing, or updated property descriptor.
-     */
-        <TMemberValue extends TValue>(
-        this: void,
-        proto: InstanceType<TClass>,
-        propertyKey: string | symbol,
-        descriptor?: TypedPropertyDescriptor<TMemberValue>,
-    ): void | any;
+}
 
-  }
+/**
+ * An amendment of class instance member (property) thant can be used as property decorator.
+ *
+ * @typeParam TValue - Amended member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Amended member update type accepted by its setter.
+ */
+export interface MemberAmendmentDecorator<
+    TValue extends TUpdate,
+    TClass extends Class = Class,
+    TUpdate = TValue,
+    > extends MemberAmendatory<TValue, TClass, TUpdate, AeMember<TValue, TClass, TUpdate>> {
+
+  /**
+   * Applies this amendment to decorated property.
+   *
+   * @typeParam TMemberValue - Decorated property value type.
+   * @param proto - Decorated class prototype.
+   * @param key - Decorated property key.
+   * @param descriptor - Decorated property descriptor, or nothing when decorating an instance field.
+   *
+   * @returns Either nothing, or updated property descriptor.
+   */
+      <TMemberValue extends TValue>(
+      this: void,
+      proto: InstanceType<TClass>,
+      key: string | symbol,
+      descriptor?: TypedPropertyDescriptor<TMemberValue>,
+  ): void | any;
 
 }

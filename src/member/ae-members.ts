@@ -1,6 +1,7 @@
+import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
 import { AeClass, ClassAmendment } from '../class';
-import { AeMember } from './ae-member';
+import { AeMember, DecoratedAeMember } from './ae-member';
 import { amendMemberOf } from './amend-member-of';
 
 /**
@@ -10,15 +11,10 @@ import { amendMemberOf } from './amend-member-of';
  * keys. `null`/`undefined` values are ignored.
  *
  * @typeParam TClass - A type of amended class.
- * @typeParam TExtClass - A type of class extended by the amendment.
- * @typeParam TAmended - Amended entity type representing a class to amend.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type AeMembersDef<
-    TAmended extends AeClass,
-    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>> = {
-  [K in keyof InstanceType<TExtClass>]?: Amendment<
-      & TAmended
-      & AeMember<InstanceType<TExtClass>[K], TExtClass>> | null;
+export type AeMembersDef<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
+  [K in keyof InstanceType<TClass>]?: Amendment<TAmended & AeMember<InstanceType<TClass>[K], TClass>> | null;
 };
 
 /**
@@ -26,22 +22,24 @@ export type AeMembersDef<
  *
  * @typeParam TClass - A type of amended class.
  * @typeParam TExtClass - A type of class extended by the amendment.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
  * @param def - A map of member amendments.
  *
  * @returns New class amendment instance.
  */
 export function AeMembers<
-    TAmended extends AeClass,
-    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>>(
-    def: AeMembersDef<TAmended, TExtClass>,
-): ClassAmendment<TAmended> {
+    TClass extends Class,
+    TExtClass extends TClass = TClass,
+    TAmended extends AeClass<TExtClass> = AeClass<TExtClass>>(
+    def: AeMembersDef<TExtClass, TAmended>,
+): ClassAmendment<TClass, TAmended> {
   return AeClass(target => {
-    for (const key of Reflect.ownKeys(def)) {
+    for (const key of Reflect.ownKeys(def) as Iterable<keyof InstanceType<TExtClass>>) {
 
-      const amendment = def[key as string] as Amendment<any> | undefined;
+      const amendment = def[key] as Amendment<AeMember<any, TClass>> | undefined;
 
       if (amendment) {
-        amendMemberOf(target.class, key as string, amendment);
+        amendMemberOf(target as DecoratedAeMember<TExtClass, TAmended>, key, amendment);
       }
     }
   });

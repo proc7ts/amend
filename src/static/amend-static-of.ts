@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AeStatic } from './ae-static';
+import { AeStatic, DecoratedAeStatic } from './ae-static';
 
 /**
  * Amends a static member (static property) of the class.
@@ -9,19 +9,28 @@ import { AeStatic } from './ae-static';
  *
  * @typeParam TClass - A type of amended class.
  * @typeParam TKey - A type of amended static member key.
- * @param targetClass - A constructor of the class to amend.
+ * @typeParam TAmended - A type of the entity representing a static member to amend.
+ * @param decorated - Decorated class representation.
  * @param memberKey - A key of the member to amend.
  * @param amendments - Amendment to apply.
  */
-export function amendStaticOf<TClass extends Class, TKey extends keyof TClass = keyof TClass>(
-    targetClass: TClass,
+export function amendStaticOf<
+    TClass extends Class,
+    TKey extends keyof TClass = keyof TClass,
+    TAmended extends AeStatic<TClass[TKey], TClass> = AeStatic<TClass[TKey], TClass>>(
+    decorated: DecoratedAeStatic<TClass, TAmended>,
     memberKey: TKey,
-    ...amendments: Amendment<AeStatic<TClass[TKey], TClass>>[]
+    ...amendments: Amendment<TAmended & AeStatic<TClass[TKey], TClass>>[]
 ): void {
 
-  const amender = AeStatic(...amendments);
+  const amendment = AeStatic(...amendments);
+  const targetClass = decorated.amendedClass;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(targetClass, memberKey);
-  const amendedDesc = amender(targetClass, memberKey as string | symbol, sourceDesc);
+  const amendedDesc = amendment.decorateAmended(
+      decorated as DecoratedAeStatic<TClass, TAmended & AeStatic<TClass[TKey], TClass>>,
+      memberKey as string | symbol,
+      sourceDesc,
+  );
 
   if (amendedDesc && sourceDesc) {
     // Redefine the property.

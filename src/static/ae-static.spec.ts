@@ -9,14 +9,14 @@ describe('@AeStatic', () => {
 
       class TestClass {
 
-        @AeStatic<AeStatic<string, typeof TestClass>>(t => {
+        @AeStatic<string, typeof TestClass>(t => {
           target = t;
         })
         static field = 'some';
 
       }
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         configurable: true,
         enumerable: true,
@@ -58,7 +58,7 @@ describe('@AeStatic', () => {
 
       }
 
-      const desc = AeStatic<AeStatic<string>>(({ get, set, amend }) => {
+      const desc = AeStatic<string>(({ get, set, amend }) => {
         amend({
           get: targetClass => get(targetClass) + '!',
           set: (targetClass, update) => set(targetClass, update),
@@ -89,7 +89,7 @@ describe('@AeStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AeStatic<AeStatic<string>>(({ get, set, amend }) => {
+        @AeStatic<string>(({ get, set, amend }) => {
           amend({
             get: instance => get(instance) + '!',
             set: (instance, update) => set(instance, update),
@@ -123,7 +123,7 @@ describe('@AeStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AeStatic<AeStatic<string, typeof TestClass>>(({ get }) => {
+        @AeStatic<string, typeof TestClass>(({ get }) => {
           getValue = get;
         })
         static field: string;
@@ -145,7 +145,7 @@ describe('@AeStatic', () => {
 
       class TestClass {
 
-        @AeStatic<AeStatic<string, typeof TestClass>>(t => {
+        @AeStatic<string, typeof TestClass>(t => {
           target = t;
           t.amend();
         })
@@ -155,7 +155,7 @@ describe('@AeStatic', () => {
 
       }
 
-      expect(target?.class).toBe(TestClass);
+      expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass, 'field')).toEqual({
         enumerable: false,
         configurable: true,
@@ -170,7 +170,7 @@ describe('@AeStatic', () => {
 
         private static _field = 'initial';
 
-        @AeStatic<AeStatic<string>>(({ get, set, amend }) => {
+        @AeStatic<string>(({ get, set, amend }) => {
           amend({
             get: targetClass => get(targetClass) + '!',
             set: (targetClass, update) => set(targetClass, update),
@@ -210,7 +210,7 @@ describe('@AeStatic', () => {
 
       class TestClass extends BaseClass {
 
-        @AeStatic<AeStatic<string>>(({ get, set, amend }) => {
+        @AeStatic<string>(({ get, set, amend }) => {
           amend({
             get: targetClass => get(targetClass) + '!',
             set: (targetClass, update) => set(targetClass, update),

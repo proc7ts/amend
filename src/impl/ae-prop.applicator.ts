@@ -1,6 +1,6 @@
+import { Class } from '@proc7ts/primitives';
 import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
 import { AeClass } from '../class';
-import { AeMember } from '../member';
 import { AeProp, AeProp$Host } from './ae-prop';
 import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessor';
 
@@ -19,21 +19,22 @@ export interface AeProp$Desc<THost, TValue extends TUpdate, TUpdate> {
 /**
  * @internal
  */
-export function AeProp$createApplicator<THost extends object, TAmended extends AeProp<THost, any>>(
-    host: AeProp$Host<THost>,
+export function AeProp$createApplicator<
+    THost extends object,
+    TValue extends TUpdate,
+    TClass extends Class,
+    TUpdate,
+    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
+    host: AeProp$Host<THost, TClass>,
     amender: Amender<TAmended>,
     key: string | symbol,
-    init: AeProp$Desc<THost, AeMember.ValueType<TAmended>, AeMember.UpdateType<TAmended>>,
+    init: AeProp$Desc<THost, TValue, TUpdate>,
 ): (
-    baseTarget: AmendTarget<AeClass<AeMember.ClassType<TAmended>>>,
-) => AeProp$Desc<THost, AeMember.ValueType<TAmended>, AeMember.UpdateType<TAmended>> {
-
-  type TValue = AeMember.ValueType<TAmended>;
-  type TClass = AeMember.ClassType<TAmended>;
-  type TUpdate = AeMember.UpdateType<TAmended>;
+    baseTarget: AmendTarget<AeClass<TClass>>,
+) => AeProp$Desc<THost, TValue, TUpdate> {
 
   return (
-      baseTarget: AmendTarget<AeClass<AeMember.ClassType<TAmended>>>,
+      baseTarget: AmendTarget<AeClass<TClass>>,
   ): AeProp$Desc<THost, TValue, TUpdate> => {
 
     const result = { ...init };

@@ -1,6 +1,7 @@
+import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
 import { AeClass, ClassAmendment } from '../class';
-import { AeStatic } from './ae-static';
+import { AeStatic, DecoratedAeStatic } from './ae-static';
 import { amendStaticOf } from './amend-static-of';
 
 /**
@@ -10,15 +11,10 @@ import { amendStaticOf } from './amend-static-of';
  * under new keys. `null`/`undefined` values are ignored.
  *
  * @typeParam TClass - A type of amended class.
- * @typeParam TExtClass - A type of class extended by the amendment.
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
-export type AeStaticsDef<
-    TAmended extends AeClass,
-    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>> = {
-  [K in keyof TExtClass]?: Amendment<
-      & TAmended
-      & AeStatic<TExtClass[K], TExtClass>> | null;
+export type AeStaticsDef<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
+  [K in keyof TClass]?: Amendment<TAmended & AeStatic<TClass[K], TClass>> | null;
 };
 
 /**
@@ -26,22 +22,24 @@ export type AeStaticsDef<
  *
  * @typeParam TClass - A type of amended class.
  * @typeParam TExtClass - A type of class extended by the amendment.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
  * @param def - A map of static member amendments.
  *
  * @returns New class amendment instance.
  */
 export function AeStatics<
-    TAmended extends AeClass,
-    TExtClass extends AeClass.ClassType<TAmended> = AeClass.ClassType<TAmended>>(
-    def: AeStaticsDef<TAmended, TExtClass>,
-): ClassAmendment<TAmended> {
+    TClass extends Class,
+    TExtClass extends TClass = TClass,
+    TAmended extends AeClass<TExtClass> = AeClass<TExtClass>>(
+    def: AeStaticsDef<TExtClass, TAmended>,
+): ClassAmendment<TClass, TAmended> {
   return AeClass(target => {
-    for (const key of Reflect.ownKeys(def)) {
+    for (const key of Reflect.ownKeys(def) as Iterable<keyof TExtClass>) {
 
-      const amendment = def[key as keyof TExtClass] as Amendment<any> | undefined;
+      const amendment = def[key] as Amendment<AeStatic<any, TClass>> | undefined;
 
       if (amendment) {
-        amendStaticOf(target.class, key as any, amendment);
+        amendStaticOf(target as DecoratedAeStatic<TExtClass, TAmended>, key as any, amendment);
       }
     }
   });
