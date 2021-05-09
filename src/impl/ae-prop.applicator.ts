@@ -32,7 +32,6 @@ export function AeProp$createApplicator<
 ): (
     baseTarget: AmendTarget<AeClass<TClass>>,
 ) => AeProp$Desc<THost, TValue, TUpdate> {
-
   return (
       baseTarget: AmendTarget<AeClass<TClass>>,
   ): AeProp$Desc<THost, TValue, TUpdate> => {
@@ -43,12 +42,18 @@ export function AeProp$createApplicator<
         request = {} as AmendRequest<TBase, TExt>,
     ): () => AmendTarget.Draft<TBase & TExt> => {
 
-      const createClassTarget = baseTarget.amend(request as AmendRequest<AeClass<TClass>, TExt>);
-
       const {
-        enumerable = base.enumerable,
+        key: $key,
         configurable = base.configurable,
+        enumerable = base.enumerable,
+        readable: $readable,
+        writable: $writable,
+        get: $get,
+        set: $set,
+        ...baseRequest
       } = request;
+      const createClassTarget = baseTarget.amend(baseRequest as AmendRequest<any>);
+
       let { get, set } = request;
       let readable: boolean;
       let writable: boolean;
@@ -90,7 +95,7 @@ export function AeProp$createApplicator<
         configurable,
         get,
         set,
-      } as unknown as AmendTarget.Draft<TBase & TExt>);
+      } as AmendTarget.Draft<TBase & TExt>);
     };
 
     amender(newAmendTarget({
