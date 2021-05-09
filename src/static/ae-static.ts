@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendment } from '../base';
+import { Amendment, AmendTarget } from '../base';
 import { AeClass } from '../class';
 import { AeProp, AeProp$Host, AeProp$HostKind } from '../impl';
 import { StaticAmendment } from './static-amendment';
@@ -90,9 +90,11 @@ export interface AeStatic<
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
 export type DecoratedAeStatic<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
-  [K in Exclude<keyof TAmended, keyof AeStatic<unknown>>]: TAmended[K];
+  [K in Exclude<keyof TAmended, keyof AeStatic<unknown>> | 'amendedClass']: TAmended[K];
 } & {
   readonly amendedClass: TClass;
+} & {
+  [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
 };
 
 /**

@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendment } from '../base';
+import { Amendment, AmendTarget } from '../base';
 import { AeClass } from '../class';
 import { AeProp, AeProp$Host, AeProp$HostKind } from '../impl';
 import { MemberAmendment } from './member-amendment';
@@ -86,6 +86,8 @@ export interface AeMember<
  *
  * Contains a class to amend, as well as arbitrary amended entity data.
  *
+ * When contains an {@link AmendTarget.Core.amend amend} method, the latter will be applied to all amendment requests.
+ *
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
@@ -93,6 +95,8 @@ export type DecoratedAeMember<TClass extends Class, TAmended extends AeClass<TCl
   [K in Exclude<keyof TAmended, keyof AeMember<unknown>>]: TAmended[K];
 } & {
   readonly amendedClass: TClass;
+} & {
+  [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
 };
 
 /**

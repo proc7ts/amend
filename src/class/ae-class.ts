@@ -1,5 +1,5 @@
 import { Class, noop } from '@proc7ts/primitives';
-import { Amendment, combineAmendments, newAmendTarget } from '../base';
+import { Amendment, AmendRequest, AmendTarget, combineAmendments, newAmendTarget } from '../base';
 import { ClassAmendment } from './class-amendment';
 
 /**
@@ -25,6 +25,8 @@ export interface AeClass<TClass extends Class = Class> {
  *
  * Contains a class to amend, as well as arbitrary amended entity data.
  *
+ * When contains an {@link AmendTarget.Core.amend amend} method, the latter will be applied to all amendment requests.
+ *
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
@@ -32,6 +34,8 @@ export type DecoratedAeClass<TClass extends Class, TAmended extends AeClass<TCla
   [K in Exclude<keyof TAmended, keyof AeClass<TClass>>]: TAmended[K];
 } & {
   readonly amendedClass: TClass;
+} & {
+  [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
 };
 
 /**
@@ -49,7 +53,10 @@ export function AeClass<TClass extends Class, TAmended extends AeClass<TClass> =
 
   const amender = combineAmendments(amendments);
   const decorateAmended = (base: TAmended): void => {
-    amender(newAmendTarget({ base, amend: noop }));
+    amender(newAmendTarget({
+      base,
+      amend: AeClass$amendTarget$amend(base),
+    }));
   };
   const decorator = ((target: TClass): void => {
     decorateAmended({ amendedClass: target } as TAmended);
@@ -59,4 +66,17 @@ export function AeClass<TClass extends Class, TAmended extends AeClass<TClass> =
   decorator.decorateAmended = decorateAmended;
 
   return decorator;
+}
+
+function AeClass$amendTarget$amend<TClass extends Class, TAmended extends AeClass<TClass>>(
+    { amend }: DecoratedAeClass<TClass, TAmended>,
+): AmendTarget.Options<TAmended>['amend'] {
+  if (!amend) {
+    return noop;
+  }
+
+  return <TBase extends TAmended, TExt>(
+      _base: TBase,
+      request?: AmendRequest<TBase, TExt>,
+  ) => amend(request as AmendRequest<TAmended, TExt>) as () => AmendTarget.Draft<TBase & TExt>;
 }
