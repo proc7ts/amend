@@ -16,10 +16,10 @@ export interface AeProp<
     > extends AeClass<TClass>{
 
   readonly key: string | symbol;
-  readonly readable: boolean;
-  readonly writable: boolean;
   readonly enumerable: boolean;
   readonly configurable: boolean;
+  readonly readable: boolean;
+  readonly writable: boolean;
   get(this: void, host: THost): TValue;
   set(this: void, host: THost, update: TUpdate): void;
 
