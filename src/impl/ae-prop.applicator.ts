@@ -52,7 +52,7 @@ export function AeProp$createApplicator<
         set: $set,
         ...baseRequest
       } = request;
-      const createClassTarget = baseTarget.amend(baseRequest as AmendRequest<any>);
+      const createBaseTarget = baseTarget.amend(baseRequest as AmendRequest<any>);
 
       let { get, set } = request;
       let readable: boolean;
@@ -85,14 +85,12 @@ export function AeProp$createApplicator<
       result.set = set;
 
       return () => ({
-        ...createClassTarget(),
-        ...request,
+        ...createBaseTarget(),
         key,
-        ...result,
+        configurable,
+        enumerable,
         readable,
         writable,
-        enumerable,
-        configurable,
         get,
         set,
       } as AmendTarget.Draft<TBase & TExt>);
