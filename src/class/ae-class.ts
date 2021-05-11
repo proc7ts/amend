@@ -30,13 +30,20 @@ export interface AeClass<TClass extends Class = Class> {
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeClass<TClass extends Class, TAmended extends AeClass<TClass>> = {
-  [K in Exclude<keyof TAmended, keyof AeClass<TClass>>]: TAmended[K];
-} & {
-  readonly amendedClass: TClass;
-} & {
-  [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
-};
+export type DecoratedAeClass<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> =
+    DecoratedAeClass.ForBase<AeClass<TClass>, TClass, TAmended>;
+
+export namespace DecoratedAeClass {
+
+  export type ForBase<TBase extends AeClass<TClass>, TClass extends Class, TAmended extends TBase> = {
+    [K in Exclude<keyof TAmended, keyof TBase>]: TAmended[K];
+  } & {
+    readonly amendedClass: TClass;
+  } & {
+    [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
+  };
+
+}
 
 /**
  * Creates an amendment (and decorator) for a class.

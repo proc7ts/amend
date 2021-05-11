@@ -89,13 +89,24 @@ export interface AeStatic<
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeStatic<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
-  [K in Exclude<keyof TAmended, keyof AeStatic<unknown>> | 'amendedClass']: TAmended[K];
-} & {
-  readonly amendedClass: TClass;
-} & {
-  [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
-};
+export type DecoratedAeStatic<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> =
+    DecoratedAeStatic.ForBase<AeClass<TClass>, AeStatic<any, TClass>, TClass, TAmended>;
+
+export namespace DecoratedAeStatic {
+
+  export type ForBase<
+      TClassBase extends AeClass<TClass>,
+      TStaticBase extends AeStatic<any, TClass>,
+      TClass extends Class,
+      TAmended extends TClassBase> = {
+    [K in Exclude<keyof TAmended, keyof TStaticBase>]: TAmended[K];
+  } & {
+    readonly amendedClass: TClass;
+  } & {
+    [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
+  };
+
+}
 
 /**
  * Creates an amendment (and decorator) for the static class member.
