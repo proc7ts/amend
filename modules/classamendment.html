@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AmendRequest | Amend</title>
+	<title>ClassAmendment | Amend</title>
 	<meta name="description" content="Documentation for Amend">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">Amend</a>
 				</li>
 				<li>
-					<a href="amendrequest.html">AmendRequest</a>
+					<a href="classamendment.html">ClassAmendment</a>
 				</li>
 			</ul>
-			<h1>Namespace AmendRequest</h1>
+			<h1>Namespace ClassAmendment</h1>
 		</div>
 	</div>
 </header>
@@ -72,7 +72,7 @@
 						<section class="tsd-index-section ">
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-type-alias tsd-parent-kind-namespace"><a href="amendrequest.html#emptyextension" class="tsd-kind-icon">Empty<wbr>Extension</a></li>
+								<li class="tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter"><a href="classamendment.html#forbase" class="tsd-kind-icon">For<wbr>Base</a></li>
 							</ul>
 						</section>
 					</div>
@@ -80,15 +80,27 @@
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Type aliases</h2>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace">
-					<a name="emptyextension" class="tsd-anchor"></a>
-					<h3>Empty<wbr>Extension</h3>
-					<div class="tsd-signature tsd-kind-icon">Empty<wbr>Extension<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol"> }</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+					<a name="forbase" class="tsd-anchor"></a>
+					<h3>For<wbr>Base</h3>
+					<div class="tsd-signature tsd-kind-icon">For<wbr>Base&lt;TBase, TClass, TAmended&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TBase</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> ? </span><a href="../interfaces/classamendmentdecorator.html" class="tsd-signature-type" data-tsd-kind="Interface">ClassAmendmentDecorator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><a href="../interfaces/classamendatory.html" class="tsd-signature-type" data-tsd-kind="Interface">ClassAmendatory</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amend-request.ts#L25">base/amend-request.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/class/class-amendment.ts#L20">proc7ts/amend/src/class/class-amendment.ts:20</a></li>
 						</ul>
 					</aside>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>TBase<span class="tsd-signature-symbol">: </span><a href="../modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span></h4>
+						</li>
+						<li>
+							<h4>TClass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Class</span></h4>
+						</li>
+						<li>
+							<h4>TAmended<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TBase</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -98,18 +110,42 @@
 					<li class=" ">
 						<a href="../modules.html">Exports</a>
 					</li>
-					<li class="current tsd-kind-namespace">
-						<a href="amendrequest.html">Amend<wbr>Request</a>
-					</li>
 					<li class=" tsd-kind-namespace">
 						<a href="amendtarget.html">Amend<wbr>Target</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="classamendatory.html">Class<wbr>Amendatory</a>
+					</li>
+					<li class="current tsd-kind-namespace">
+						<a href="classamendment.html">Class<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="decoratedaeclass.html">Decorated<wbr>AeClass</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="decoratedaemember.html">Decorated<wbr>AeMember</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="decoratedaestatic.html">Decorated<wbr>AeStatic</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="memberamendatory.html">Member<wbr>Amendatory</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="memberamendment.html">Member<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="staticamendatory.html">Static<wbr>Amendatory</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="staticamendment.html">Static<wbr>Amendment</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace">
-						<a href="amendrequest.html#emptyextension" class="tsd-kind-icon">Empty<wbr>Extension</a>
+					<li class=" tsd-kind-type-alias tsd-parent-kind-namespace tsd-has-type-parameter">
+						<a href="classamendment.html#forbase" class="tsd-kind-icon">For<wbr>Base</a>
 					</li>
 				</ul>
 			</nav>

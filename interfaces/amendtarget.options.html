@@ -123,7 +123,7 @@
 					<div class="tsd-signature tsd-kind-icon">base<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TAmended</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amend-target.ts#L73">base/amend-target.ts:73</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amend-target.ts#L73">proc7ts/amend/src/base/amend-target.ts:73</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -139,13 +139,13 @@
 					<a name="amend" class="tsd-anchor"></a>
 					<h3>amend</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-has-type-parameter">
-						<li class="tsd-signature tsd-kind-icon">amend&lt;TBase, TExt&gt;<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TBase</span>, request<span class="tsd-signature-symbol">?: </span><a href="../modules/amendrequest.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendRequest</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TBase</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../modules/amendtarget.html#draft" class="tsd-signature-type" data-tsd-kind="Type alias">Draft</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TBase</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></li>
+						<li class="tsd-signature tsd-kind-icon">amend&lt;TBase, TExt&gt;<span class="tsd-signature-symbol">(</span>base<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TBase</span>, request<span class="tsd-signature-symbol">?: </span><a href="../modules.html#amendrequest" class="tsd-signature-type" data-tsd-kind="Type alias">AmendRequest</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TBase</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><a href="../modules/amendtarget.html#draft" class="tsd-signature-type" data-tsd-kind="Type alias">Draft</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TBase</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amend-target.ts#L92">base/amend-target.ts:92</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amend-target.ts#L92">proc7ts/amend/src/base/amend-target.ts:92</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -155,7 +155,7 @@
 								<p>Applies the given amendment <code>request</code> to the <code>base</code> amended entity.</p>
 								<p>The returned amendment target draft builder function will be used to build a modified amendment target.</p>
 								<p>This method is called at leas once to build the initial amendment target. Then it will be called on each
-								<a href="amendtarget.core.html#amend">amendment</a>, unless overridden by further amendment <a href="../modules/amendrequest.html">requests</a>.</p>
+								<a href="amendtarget.core.html#amend">amendment</a>, unless overridden by further amendment <a href="../modules.html#amendrequest">requests</a>.</p>
 							</div>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
@@ -178,7 +178,7 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> request: <a href="../modules/amendrequest.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendRequest</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TBase</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> request: <a href="../modules.html#amendrequest" class="tsd-signature-type" data-tsd-kind="Type alias">AmendRequest</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TBase</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Amendment request.</p>
 									</div>
@@ -198,11 +198,35 @@
 					<li class=" ">
 						<a href="../modules.html">Exports</a>
 					</li>
-					<li class=" tsd-kind-namespace">
-						<a href="../modules/amendrequest.html">Amend<wbr>Request</a>
-					</li>
 					<li class="current tsd-kind-namespace">
 						<a href="../modules/amendtarget.html">Amend<wbr>Target</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/classamendatory.html">Class<wbr>Amendatory</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/classamendment.html">Class<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/decoratedaeclass.html">Decorated<wbr>AeClass</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/decoratedaemember.html">Decorated<wbr>AeMember</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/decoratedaestatic.html">Decorated<wbr>AeStatic</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/memberamendatory.html">Member<wbr>Amendatory</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/memberamendment.html">Member<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/staticamendatory.html">Static<wbr>Amendatory</a>
+					</li>
+					<li class=" tsd-kind-namespace">
+						<a href="../modules/staticamendment.html">Static<wbr>Amendment</a>
 					</li>
 				</ul>
 			</nav>

@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>AmendmentSpec | Amend</title>
+	<title>Amendatory | Amend</title>
 	<meta name="description" content="Documentation for Amend">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">Amend</a>
 				</li>
 				<li>
-					<a href="amendmentspec.html">AmendmentSpec</a>
+					<a href="amendatory.html">Amendatory</a>
 				</li>
 			</ul>
-			<h1>Interface AmendmentSpec&lt;TAmended&gt;</h1>
+			<h1>Interface Amendatory&lt;TAmended&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -68,8 +68,10 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Amendment specifier.</p>
+						<p>Amendatory instance.</p>
 					</div>
+					<p>May be implemented by any object (or function) that is going to serve as an <a href="../modules.html#amendment">amendment</a>.</p>
+					<p>Can be converted to <a href="../modules.html#amender">Amender</a> by <a href="../modules.html#amenderof">amenderOf</a> function.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -89,16 +91,16 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">AmendmentSpec</span>
+						<span class="target">Amendatory</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<a href="classamendment.html" class="tsd-signature-type" data-tsd-kind="Interface">ClassAmendment</a>
+								<a href="classamendatory.forbase.html" class="tsd-signature-type" data-tsd-kind="Interface">ForBase</a>
 							</li>
 							<li>
-								<a href="memberamendment.html" class="tsd-signature-type" data-tsd-kind="Interface">MemberAmendment</a>
+								<a href="memberamendatory.forbase.html" class="tsd-signature-type" data-tsd-kind="Interface">ForBase</a>
 							</li>
 							<li>
-								<a href="staticamendment.html" class="tsd-signature-type" data-tsd-kind="Interface">StaticAmendment</a>
+								<a href="staticamendatory.forbase.html" class="tsd-signature-type" data-tsd-kind="Interface">ForBase</a>
 							</li>
 						</ul>
 					</li>
@@ -111,7 +113,7 @@
 						<section class="tsd-index-section ">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="amendmentspec.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="amendatory.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a></li>
 							</ul>
 						</section>
 					</div>
@@ -129,7 +131,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L45">base/amendment.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L49">proc7ts/amend/src/base/amendment.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -163,75 +165,18 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendedclass.html" class="tsd-kind-icon">Amended<wbr>Class</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendedmember.html" class="tsd-kind-icon">Amended<wbr>Member</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendedstatic.html" class="tsd-kind-icon">Amended<wbr>Static</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendmentspec.html" class="tsd-kind-icon">Amendment<wbr>Spec</a>
+						<a href="amendatory.html" class="tsd-kind-icon">Amendatory</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="amendmentspec.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a>
+								<a href="amendatory.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="classamendment.html" class="tsd-kind-icon">Class<wbr>Amendment</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="memberamendment.html" class="tsd-kind-icon">Member<wbr>Amendment</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="staticamendment.html" class="tsd-kind-icon">Static<wbr>Amendment</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amendrequest" class="tsd-kind-icon">Amend<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amendtarget" class="tsd-kind-icon">Amend<wbr>Target</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amender" class="tsd-kind-icon">Amender</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amendment" class="tsd-kind-icon">Amendment</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendedclass" class="tsd-kind-icon">Amended<wbr>Class</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendedmember" class="tsd-kind-icon">Amended<wbr>Member</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendedstatic" class="tsd-kind-icon">Amended<wbr>Static</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amenderof" class="tsd-kind-icon">amender<wbr>Of</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendmentisspec" class="tsd-kind-icon">amendment<wbr>IsSpec</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#combineamendments" class="tsd-kind-icon">combine<wbr>Amendments</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#isamendmentspec" class="tsd-kind-icon">is<wbr>Amendment<wbr>Spec</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#newamendtarget" class="tsd-kind-icon">new<wbr>Amend<wbr>Target</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../modules.html#noopamender" class="tsd-kind-icon">noop<wbr>Amender</a>
-					</li>
 				</ul>
 			</nav>
 		</div>

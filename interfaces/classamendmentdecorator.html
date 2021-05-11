@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ClassAmendment | Amend</title>
+	<title>ClassAmendmentDecorator | Amend</title>
 	<meta name="description" content="Documentation for Amend">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -55,10 +55,10 @@
 					<a href="../modules.html">Amend</a>
 				</li>
 				<li>
-					<a href="classamendment.html">ClassAmendment</a>
+					<a href="classamendmentdecorator.html">ClassAmendmentDecorator</a>
 				</li>
 			</ul>
-			<h1>Interface ClassAmendment&lt;TClass&gt;</h1>
+			<h1>Interface ClassAmendmentDecorator&lt;TClass&gt;</h1>
 		</div>
 	</div>
 </header>
@@ -68,9 +68,8 @@
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
 					<div class="lead">
-						<p>Class amendment. Can be used as class decorator.</p>
+						<p>Class amendment that can be used as class decorator.</p>
 					</div>
-					<p>Can also be used as an amendment <a href="amendmentspec.html">specifier</a> e.g. to combine it with other amendments.</p>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-type-parameters">
@@ -90,10 +89,10 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<a href="amendmentspec.html" class="tsd-signature-type" data-tsd-kind="Interface">AmendmentSpec</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#amendedclass" class="tsd-signature-type" data-tsd-kind="Function">AmendedClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span>
+						<a href="classamendatory.html" class="tsd-signature-type" data-tsd-kind="Interface">ClassAmendatory</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span>
 						<ul class="tsd-hierarchy">
 							<li>
-								<span class="target">ClassAmendment</span>
+								<span class="target">ClassAmendmentDecorator</span>
 							</li>
 						</ul>
 					</li>
@@ -102,20 +101,19 @@
 			<section class="tsd-panel">
 				<h3 class="tsd-before-signature">Callable</h3>
 				<ul class="tsd-signatures tsd-kind-interface tsd-has-type-parameter">
-					<li class="tsd-signature tsd-kind-icon">Class<wbr>Amendment<span class="tsd-signature-symbol">(</span>classConstructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					<li class="tsd-signature tsd-kind-icon">Class<wbr>Amendment<wbr>Decorator<span class="tsd-signature-symbol">(</span>classConstructor<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 				</ul>
 				<ul class="tsd-descriptions">
 					<li class="tsd-description">
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/class/class-amendment.ts#L12">class/class-amendment.ts:12</a></li>
+								<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/class/class-amendment.ts#L73">proc7ts/amend/src/class/class-amendment.ts:73</a></li>
 							</ul>
 						</aside>
 						<div class="tsd-comment tsd-typography">
 							<div class="lead">
 								<p>Applies this amendment to decorated class.</p>
 							</div>
-							<p>Can also be used as an amendment <a href="amendmentspec.html">specifier</a> e.g. to combine it with other amendments.</p>
 						</div>
 						<h4 class="tsd-parameters-title">Parameters</h4>
 						<ul class="tsd-parameters">
@@ -137,7 +135,8 @@
 						<section class="tsd-index-section tsd-is-inherited">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="classamendment.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="classamendmentdecorator.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-interface tsd-is-inherited"><a href="classamendmentdecorator.html#decorateamended" class="tsd-kind-icon">decorate<wbr>Amended</a></li>
 							</ul>
 						</section>
 					</div>
@@ -149,14 +148,14 @@
 					<a name="applyamendment" class="tsd-anchor"></a>
 					<h3>apply<wbr>Amendment</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-						<li class="tsd-signature tsd-kind-icon">apply<wbr>Amendment<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="../modules/amendtarget.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#amendedclass" class="tsd-signature-type" data-tsd-kind="Function">AmendedClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">apply<wbr>Amendment<span class="tsd-signature-symbol">(</span>target<span class="tsd-signature-symbol">: </span><a href="../modules/amendtarget.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
-								<p>Inherited from <a href="amendmentspec.html">AmendmentSpec</a>.<a href="amendmentspec.html#applyamendment">applyAmendment</a></p>
+								<p>Inherited from <a href="classamendatory.html">ClassAmendatory</a>.<a href="classamendatory.html#applyamendment">applyAmendment</a></p>
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/59ea822/src/base/amendment.ts#L45">base/amendment.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L49">proc7ts/amend/src/base/amendment.ts:49</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -168,9 +167,41 @@
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>target: <a href="../modules/amendtarget.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#amendedclass" class="tsd-signature-type" data-tsd-kind="Function">AmendedClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<h5>target: <a href="../modules/amendtarget.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendTarget</a><span class="tsd-signature-symbol">&lt;</span><a href="../modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Amendment target.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+					<a name="decorateamended" class="tsd-anchor"></a>
+					<h3>decorate<wbr>Amended</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+						<li class="tsd-signature tsd-kind-icon">decorate<wbr>Amended<span class="tsd-signature-symbol">(</span>decorated<span class="tsd-signature-symbol">: </span><a href="../modules/decoratedaeclass.html" class="tsd-signature-type" data-tsd-kind="Namespace">DecoratedAeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><a href="../modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<p>Inherited from <a href="classamendatory.html">ClassAmendatory</a>.<a href="classamendatory.html#decorateamended">decorateAmended</a></p>
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/class/class-amendment.ts#L41">proc7ts/amend/src/class/class-amendment.ts:41</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Decorates the given class.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>decorated: <a href="../modules/decoratedaeclass.html" class="tsd-signature-type" data-tsd-kind="Namespace">DecoratedAeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><a href="../modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Decorated class representation.</p>
 									</div>
 								</li>
 							</ul>
@@ -190,75 +221,21 @@
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendedclass.html" class="tsd-kind-icon">Amended<wbr>Class</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendedmember.html" class="tsd-kind-icon">Amended<wbr>Member</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendedstatic.html" class="tsd-kind-icon">Amended<wbr>Static</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="amendmentspec.html" class="tsd-kind-icon">Amendment<wbr>Spec</a>
-					</li>
 				</ul>
 				<ul class="current">
 					<li class="current tsd-kind-interface tsd-has-type-parameter">
-						<a href="classamendment.html" class="tsd-kind-icon">Class<wbr>Amendment</a>
+						<a href="classamendmentdecorator.html" class="tsd-kind-icon">Class<wbr>Amendment<wbr>Decorator</a>
 						<ul>
 							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
-								<a href="classamendment.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a>
+								<a href="classamendmentdecorator.html#applyamendment" class="tsd-kind-icon">apply<wbr>Amendment</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface tsd-is-inherited">
+								<a href="classamendmentdecorator.html#decorateamended" class="tsd-kind-icon">decorate<wbr>Amended</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="memberamendment.html" class="tsd-kind-icon">Member<wbr>Amendment</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="staticamendment.html" class="tsd-kind-icon">Static<wbr>Amendment</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amendrequest" class="tsd-kind-icon">Amend<wbr>Request</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amendtarget" class="tsd-kind-icon">Amend<wbr>Target</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amender" class="tsd-kind-icon">Amender</a>
-					</li>
-					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="../modules.html#amendment" class="tsd-kind-icon">Amendment</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendedclass" class="tsd-kind-icon">Amended<wbr>Class</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendedmember" class="tsd-kind-icon">Amended<wbr>Member</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendedstatic" class="tsd-kind-icon">Amended<wbr>Static</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amenderof" class="tsd-kind-icon">amender<wbr>Of</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#amendmentisspec" class="tsd-kind-icon">amendment<wbr>IsSpec</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#combineamendments" class="tsd-kind-icon">combine<wbr>Amendments</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#isamendmentspec" class="tsd-kind-icon">is<wbr>Amendment<wbr>Spec</a>
-					</li>
-					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="../modules.html#newamendtarget" class="tsd-kind-icon">new<wbr>Amend<wbr>Target</a>
-					</li>
-					<li class=" tsd-kind-function">
-						<a href="../modules.html#noopamender" class="tsd-kind-icon">noop<wbr>Amender</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
