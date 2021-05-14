@@ -1,3 +1,4 @@
+import { AeNone } from './ae-none';
 import { AmendTarget } from './amend-target';
 
 /**
@@ -12,7 +13,7 @@ import { AmendTarget } from './amend-target';
  * @typeParam TAmended - A type of amended entity to modify.
  * @typeParam TExt - A type of amended entity extension.
  */
-export type AmendRequest<TAmended, TExt = NoneAmended> = {
+export type AmendRequest<TAmended, TExt = AeNone> = {
   [K in keyof TAmended]?: TAmended[K];
 } & {
   [K in Exclude<keyof TExt, keyof TAmended>]: TExt[K];
@@ -20,4 +21,3 @@ export type AmendRequest<TAmended, TExt = NoneAmended> = {
   [K in keyof AmendTarget.Core<TAmended & TExt>]?: AmendTarget.Core<TAmended & TExt>[K];
 };
 
-export type NoneAmended = { [K in never]: unknown };

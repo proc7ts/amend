@@ -1,5 +1,6 @@
 import { lazyValue, valueProvider } from '@proc7ts/primitives';
-import { AmendRequest, NoneAmended } from './amend-request';
+import { AeNone } from './ae-none';
+import { AmendRequest } from './amend-request';
 
 /**
  * Amendment target.
@@ -134,7 +135,7 @@ export function newAmendTarget<TAmended>(
     };
   };
 
-  return nextTarget<TAmended, NoneAmended>(valueProvider<TAmended>(base));
+  return nextTarget<TAmended, AeNone>(valueProvider<TAmended>(base));
 }
 
 function AmendTarget$default$modify<TBase, TExt>(
