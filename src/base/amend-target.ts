@@ -43,7 +43,7 @@ export namespace AmendTarget {
      *
      * @returns A function without arguments returning modified amendment target.
      */
-    amend<TExt>(
+    amend<TExt = AeNone>(
         this: void,
         request?: AmendRequest<TAmended, TExt>,
     ): (this: void) => AmendTarget<TAmended & TExt>;
