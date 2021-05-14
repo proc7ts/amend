@@ -119,7 +119,7 @@ export namespace DecoratedAeMember {
  * @typeParam TAmended - A type of the entity representing a member to amend.
  * @param amendments - Amendments to apply.
  *
- * @returns - New class member amendment instance.
+ * @returns New class member amendment instance.
  */
 export function AeMember<
     TValue extends TUpdate,
