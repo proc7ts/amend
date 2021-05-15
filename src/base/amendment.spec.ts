@@ -1,7 +1,7 @@
 import { noop } from '@proc7ts/primitives';
 import { AeClass } from '../class';
 import { AmendTarget } from './amend-target';
-import { amenderOf, combineAmendments, isAmendatory, noopAmender } from './amendment';
+import { amenderOf, isAmendatory } from './amendment';
 
 describe('amenderOf', () => {
   it('returns amender as is', () => {
@@ -10,7 +10,7 @@ describe('amenderOf', () => {
 
     expect(amenderOf(amender)).toBe(amender);
   });
-  it('returns amendment action for amendment spec function', () => {
+  it('returns amendment action for amendatory function', () => {
 
     const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
     const amendment = (): void => { /* fn */ };
@@ -19,7 +19,7 @@ describe('amenderOf', () => {
 
     expect(amenderOf(amendment)).toBe(applyAmendment);
   });
-  it('returns amendment action for amendment spec object', () => {
+  it('returns amendment action for amendatory object', () => {
 
     const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
     const amendment = { applyAmendment };
@@ -28,26 +28,12 @@ describe('amenderOf', () => {
   });
 });
 
-describe('combineAmendments', () => {
-  it('returns no-op amender for empty array', () => {
-    expect(combineAmendments([])).toBe(noopAmender);
-  });
-  it('returns singleton amendment action', () => {
 
-    const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
-    const amendment = (): void => { /* fn */ };
-
-    amendment.applyAmendment = applyAmendment;
-
-    expect(combineAmendments([amendment])).toBe(applyAmendment);
-  });
-});
-
-describe('isAmendmentSpec', () => {
-  it('is `true` for amendment spec object', () => {
+describe('isAmendatory', () => {
+  it('is `true` for amendatory object', () => {
     expect(isAmendatory({ applyAmendment: noop })).toBe(true);
   });
-  it('is `true` for amendment spec function', () => {
+  it('is `true` for amendatory function', () => {
 
     const amendment = (): void => { /* fn */ };
 
@@ -55,18 +41,12 @@ describe('isAmendmentSpec', () => {
 
     expect(isAmendatory(amendment)).toBe(true);
   });
-  it('is `false` for everything else spec', () => {
+  it('is `false` for everything but amendatory', () => {
     expect(isAmendatory(null)).toBe(false);
     expect(isAmendatory(undefined)).toBe(false);
     expect(isAmendatory(noop)).toBe(false);
     expect(isAmendatory({ applyAmendment: true })).toBe(false);
     expect(isAmendatory({})).toBe(false);
     expect(isAmendatory('amendment?')).toBe(false);
-  });
-});
-
-describe('noopAmender', () => {
-  it('does nothing', () => {
-    expect(noopAmender(undefined!)).toBeUndefined();
   });
 });

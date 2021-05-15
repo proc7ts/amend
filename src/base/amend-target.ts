@@ -29,17 +29,14 @@ export namespace AmendTarget {
     /**
      * Amends the target.
      *
-     * Applies the amendment specified by `request` that also serves as modification or extension of this amendment
-     * target.
-     *
-     * The returned function can be used to construct the modified amendment target. The latter can be used to chain
+     * The returned function can be called to construct the modified amendment target. The latter can be used to chain
      * amendments.
      *
      * This method does not require `this` context. Thus it can be extracted from amendment target e.g. by destructuring
      * the latter.
      *
      * @typeParam TExt - A type of amended entity extension.
-     * @param request - Amendment request.
+     * @param request - Amendment request. Also serves as modification or extension of this amendment target.
      *
      * @returns A function without arguments returning modified amendment target.
      */

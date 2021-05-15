@@ -1,4 +1,3 @@
-import { AmendRequest } from './amend-request';
 import { AmendTarget } from './amend-target';
 
 /**
@@ -58,7 +57,7 @@ export interface Amendatory<TAmended> {
  * @param amendment - An amendment to convert.
  *
  * @returns Either the `amendment` itself if it is already an amender, or its {@link Amendatory.applyAmendment
- * applyAmendment} method if it is a specifier.
+ * applyAmendment} method if it is an {@link Amendatory} instance.
  */
 export function amenderOf<TAmended>(amendment: Amendment<TAmended>): Amender<TAmended> {
   return isAmendatoryAmendment(amendment) ? amendment.applyAmendment : amendment;
@@ -78,56 +77,6 @@ function isAmendatoryAmendment<TAmended>(amendment: Amendment<TAmended>): amendm
 }
 
 /**
- * Combines multiple amendments into one amender.
- *
- * The resulting amender performs amendments in order. The subsequent amendments receive the amendment targets modified
- * by preceding ones.
- *
- * @typeParam TAmended - Amended entity type.
- * @param amendments - An iterable of amendments to apply in their application order.
- *
- * @returns A combining amendment {@link Amender action}.
- */
-export function combineAmendments<TAmended>(amendments: Iterable<Amendment<TAmended>>): Amender<TAmended> {
-  if (Array.isArray(amendments) && amendments.length < 2) {
-
-    const [amender = noopAmender] = amendments;
-
-    return amenderOf(amender);
-  }
-
-  return target => {
-
-    let amend = (
-        amendment: Amendment<TAmended>,
-    ): void => amenderOf(amendment)({
-      ...target,
-      amend<TExt>(modification?: AmendRequest<TAmended, TExt>): (
-          this: void,
-      ) => AmendTarget<TAmended & TExt> {
-
-        const result = target.amend<TExt>(modification);
-
-        amend = (next: Amendment<TAmended>) => {
-
-          const nextTarget: AmendTarget<TAmended & TExt> = result();
-
-          amenderOf(next)(nextTarget as AmendTarget<TAmended>);
-
-          return nextTarget;
-        };
-
-        return result;
-      },
-    });
-
-    for (const amendment of amendments) {
-      amend(amendment);
-    }
-  };
-}
-
-/**
  * Checks whether the given value is an {@link Amendatory} instance.
  *
  * @typeParam TAmended - Amended entity type.
@@ -143,13 +92,4 @@ export function isAmendatory<TAmended, TOther = unknown>(
   return !!value
       && (typeof value === 'object' || typeof value === 'function')
       && isAmendatoryAmendment(value as Amendment<TAmended>);
-}
-
-/**
- * An {@link Amender amender} that amends nothing.
- *
- * @param _target - An amendment target that remains intact.
- */
-export function noopAmender(_target: AmendTarget<unknown>): void {
-  // Do not amend
 }
