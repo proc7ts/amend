@@ -1,7 +1,7 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment, AmendTarget } from '../base';
 import { AeClass } from '../class';
-import { AeHost, AeHostKind, AeProp } from '../impl';
+import { AeProp, AePropHost, AePropHostKind } from '../impl';
 import { MemberAmendment } from './member-amendment';
 
 /**
@@ -131,14 +131,14 @@ export function AeMember<
   return AeProp(AeMember$createHost, AeMember$hostClass, amendments);
 }
 
-const AeMember$HostKind: AeHostKind = {
+const AeMember$HostKind: AePropHostKind = {
   pName: 'Property',
   vDesc: key => `valueOf(${String(key)}`,
 };
 
 function AeMember$createHost<TClass extends Class>(
     { amendedClass }: AeClass<TClass>,
-): AeHost<InstanceType<TClass>, TClass> {
+): AePropHost<InstanceType<TClass>, TClass> {
   return {
     kind: AeMember$HostKind,
     cls: amendedClass,

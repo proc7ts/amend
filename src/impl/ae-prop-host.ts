@@ -1,12 +1,12 @@
 import { Class } from '@proc7ts/primitives';
 
-export interface AeHost<THost extends object = any, TClass extends Class = Class> {
-  readonly kind: AeHostKind;
+export interface AePropHost<THost extends object = any, TClass extends Class = Class> {
+  readonly kind: AePropHostKind;
   readonly cls: TClass;
   readonly host: THost;
 }
 
-export interface AeHostKind {
+export interface AePropHostKind {
 
   readonly pName: string;
 

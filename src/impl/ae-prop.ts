@@ -2,9 +2,9 @@ import { Class } from '@proc7ts/primitives';
 import { AmendablePropertyDescriptor, Amendatory, Amendment, combineAmendments } from '../base';
 import { AeClass, DecoratedAeClass } from '../class';
 import { DecoratedAeMember } from '../member';
-import { AeHost } from './ae-host';
 import { createAePropAccessor } from './ae-prop-accessor';
 import { AePropDesc, createAePropApplicator } from './ae-prop-applicator';
+import { AePropHost } from './ae-prop-host';
 
 export interface AeProp<
     THost extends object,
@@ -73,7 +73,7 @@ export function AeProp<
     TClass extends Class,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
-    createHost: (decorated: AeClass<TClass>) => AeHost<THost, TClass>,
+    createHost: (decorated: AeClass<TClass>) => AePropHost<THost, TClass>,
     hostClass: (host: THost) => TClass,
     amendments: Amendment<TAmended>[],
 ): PropAmendment<THost, TValue, TClass, TUpdate, TAmended> {

@@ -1,9 +1,10 @@
 import { noop } from '@proc7ts/primitives';
 import { AmendablePropertyDescriptor } from '../base';
-import { AeHost } from './ae-host';
+import { AePropHost } from './ae-prop-host';
+import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessibility';
 
 export function createAePropAccessor<THost extends object, TValue extends TUpdate, TUpdate>(
-    host: AeHost<THost>,
+    host: AePropHost<THost>,
     key: string | symbol,
     descriptor: AmendablePropertyDescriptor<TValue, THost, TUpdate> | undefined,
 ): [
@@ -87,35 +88,4 @@ export function createAePropAccessor<THost extends object, TValue extends TUpdat
     (instance, update) => setValue(instance, update),
     toAccessor,
   ];
-}
-
-export function AeProp$notReadable(
-    host: AeHost,
-    key: string | symbol,
-): (instance: unknown) => never {
-  return _instance => {
-    throw new TypeError(
-        `${host.kind.pName} ${host.cls.name}${AmendProp$accessString(key)} is not readable`,
-    );
-  };
-}
-
-export function AeProp$notWritable(
-    host: AeHost,
-    key: string | symbol,
-): (instance: unknown, update: unknown) => never {
-  return (_instance, _update) => {
-    throw new TypeError(
-        `${host.kind.pName} ${host.cls.name}${AmendProp$accessString(key)} is not writable`,
-    );
-  };
-}
-
-const AeProp$idPattern = /^[a-z_$][a-z0-9_$]*$/i;
-
-function AmendProp$accessString(key: string | symbol): string {
-  if (typeof key === 'string') {
-    return AeProp$idPattern.test(key) ? `.${key}` : `[${JSON.stringify(key)}]`;
-  }
-  return `[${String(key)}]`;
 }
