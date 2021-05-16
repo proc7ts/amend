@@ -1,13 +1,12 @@
 import { Class } from '@proc7ts/primitives';
 import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
 import { AeClass } from '../class';
-import { AeProp, AeProp$Host } from './ae-prop';
-import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessor';
+import { AeProp } from './ae-prop';
+import { AePropHost } from './ae-prop-host';
+import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessibility';
+import { PseudoHost } from './pseudo-host';
 
-/**
- * @internal
- */
-export interface AeProp$Desc<THost, TValue extends TUpdate, TUpdate> {
+export interface AePropDesc<THost, TValue extends TUpdate, TUpdate> {
   enumerable: boolean;
   configurable: boolean;
   readable: boolean;
@@ -16,25 +15,22 @@ export interface AeProp$Desc<THost, TValue extends TUpdate, TUpdate> {
   set(this: void, host: THost, update: TUpdate): void;
 }
 
-/**
- * @internal
- */
-export function AeProp$createApplicator<
+export function createAePropApplicator<
     THost extends object,
     TValue extends TUpdate,
     TClass extends Class,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
-    host: AeProp$Host<THost, TClass>,
+    host: AePropHost<THost, TClass> | PseudoHost<THost, TClass>,
     amender: Amender<TAmended>,
     key: string | symbol,
-    init: AeProp$Desc<THost, TValue, TUpdate>,
+    init: AePropDesc<THost, TValue, TUpdate>,
 ): (
     baseTarget: AmendTarget<AeClass<TClass>>,
-) => AeProp$Desc<THost, TValue, TUpdate> {
+) => AePropDesc<THost, TValue, TUpdate> {
   return (
       baseTarget: AmendTarget<AeClass<TClass>>,
-  ): AeProp$Desc<THost, TValue, TUpdate> => {
+  ): AePropDesc<THost, TValue, TUpdate> => {
 
     const result = { ...init };
 

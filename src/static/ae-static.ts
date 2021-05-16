@@ -1,7 +1,7 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment, AmendTarget } from '../base';
 import { AeClass } from '../class';
-import { AeProp, AeProp$Host, AeProp$HostKind } from '../impl';
+import { AeProp, AePropHost, AePropHostKind } from '../impl';
 import { StaticAmendment } from './static-amendment';
 
 /**
@@ -129,14 +129,14 @@ export function AeStatic<
   return AeProp(AeStatic$createHost, AeStatic$hostClass, amendments);
 }
 
-const AeStatic$HostKind: AeProp$HostKind = {
+const AeStatic$HostKind: AePropHostKind = {
   pName: 'Static property',
   vDesc: key => `staticOf(${String(key)}`,
 };
 
 function AeStatic$createHost<TClass extends Class>(
     { amendedClass }: AeClass<TClass>,
-): AeProp$Host<TClass, TClass> {
+): AePropHost<TClass, TClass> {
   return {
     kind: AeStatic$HostKind,
     cls: amendedClass,

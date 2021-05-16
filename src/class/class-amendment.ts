@@ -20,7 +20,7 @@ export namespace ClassAmendment {
   export type ForBase<TBase extends AeClass<TClass>, TClass extends Class, TAmended extends TBase> =
       TBase extends TAmended
           ? ClassAmendmentDecorator<TClass>
-          : ClassAmendatory<TClass, TAmended>;
+          : ClassAmendatory.ForBase<TBase, TClass, TAmended>;
 
 }
 
