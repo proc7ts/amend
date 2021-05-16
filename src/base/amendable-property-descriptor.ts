@@ -13,13 +13,15 @@ export interface AmendablePropertyDescriptor<TValue extends TUpdate, TObject = a
    *
    * @returns Property value.
    */
-  get?(this: TObject): TValue;
+  get?: (this: TObject) => TValue;
 
   /**
    * Writes property value.
    *
    * @param update - Updated property value.
    */
-  set?(this: TObject, update: TUpdate): void;
+  set?:
+      | ((this: TObject, update: TUpdate) => void)
+      | ((this: TObject, update: TValue) => void);
 
 }
