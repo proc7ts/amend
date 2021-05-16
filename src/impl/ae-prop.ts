@@ -30,7 +30,7 @@ export type PropAmendment<
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>> =
     AeProp<THost, any, any, any> extends TAmended
-        ? PropAmendment$Decorator<THost, TValue, TClass, TUpdate, TAmended>
+        ? PropAmendmentDecorator<THost, TValue, TClass, TUpdate, TAmended>
         : PropAmendatory<THost, TValue, TClass, TUpdate, TAmended>;
 
 export interface PropAmendatory<
@@ -50,10 +50,7 @@ export interface PropAmendatory<
 
 }
 
-/**
- * @internal
- */
-export interface PropAmendment$Decorator<
+export interface PropAmendmentDecorator<
     THost extends object,
     TValue extends TUpdate,
     TClass extends Class,
