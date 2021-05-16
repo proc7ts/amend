@@ -44,22 +44,39 @@ export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TU
 
 }
 
+/**
+ * An amendment of pseudo-member.
+ *
+ * Can be used as class decorator, unless expects an amended entity other than {@link AeMember}.
+ *
+ * When used as a member amendment, the provided member key is used as a pseudo-member one, unless explicitly specified.
+ * This makes it usable as {@link AeMember @AeMember()} and {@link AeMembers @AeMembers()} parameter.
+ *
+ * @typeParam TValue - Pseudo-member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Pseudo-member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a pseudo-member.
+ */
 export type PseudoMemberAmendment<
     TValue extends TUpdate,
     TClass extends Class = Class,
     TUpdate = TValue,
     TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
-  ClassAmendment.ForBase<AeMember<TValue, TClass, TUpdate>, TClass, TAmended>
+  ClassAmendment.ForBase<AeMember<TValue, TClass, TUpdate>, TClass, TAmended>;
 
 /**
  * Creates a class amendment (and decorator) that declares a pseudo-member of the target class.
  *
  * A pseudo-member does not alter the class instance. Instead, its value is read and written by the given `accessor`.
  *
+ * @typeParam TValue - Pseudo-member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Pseudo-member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a pseudo-member.
  * @param accessor - Pseudo-member accessor.
  * @param amendments - Amendments to apply to pseudo-member.
  *
- * @returns New class amendment.
+ * @returns New pseudo-member amendment.
  */
 export function PseudoMember<
     TValue extends TUpdate,
