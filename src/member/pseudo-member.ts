@@ -67,7 +67,8 @@ export type PseudoMemberAmendment<
 /**
  * Creates a class amendment (and decorator) that declares a pseudo-member of the target class.
  *
- * A pseudo-member does not alter the class instance. Instead, its value is read and written by the given `accessor`.
+ * A pseudo-member does not alter the class prototype or instance. Instead, its value is read and written by the given
+ * `accessor`.
  *
  * @typeParam TValue - Pseudo-member value type.
  * @typeParam TClass - A type of amended class.
