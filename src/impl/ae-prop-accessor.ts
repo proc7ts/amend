@@ -1,12 +1,9 @@
 import { noop } from '@proc7ts/primitives';
 import { AmendablePropertyDescriptor } from '../base';
-import { AeProp$Host } from './ae-prop';
+import { AeHost } from './ae-host';
 
-/**
- * @internal
- */
-export function AeProp$accessor<THost extends object, TValue extends TUpdate, TUpdate>(
-    host: AeProp$Host<THost>,
+export function createAePropAccessor<THost extends object, TValue extends TUpdate, TUpdate>(
+    host: AeHost<THost>,
     key: string | symbol,
     descriptor: AmendablePropertyDescriptor<TValue, THost, TUpdate> | undefined,
 ): [
@@ -92,11 +89,8 @@ export function AeProp$accessor<THost extends object, TValue extends TUpdate, TU
   ];
 }
 
-/**
- * @internal
- */
 export function AeProp$notReadable(
-    host: AeProp$Host,
+    host: AeHost,
     key: string | symbol,
 ): (instance: unknown) => never {
   return _instance => {
@@ -106,11 +100,8 @@ export function AeProp$notReadable(
   };
 }
 
-/**
- * @internal
- */
 export function AeProp$notWritable(
-    host: AeProp$Host,
+    host: AeHost,
     key: string | symbol,
 ): (instance: unknown, update: unknown) => never {
   return (_instance, _update) => {
