@@ -66,6 +66,218 @@
 					<a href="https://github.com/proc7ts/amend/actions?query=workflow%3ABuild"><img src="https://github.com/proc7ts/amend/workflows/Build/badge.svg" alt="Build Status"></a>
 					<a href="https://github.com/proc7ts/amend"><img src="https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational" alt="GitHub Project"></a>
 				<a href="https://proc7ts.github.io/amend/"><img src="https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational" alt="API Documentation"></a></p>
+				<a href="#class-members-amendment" id="class-members-amendment" style="color: inherit; text-decoration: none;">
+					<h2>Class Members Amendment</h2>
+				</a>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">AeMember</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/amend&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyClass</span><span style="color: #000000"> {</span>
+
+<span style="color: #000000">  @</span><span style="color: #795E26">AeMember</span><span style="color: #000000">(({ </span><span style="color: #001080">key</span><span style="color: #000000">, </span><span style="color: #001080">get</span><span style="color: #000000">, </span><span style="color: #001080">set</span><span style="color: #000000">, </span><span style="color: #001080">amend</span><span style="color: #000000"> }) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">amend</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">) { </span><span style="color: #008000">// Replace the getter.</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">); </span><span style="color: #008000">// Read the value with default getter.  </span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">key</span><span style="color: #0000FF">}</span><span style="color: #A31515"> value read:`</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000">;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">) { </span><span style="color: #008000">// Replace the setter.</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">oldValue</span><span style="color: #000000"> = </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">      </span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">key</span><span style="color: #0000FF">}</span><span style="color: #A31515"> value updated:`</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039; -&gt; &#039;</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">);</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  }))</span>
+<span style="color: #000000">  </span><span style="color: #001080">field</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Here <code>@AeMember()</code> creates an amendment that can be used as a class member decorator. This decorator can be
+					applied to property, accessor, or method. In any case the provided <code>get</code> and <code>set</code> functions read and write values
+				correspondingly.</p>
+				<p>The <code>@AeMember()</code> accepts arbitrary number of nested amendments. Each amendment receives an object with the following
+				properties:</p>
+				<ul>
+					<li><code>amendedClass</code> - Amended class constructor.</li>
+					<li><code>key</code> - Amended member key.</li>
+					<li><code>configurable</code> - Whether the amended member is <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description">configurable</a>.</li>
+					<li><code>enumberable</code> - Whether the amended member is <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description">enumerable</a>.</li>
+					<li><code>readable</code> - Whether the amended member is readable. The member is readable, unless it has only setter.</li>
+					<li><code>writable</code> - Whether the amended member is writable. The member is writable, unless it has only setter, or it is
+					defined non-<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description">writable</a>.</li>
+					<li><code>get(instance)</code> - Member value reader function.</li>
+					<li><code>set(instance, update)</code> - Member value writer function.</li>
+					<li><code>amend(request)</code> - Member amendment function.</li>
+				</ul>
+				<p>The <code>amend()</code> function call modifies the member definition. It accepts an object with the same properties and overrides
+				the member definition:</p>
+				<ul>
+					<li><p>If <code>get</code> or <code>set</code> specified and differ from the passed in value, then the member converted to accessor with
+						corresponding <code>get</code> and/or <code>set</code> operations.</p>
+						<p>If <code>get</code> omitted, then the member becomes non-readable.</p>
+						<p>If <code>set</code> omitted, then the member becomes non-readable.</p>
+						<p>Note that <code>get</code> and <code>set</code> operations passed in still could be used event from inside their replacements.
+						They would act as before.</p>
+					</li>
+					<li><p>If neither <code>get</code>, nor <code>set</code> specified, then the member value access method does not change.</p>
+					</li>
+					<li><p>If <code>configurable</code> or <code>enumerable</code> specified and differ from the values passes in, then these properties used to
+						update the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/defineProperty">property descriptor</a>.</p>
+					</li>
+					<li><p>The rest of the properties are ignored.</p>
+					</li>
+				</ul>
+				<a href="#static-members-amendment" id="static-members-amendment" style="color: inherit; text-decoration: none;">
+					<h2>Static Members Amendment</h2>
+				</a>
+				<p>The <code>@AeStatic()</code> creates an amendment that can be used as a static class member decorator. It is equivalent to
+				<code>@AeMember()</code>, except it works for static members.</p>
+				<a href="#class-amendment" id="class-amendment" style="color: inherit; text-decoration: none;">
+					<h2>Class Amendment</h2>
+				</a>
+				<p>The <code>@AeClass()</code> creates an amendment that can be used as a class decorator.</p>
+				<p>The nested amendments receive an object with only <code>amendedClass</code> and <code>amend()</code> properties.</p>
+				<a href="#custom-amendments" id="custom-amendments" style="color: inherit; text-decoration: none;">
+					<h2>Custom Amendments</h2>
+				</a>
+				<p>Custom amendment is just a function that calls one of the predefined ones. It can be declared like this:</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">AeMember</span><span style="color: #000000">, </span><span style="color: #001080">AmendTarget</span><span style="color: #000000">, </span><span style="color: #001080">MemberAmendment</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/amend&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Class</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/primitives&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">LoggedMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">,       </span><span style="color: #008000">// Member value type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TClass</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Class</span><span style="color: #000000"> = </span><span style="color: #267F99">Class</span><span style="color: #000000">, </span><span style="color: #008000">// Amended class type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TUpdate</span><span style="color: #000000"> = </span><span style="color: #267F99">TValue</span><span style="color: #000000">,             </span><span style="color: #008000">// Member value update type accepted by its setter.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TAmended</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; = </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; </span><span style="color: #008000">// Amended entity type.</span>
+<span style="color: #000000">    &gt;(): </span><span style="color: #267F99">MemberAmendment</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">AeMember</span><span style="color: #000000">((</span>
+<span style="color: #000000">      {</span>
+<span style="color: #000000">        </span><span style="color: #001080">key</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">get</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">set</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">amend</span><span style="color: #000000">,</span>
+<span style="color: #000000">      }: </span><span style="color: #267F99">AmendTarget</span><span style="color: #000000">&lt;</span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">&gt;&gt;, </span><span style="color: #008000">// Amendment target. Contains amended entity properties</span>
+<span style="color: #000000">                                                         </span><span style="color: #008000">// along with `amend()` function.</span>
+<span style="color: #000000">  ) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">amend</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">) { </span><span style="color: #008000">// Replace the getter.</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">); </span><span style="color: #008000">// Read the value with default getter.  </span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">key</span><span style="color: #0000FF">}</span><span style="color: #A31515"> value read:`</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000">;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">) { </span><span style="color: #008000">// Replace the setter.</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">oldValue</span><span style="color: #000000"> = </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">      </span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">key</span><span style="color: #0000FF">}</span><span style="color: #A31515"> value updated:`</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039; -&gt; &#039;</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">);</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  }));</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Then the first example could be rewritten like this:</p>
+				<pre><code class="language-typescript"><span style="color: #0000FF">class</span><span style="color: #000000"> </span><span style="color: #267F99">MyClass</span><span style="color: #000000"> {</span>
+
+<span style="color: #000000">  @</span><span style="color: #795E26">LoggedMember</span><span style="color: #000000">()</span>
+<span style="color: #000000">  </span><span style="color: #001080">field</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;value&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#combined-amendment" id="combined-amendment" style="color: inherit; text-decoration: none;">
+					<h2>Combined Amendment</h2>
+				</a>
+				<p>The simplest way to combine multiple amendments is to apply multiple decorators.</p>
+				<p>However, it is possible to declare a combined amendment that applies multiple amendments by single decorator:</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">AeMember</span><span style="color: #000000">, </span><span style="color: #001080">AmendTarget</span><span style="color: #000000">, </span><span style="color: #001080">MemberAmendment</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/amend&#039;</span><span style="color: #000000">;</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">Class</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@proc7ts/primitives&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Logs member reads.</span>
+<span style="color: #008000"> */</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">ReadLoggedMember</span><span style="color: #000000">&lt;</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TValue</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">,       </span><span style="color: #008000">// Member value type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TClass</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Class</span><span style="color: #000000"> = </span><span style="color: #267F99">Class</span><span style="color: #000000">, </span><span style="color: #008000">// Amended class type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TUpdate</span><span style="color: #000000"> = </span><span style="color: #267F99">TValue</span><span style="color: #000000">,             </span><span style="color: #008000">// Member value update type accepted by its setter.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TAmended</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; = </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; </span><span style="color: #008000">// Amended entity type.</span>
+<span style="color: #000000">    &gt;(): </span><span style="color: #267F99">MemberAmendment</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">AeMember</span><span style="color: #000000">((</span>
+<span style="color: #000000">      {</span>
+<span style="color: #000000">        </span><span style="color: #001080">key</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">get</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">set</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">amend</span><span style="color: #000000">,</span>
+<span style="color: #000000">      }: </span><span style="color: #267F99">AmendTarget</span><span style="color: #000000">&lt;</span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">&gt;&gt;,</span>
+<span style="color: #000000">  ) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">amend</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">) { </span><span style="color: #008000">// Replace the getter.</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">value</span><span style="color: #000000"> = </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">); </span><span style="color: #008000">// Read the value with default getter.  </span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">key</span><span style="color: #0000FF">}</span><span style="color: #A31515"> value read:`</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">value</span><span style="color: #000000">;</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">    </span><span style="color: #001080">set</span><span style="color: #000000">, </span><span style="color: #008000">// The setter remains unchaned.</span>
+<span style="color: #000000">  }));</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Logs member writes.</span>
+<span style="color: #008000"> */</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">WriteLoggedMember</span><span style="color: #000000">&lt;</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TValue</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">,       </span><span style="color: #008000">// Member value type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TClass</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Class</span><span style="color: #000000"> = </span><span style="color: #267F99">Class</span><span style="color: #000000">, </span><span style="color: #008000">// Amended class type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TUpdate</span><span style="color: #000000"> = </span><span style="color: #267F99">TValue</span><span style="color: #000000">,             </span><span style="color: #008000">// Member value update type accepted by its setter.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TAmended</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; = </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; </span><span style="color: #008000">// Amended entity type.</span>
+<span style="color: #000000">    &gt;(): </span><span style="color: #267F99">MemberAmendment</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">AeMember</span><span style="color: #000000">((</span>
+<span style="color: #000000">      {</span>
+<span style="color: #000000">        </span><span style="color: #001080">key</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">get</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">set</span><span style="color: #000000">,</span>
+<span style="color: #000000">        </span><span style="color: #001080">amend</span><span style="color: #000000">,</span>
+<span style="color: #000000">      }: </span><span style="color: #267F99">AmendTarget</span><span style="color: #000000">&lt;</span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">&gt;&gt;,</span>
+<span style="color: #000000">  ) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">amend</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">get</span><span style="color: #000000">, </span><span style="color: #008000">// The getter remains uncchanged.</span>
+<span style="color: #000000">    </span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">) { </span><span style="color: #008000">// Replace the setter.</span>
+
+<span style="color: #000000">      </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">oldValue</span><span style="color: #000000"> = </span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">)</span>
+
+<span style="color: #000000">      </span><span style="color: #795E26">set</span><span style="color: #000000">(</span><span style="color: #001080">instance</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">);</span>
+
+<span style="color: #000000">      </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">debug</span><span style="color: #000000">(</span><span style="color: #A31515">`</span><span style="color: #0000FF">${</span><span style="color: #001080">key</span><span style="color: #0000FF">}</span><span style="color: #A31515"> value updated:`</span><span style="color: #000000">, </span><span style="color: #001080">oldValue</span><span style="color: #000000">, </span><span style="color: #A31515">&#039; -&gt; &#039;</span><span style="color: #000000">, </span><span style="color: #001080">update</span><span style="color: #000000">);</span>
+<span style="color: #000000">    },</span>
+<span style="color: #000000">  }));</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #008000">/**</span>
+<span style="color: #008000"> * Logs any member access.</span>
+<span style="color: #008000"> */</span>
+<span style="color: #AF00DB">export</span><span style="color: #000000"> </span><span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">LoggedMember</span><span style="color: #000000">&lt;</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TValue</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">,       </span><span style="color: #008000">// Member value type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TClass</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">Class</span><span style="color: #000000"> = </span><span style="color: #267F99">Class</span><span style="color: #000000">, </span><span style="color: #008000">// Amended class type.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TUpdate</span><span style="color: #000000"> = </span><span style="color: #267F99">TValue</span><span style="color: #000000">,             </span><span style="color: #008000">// Member value update type accepted by its setter.</span>
+<span style="color: #000000">    </span><span style="color: #267F99">TAmended</span><span style="color: #000000"> </span><span style="color: #0000FF">extends</span><span style="color: #000000"> </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; = </span><span style="color: #267F99">AeMember</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; </span><span style="color: #008000">// Amended entity type.</span>
+<span style="color: #000000">    &gt;(): </span><span style="color: #267F99">MemberAmendment</span><span style="color: #000000">&lt;</span><span style="color: #267F99">TValue</span><span style="color: #000000">, </span><span style="color: #267F99">TClass</span><span style="color: #000000">, </span><span style="color: #267F99">TUpdate</span><span style="color: #000000">, </span><span style="color: #267F99">TAmended</span><span style="color: #000000">&gt; {</span>
+<span style="color: #000000">  </span><span style="color: #008000">// Apply both amendments in chain.</span>
+<span style="color: #000000">  </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">AeMember</span><span style="color: #000000">(</span>
+<span style="color: #000000">      </span><span style="color: #795E26">ReadLoggedMember</span><span style="color: #000000">(),</span>
+<span style="color: #000000">      </span><span style="color: #795E26">WriteLoggedMember</span><span style="color: #000000">(),</span>
+<span style="color: #000000">  );</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<a href="#additional-amendments" id="additional-amendments" style="color: inherit; text-decoration: none;">
+					<h2>Additional Amendments</h2>
+				</a>
+				<p>The library contains a few more helpful amendments:</p>
+				<ul>
+					<li>[@AeMembers()] - A class amendment able to</li>
+				</ul>
+				<p>[@AeMembers()]: </p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
@@ -136,6 +348,9 @@
 						<a href="interfaces/memberamendmentdecorator.html" class="tsd-kind-icon">Member<wbr>Amendment<wbr>Decorator</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/pseudoaccessor.html" class="tsd-kind-icon">Pseudo<wbr>Accessor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/staticamendatory.html" class="tsd-kind-icon">Static<wbr>Amendatory</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
@@ -143,6 +358,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#aemembersdef" class="tsd-kind-icon">Ae<wbr>Members<wbr>Def</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#aenone" class="tsd-kind-icon">Ae<wbr>None</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#aestaticsdef" class="tsd-kind-icon">Ae<wbr>Statics<wbr>Def</a>
@@ -174,11 +392,17 @@
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#memberamendment" class="tsd-kind-icon">Member<wbr>Amendment</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#noneamended" class="tsd-kind-icon">None<wbr>Amended</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#pseudomemberamendment" class="tsd-kind-icon">Pseudo<wbr>Member<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#pseudostaticamendment" class="tsd-kind-icon">Pseudo<wbr>Static<wbr>Amendment</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#staticamendment" class="tsd-kind-icon">Static<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#pseudomember__symbol" class="tsd-kind-icon">Pseudo<wbr>Member__symbol</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#aeclass" class="tsd-kind-icon">Ae<wbr>Class</a>
@@ -194,6 +418,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#aestatics" class="tsd-kind-icon">Ae<wbr>Statics</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#pseudomember" class="tsd-kind-icon">Pseudo<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#pseudostatic" class="tsd-kind-icon">Pseudo<wbr>Static</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#amendmemberof" class="tsd-kind-icon">amend<wbr>Member<wbr>Of</a>

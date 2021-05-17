@@ -122,16 +122,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amend-target.ts#L45">proc7ts/amend/src/base/amend-target.ts:45</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amend-target.ts#L43">proc7ts/amend/src/base/amend-target.ts:43</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
 									<p>Amends the target.</p>
 								</div>
-								<p>Applies the amendment specified by <code>request</code> that also serves as modification or extension of this amendment
-								target.</p>
-								<p>The returned function can be used to construct the modified amendment target. The latter can be used to chain
+								<p>The returned function can be called to construct the modified amendment target. The latter can be used to chain
 								amendments.</p>
 								<p>This method does not require <code>this</code> context. Thus it can be extracted from amendment target e.g. by destructuring
 								the latter.</p>
@@ -139,7 +137,7 @@
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
 							<ul class="tsd-type-parameters">
 								<li>
-									<h4>TExt</h4>
+									<h4>TExt = <a href="../modules.html#aenone" class="tsd-signature-type" data-tsd-kind="Type alias">AeNone</a></h4>
 									<div class="tsd-comment tsd-typography">
 										<p>A type of amended entity extension.</p>
 									</div>
@@ -150,7 +148,7 @@
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> request: <a href="../modules.html#amendrequest" class="tsd-signature-type" data-tsd-kind="Type alias">AmendRequest</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Amendment request.</p>
+										<p>Amendment request. Also serves as modification or extension of this amendment target.</p>
 									</div>
 								</li>
 							</ul>

@@ -88,6 +88,7 @@
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/classamendmentdecorator.html" class="tsd-kind-icon">Class<wbr>Amendment<wbr>Decorator</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/memberamendatory.html" class="tsd-kind-icon">Member<wbr>Amendatory</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/memberamendmentdecorator.html" class="tsd-kind-icon">Member<wbr>Amendment<wbr>Decorator</a></li>
+								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/pseudoaccessor.html" class="tsd-kind-icon">Pseudo<wbr>Accessor</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/staticamendatory.html" class="tsd-kind-icon">Static<wbr>Amendatory</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter"><a href="interfaces/staticamendmentdecorator.html" class="tsd-kind-icon">Static<wbr>Amendment<wbr>Decorator</a></li>
 							</ul>
@@ -96,6 +97,7 @@
 							<h3>Type aliases</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#aemembersdef" class="tsd-kind-icon">Ae<wbr>Members<wbr>Def</a></li>
+								<li class="tsd-kind-type-alias"><a href="modules.html#aenone" class="tsd-kind-icon">Ae<wbr>None</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#aestaticsdef" class="tsd-kind-icon">Ae<wbr>Statics<wbr>Def</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#amendrequest" class="tsd-kind-icon">Amend<wbr>Request</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#amendtarget" class="tsd-kind-icon">Amend<wbr>Target</a></li>
@@ -106,8 +108,15 @@
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#decoratedaemember" class="tsd-kind-icon">Decorated<wbr>AeMember</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#decoratedaestatic" class="tsd-kind-icon">Decorated<wbr>AeStatic</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#memberamendment" class="tsd-kind-icon">Member<wbr>Amendment</a></li>
-								<li class="tsd-kind-type-alias"><a href="modules.html#noneamended" class="tsd-kind-icon">None<wbr>Amended</a></li>
+								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#pseudomemberamendment" class="tsd-kind-icon">Pseudo<wbr>Member<wbr>Amendment</a></li>
+								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#pseudostaticamendment" class="tsd-kind-icon">Pseudo<wbr>Static<wbr>Amendment</a></li>
 								<li class="tsd-kind-type-alias tsd-has-type-parameter"><a href="modules.html#staticamendment" class="tsd-kind-icon">Static<wbr>Amendment</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Variables</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-variable"><a href="modules.html#pseudomember__symbol" class="tsd-kind-icon">Pseudo<wbr>Member__symbol</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -118,6 +127,8 @@
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#aemembers" class="tsd-kind-icon">Ae<wbr>Members</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#aestatic" class="tsd-kind-icon">Ae<wbr>Static</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#aestatics" class="tsd-kind-icon">Ae<wbr>Statics</a></li>
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#pseudomember" class="tsd-kind-icon">Pseudo<wbr>Member</a></li>
+								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#pseudostatic" class="tsd-kind-icon">Pseudo<wbr>Static</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amendmemberof" class="tsd-kind-icon">amend<wbr>Member<wbr>Of</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amendstaticof" class="tsd-kind-icon">amend<wbr>Static<wbr>Of</a></li>
 								<li class="tsd-kind-function tsd-has-type-parameter"><a href="modules.html#amenderof" class="tsd-kind-icon">amender<wbr>Of</a></li>
@@ -138,7 +149,7 @@
 					<div class="tsd-signature tsd-kind-icon">Ae<wbr>Members<wbr>Def&lt;TClass, TAmended&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">InstanceType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">InstanceType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/member/ae-members.ts#L16">proc7ts/amend/src/member/ae-members.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/ae-members.ts#L16">proc7ts/amend/src/member/ae-members.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -164,13 +175,28 @@
 						</li>
 					</ul>
 				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias">
+					<a name="aenone" class="tsd-anchor"></a>
+					<h3>Ae<wbr>None</h3>
+					<div class="tsd-signature tsd-kind-icon">Ae<wbr>None<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol"> }</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/ae-none.ts#L4">proc7ts/amend/src/base/ae-none.ts:4</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Empty amended entity.</p>
+						</div>
+					</div>
+				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
 					<a name="aestaticsdef" class="tsd-anchor"></a>
 					<h3>Ae<wbr>Statics<wbr>Def</h3>
 					<div class="tsd-signature tsd-kind-icon">Ae<wbr>Statics<wbr>Def&lt;TClass, TAmended&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">null</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/static/ae-statics.ts#L16">proc7ts/amend/src/static/ae-statics.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/ae-statics.ts#L16">proc7ts/amend/src/static/ae-statics.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -202,7 +228,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amend<wbr>Request&lt;TAmended, TExt&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-type">Exclude</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-symbol">keyof </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-symbol">keyof </span><a href="interfaces/amendtarget.core.html" class="tsd-signature-type" data-tsd-kind="Interface">Core</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><a href="interfaces/amendtarget.core.html" class="tsd-signature-type" data-tsd-kind="Interface">Core</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><span class="tsd-signature-type">TExt</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[</span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amend-request.ts#L15">proc7ts/amend/src/base/amend-request.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amend-request.ts#L16">proc7ts/amend/src/base/amend-request.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -223,7 +249,7 @@
 							</div>
 						</li>
 						<li>
-							<h4>TExt = <a href="modules.html#noneamended" class="tsd-signature-type" data-tsd-kind="Type alias">NoneAmended</a></h4>
+							<h4>TExt = <a href="modules.html#aenone" class="tsd-signature-type" data-tsd-kind="Type alias">AeNone</a></h4>
 							<div class="tsd-comment tsd-typography">
 								<p>A type of amended entity extension.</p>
 							</div>
@@ -236,7 +262,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amend<wbr>Target&lt;TAmended&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> &amp; </span><a href="interfaces/amendtarget.core.html" class="tsd-signature-type" data-tsd-kind="Interface">Core</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amend-target.ts#L15">proc7ts/amend/src/base/amend-target.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amend-target.ts#L16">proc7ts/amend/src/base/amend-target.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -263,7 +289,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amender&lt;TAmended&gt;<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>this<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span>, target<span class="tsd-signature-symbol">: </span><a href="modules/amendtarget.html" class="tsd-signature-type" data-tsd-kind="Namespace">AmendTarget</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L25">proc7ts/amend/src/base/amendment.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amendment.ts#L24">proc7ts/amend/src/base/amendment.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -315,7 +341,7 @@
 					<div class="tsd-signature tsd-kind-icon">Amendment&lt;TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules.html#amender" class="tsd-signature-type" data-tsd-kind="Type alias">Amender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><a href="interfaces/amendatory.html" class="tsd-signature-type" data-tsd-kind="Interface">Amendatory</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L14">proc7ts/amend/src/base/amendment.ts:14</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amendment.ts#L13">proc7ts/amend/src/base/amendment.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -342,7 +368,7 @@
 					<div class="tsd-signature tsd-kind-icon">Class<wbr>Amendment&lt;TClass, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> extends </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol"> ? </span><a href="interfaces/classamendmentdecorator.html" class="tsd-signature-type" data-tsd-kind="Interface">ClassAmendmentDecorator</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> : </span><a href="interfaces/classamendatory.html" class="tsd-signature-type" data-tsd-kind="Interface">ClassAmendatory</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/class/class-amendment.ts#L13">proc7ts/amend/src/class/class-amendment.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/class/class-amendment.ts#L13">proc7ts/amend/src/class/class-amendment.ts:13</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -373,7 +399,7 @@
 					<div class="tsd-signature tsd-kind-icon">Decorated<wbr>AeClass&lt;TClass, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/decoratedaeclass.html#forbase" class="tsd-signature-type" data-tsd-kind="Type alias">ForBase</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/class/ae-class.ts#L33">proc7ts/amend/src/class/ae-class.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/class/ae-class.ts#L33">proc7ts/amend/src/class/ae-class.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -406,7 +432,7 @@
 					<div class="tsd-signature tsd-kind-icon">Decorated<wbr>AeMember&lt;TClass, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/decoratedaemember.html#forbase" class="tsd-signature-type" data-tsd-kind="Type alias">ForBase</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/member/ae-member.ts#L94">proc7ts/amend/src/member/ae-member.ts:94</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/ae-member.ts#L94">proc7ts/amend/src/member/ae-member.ts:94</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -439,7 +465,7 @@
 					<div class="tsd-signature tsd-kind-icon">Decorated<wbr>AeStatic&lt;TClass, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/decoratedaestatic.html#forbase" class="tsd-signature-type" data-tsd-kind="Type alias">ForBase</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/static/ae-static.ts#L92">proc7ts/amend/src/static/ae-static.ts:92</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/ae-static.ts#L92">proc7ts/amend/src/static/ae-static.ts:92</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -471,7 +497,7 @@
 					<div class="tsd-signature tsd-kind-icon">Member<wbr>Amendment&lt;TValue, TClass, TUpdate, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/memberamendment.html#forbase" class="tsd-signature-type" data-tsd-kind="Type alias">ForBase</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/member/member-amendment.ts#L16">proc7ts/amend/src/member/member-amendment.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/member-amendment.ts#L16">proc7ts/amend/src/member/member-amendment.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -508,15 +534,95 @@
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-type-alias">
-					<a name="noneamended" class="tsd-anchor"></a>
-					<h3>None<wbr>Amended</h3>
-					<div class="tsd-signature tsd-kind-icon">None<wbr>Amended<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{</span><span class="tsd-signature-symbol">[ </span><span class="tsd-signature-type">K</span><span class="tsd-signature-symbol"> in </span><span class="tsd-signature-type">never</span><span class="tsd-signature-symbol">]</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">unknown</span><span class="tsd-signature-symbol"> }</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
+					<a name="pseudomemberamendment" class="tsd-anchor"></a>
+					<h3>Pseudo<wbr>Member<wbr>Amendment</h3>
+					<div class="tsd-signature tsd-kind-icon">Pseudo<wbr>Member<wbr>Amendment&lt;TValue, TClass, TUpdate, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/classamendment.html#forbase" class="tsd-signature-type" data-tsd-kind="Type alias">ForBase</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amend-request.ts#L23">proc7ts/amend/src/base/amend-request.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/pseudo-member.ts#L60">proc7ts/amend/src/member/pseudo-member.ts:60</a></li>
 						</ul>
 					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An amendment of pseudo-member.</p>
+						</div>
+						<p>Can be used as class decorator, unless expects an amended entity other than <a href="modules.html#aemember">AeMember</a>.</p>
+						<p>When used as a member amendment, the provided member key is used as a pseudo-member one, unless explicitly specified.
+						This makes it usable as <a href="modules.html#aemember">@AeMember()</a> and <a href="modules.html#aemembers">@AeMembers()</a> parameter.</p>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>TValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TUpdate</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>Pseudo-member value type.</p>
+							</div>
+						</li>
+						<li>
+							<h4>TClass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Class</span> = <span class="tsd-signature-type">Class</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>A type of amended class.</p>
+							</div>
+						</li>
+						<li>
+							<h4>TUpdate = <span class="tsd-signature-type">TValue</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>Pseudo-member update type accepted by its setter.</p>
+							</div>
+						</li>
+						<li>
+							<h4>TAmended<span class="tsd-signature-symbol">: </span><a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span> = <a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>A type of the entity representing a pseudo-member.</p>
+							</div>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
+					<a name="pseudostaticamendment" class="tsd-anchor"></a>
+					<h3>Pseudo<wbr>Static<wbr>Amendment</h3>
+					<div class="tsd-signature tsd-kind-icon">Pseudo<wbr>Static<wbr>Amendment&lt;TValue, TClass, TUpdate, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/classamendment.html#forbase" class="tsd-signature-type" data-tsd-kind="Type alias">ForBase</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/pseudo-static.ts#L21">proc7ts/amend/src/static/pseudo-static.ts:21</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>An amendment of static pseudo-member.</p>
+						</div>
+						<p>Can be used as class decorator, unless expects an amended entity other than <a href="modules.html#aestatic">AeStatic</a>.</p>
+						<p>When used as a static member amendment, the provided member key is used as a pseudo-member one, unless explicitly
+						specified. This makes it usable as <a href="modules.html#aestatic">@AeStatic()</a> and <a href="modules.html#aestatics">@AeStatics()</a> parameter.</p>
+					</div>
+					<h4 class="tsd-type-parameters-title">Type parameters</h4>
+					<ul class="tsd-type-parameters">
+						<li>
+							<h4>TValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">TUpdate</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>Static pseudo-member value type.</p>
+							</div>
+						</li>
+						<li>
+							<h4>TClass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Class</span> = <span class="tsd-signature-type">Class</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>A type of amended class.</p>
+							</div>
+						</li>
+						<li>
+							<h4>TUpdate = <span class="tsd-signature-type">TValue</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>Static pseudo-member update type accepted by its setter.</p>
+							</div>
+						</li>
+						<li>
+							<h4>TAmended<span class="tsd-signature-symbol">: </span><a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span> = <a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<p>A type of the entity representing a static pseudo-member.</p>
+							</div>
+						</li>
+					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-type-alias tsd-has-type-parameter">
 					<a name="staticamendment" class="tsd-anchor"></a>
@@ -524,7 +630,7 @@
 					<div class="tsd-signature tsd-kind-icon">Static<wbr>Amendment&lt;TValue, TClass, TUpdate, TAmended&gt;<span class="tsd-signature-symbol">:</span> <a href="modules/staticamendment.html#forbase" class="tsd-signature-type" data-tsd-kind="Type alias">ForBase</a><span class="tsd-signature-symbol">&lt;</span><a href="modules.html#aeclass" class="tsd-signature-type" data-tsd-kind="Function">AeClass</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/static/static-amendment.ts#L16">proc7ts/amend/src/static/static-amendment.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/static-amendment.ts#L16">proc7ts/amend/src/static/static-amendment.ts:16</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -563,6 +669,24 @@
 				</section>
 			</section>
 			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Variables</h2>
+				<section class="tsd-panel tsd-member tsd-kind-variable">
+					<a name="pseudomember__symbol" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagConst">Const</span> Pseudo<wbr>Member__symbol</h3>
+					<div class="tsd-signature tsd-kind-icon">Pseudo<wbr>Member__symbol<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">typeof </span><a href="modules.html#pseudomember__symbol" class="tsd-signature-type" data-tsd-kind="Variable">PseudoMember__symbol</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/class/pseudo-member.symbol.ts#L4">proc7ts/amend/src/class/pseudo-member.symbol.ts:4</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Unique symbol used as a pseudo-member key by default.</p>
+						</div>
+					</div>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Functions</h2>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
 					<a name="aeclass" class="tsd-anchor"></a>
@@ -574,7 +698,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/class/ae-class.ts#L57">proc7ts/amend/src/class/ae-class.ts:57</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/class/ae-class.ts#L57">proc7ts/amend/src/class/ae-class.ts:57</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -623,7 +747,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/member/ae-member.ts#L124">proc7ts/amend/src/member/ae-member.ts:124</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/ae-member.ts#L124">proc7ts/amend/src/member/ae-member.ts:124</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -668,9 +792,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="modules/memberamendment.html" class="tsd-signature-type" data-tsd-kind="Namespace">MemberAmendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<ul>
-								<li>New class member amendment instance.</li>
-							</ul>
+							<p>New class member amendment instance.</p>
 						</li>
 					</ul>
 				</section>
@@ -684,7 +806,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/member/ae-members.ts#L30">proc7ts/amend/src/member/ae-members.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/ae-members.ts#L30">proc7ts/amend/src/member/ae-members.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -737,7 +859,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/static/ae-static.ts#L122">proc7ts/amend/src/static/ae-static.ts:122</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/ae-static.ts#L122">proc7ts/amend/src/static/ae-static.ts:122</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -798,7 +920,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/static/ae-statics.ts#L30">proc7ts/amend/src/static/ae-statics.ts:30</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/ae-statics.ts#L30">proc7ts/amend/src/static/ae-statics.ts:30</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -842,6 +964,140 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="pseudomember" class="tsd-anchor"></a>
+					<h3>Pseudo<wbr>Member</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">Pseudo<wbr>Member&lt;TValue, TClass, TUpdate, TAmended&gt;<span class="tsd-signature-symbol">(</span>accessor<span class="tsd-signature-symbol">: </span><a href="interfaces/pseudoaccessor.html" class="tsd-signature-type" data-tsd-kind="Interface">PseudoAccessor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">InstanceType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>amendments<span class="tsd-signature-symbol">: </span><a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modules.html#pseudomemberamendment" class="tsd-signature-type" data-tsd-kind="Type alias">PseudoMemberAmendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/pseudo-member.ts#L82">proc7ts/amend/src/member/pseudo-member.ts:82</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a class amendment (and decorator) that declares a pseudo-member of the target class.</p>
+								</div>
+								<p>A pseudo-member does not alter the class prototype or instance. Instead, its value is read and written by the given
+								<code>accessor</code>.</p>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TValue</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Pseudo-member value type.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TClass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Class</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span> = <span class="tsd-signature-type">Class</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>A type of amended class.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TUpdate = <span class="tsd-signature-type">TValue</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Pseudo-member update type accepted by its setter.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TAmended<span class="tsd-signature-symbol">: </span><a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span> = <a href="modules.html#aemember" class="tsd-signature-type" data-tsd-kind="Function">AeMember</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>A type of the entity representing a pseudo-member.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>accessor: <a href="interfaces/pseudoaccessor.html" class="tsd-signature-type" data-tsd-kind="Interface">PseudoAccessor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">InstanceType</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Pseudo-member accessor.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>amendments: <a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Amendments to apply to pseudo-member.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="modules.html#pseudomemberamendment" class="tsd-signature-type" data-tsd-kind="Type alias">PseudoMemberAmendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>New pseudo-member amendment.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
+					<a name="pseudostatic" class="tsd-anchor"></a>
+					<h3>Pseudo<wbr>Static</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
+						<li class="tsd-signature tsd-kind-icon">Pseudo<wbr>Static&lt;TValue, TClass, TUpdate, TAmended&gt;<span class="tsd-signature-symbol">(</span>accessor<span class="tsd-signature-symbol">: </span><a href="interfaces/pseudoaccessor.html" class="tsd-signature-type" data-tsd-kind="Interface">PseudoAccessor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span>, <span class="tsd-signature-symbol">...</span>amendments<span class="tsd-signature-symbol">: </span><a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="modules.html#pseudostaticamendment" class="tsd-signature-type" data-tsd-kind="Type alias">PseudoStaticAmendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/pseudo-static.ts#L43">proc7ts/amend/src/static/pseudo-static.ts:43</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates a class amendment (and decorator) that declares a static pseudo-member of the target class.</p>
+								</div>
+								<p>A static pseudo-member does not alter the class constructor. Instead, its value is read and written by the given
+								<code>accessor</code>.</p>
+							</div>
+							<h4 class="tsd-type-parameters-title">Type parameters</h4>
+							<ul class="tsd-type-parameters">
+								<li>
+									<h4>TValue</h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Static pseudo-member value type.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TClass<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Class</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">&gt;</span> = <span class="tsd-signature-type">Class</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>A type of amended class.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TUpdate = <span class="tsd-signature-type">TValue</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>Static pseudo-member update type accepted by its setter.</p>
+									</div>
+								</li>
+								<li>
+									<h4>TAmended<span class="tsd-signature-symbol">: </span><a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span> = <a href="modules.html#aestatic" class="tsd-signature-type" data-tsd-kind="Function">AeStatic</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></h4>
+									<div class="tsd-comment tsd-typography">
+										<p>A type of the entity representing a static pseudo-member.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>accessor: <a href="interfaces/pseudoaccessor.html" class="tsd-signature-type" data-tsd-kind="Interface">PseudoAccessor</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">&gt;</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Static pseudo-member accessor.</p>
+									</div>
+								</li>
+								<li>
+									<h5><span class="tsd-flag ts-flagRest">Rest</span> <span class="tsd-signature-symbol">...</span>amendments: <a href="modules.html#amendment" class="tsd-signature-type" data-tsd-kind="Type alias">Amendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">[]</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Amendments to apply to static pseudo-member.</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <a href="modules.html#pseudostaticamendment" class="tsd-signature-type" data-tsd-kind="Type alias">PseudoStaticAmendment</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TValue</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TClass</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TUpdate</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<p>New static pseudo-member amendment.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-has-type-parameter">
 					<a name="amendmemberof" class="tsd-anchor"></a>
 					<h3>amend<wbr>Member<wbr>Of</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-has-type-parameter">
@@ -851,7 +1107,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/member/amend-member-of.ts#L17">proc7ts/amend/src/member/amend-member-of.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/member/amend-member-of.ts#L17">proc7ts/amend/src/member/amend-member-of.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -916,7 +1172,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/static/amend-static-of.ts#L17">proc7ts/amend/src/static/amend-static-of.ts:17</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/static/amend-static-of.ts#L17">proc7ts/amend/src/static/amend-static-of.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -981,7 +1237,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L63">proc7ts/amend/src/base/amendment.ts:63</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amendment.ts#L62">proc7ts/amend/src/base/amendment.ts:62</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1008,7 +1264,7 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="modules.html#amender" class="tsd-signature-type" data-tsd-kind="Type alias">Amender</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">TAmended</span><span class="tsd-signature-symbol">&gt;</span></h4>
-							<p>Either the <code>amendment</code> itself if it is already an amender, or its <a href="interfaces/amendatory.html#applyamendment">applyAmendment</a> method if it is a specifier.</p>
+							<p>Either the <code>amendment</code> itself if it is already an amender, or its <a href="interfaces/amendatory.html#applyamendment">applyAmendment</a> method if it is an <a href="interfaces/amendatory.html">Amendatory</a> instance.</p>
 						</li>
 					</ul>
 				</section>
@@ -1022,7 +1278,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L91">proc7ts/amend/src/base/amendment.ts:91</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/combine-amendments.ts#L17">proc7ts/amend/src/base/combine-amendments.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1065,7 +1321,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L140">proc7ts/amend/src/base/amendment.ts:140</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amendment.ts#L89">proc7ts/amend/src/base/amendment.ts:89</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1113,7 +1369,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amend-target.ts#L110">proc7ts/amend/src/base/amend-target.ts:110</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/amend-target.ts#L108">proc7ts/amend/src/base/amend-target.ts:108</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1154,7 +1410,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/c042ed2/src/base/amendment.ts#L153">proc7ts/amend/src/base/amendment.ts:153</a></li>
+									<li>Defined in <a href="https://github.com/proc7ts/amend/blob/3212712/src/base/noop-amender.ts#L8">proc7ts/amend/src/base/noop-amender.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -1245,6 +1501,9 @@
 						<a href="interfaces/memberamendmentdecorator.html" class="tsd-kind-icon">Member<wbr>Amendment<wbr>Decorator</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
+						<a href="interfaces/pseudoaccessor.html" class="tsd-kind-icon">Pseudo<wbr>Accessor</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-has-type-parameter">
 						<a href="interfaces/staticamendatory.html" class="tsd-kind-icon">Static<wbr>Amendatory</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
@@ -1252,6 +1511,9 @@
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#aemembersdef" class="tsd-kind-icon">Ae<wbr>Members<wbr>Def</a>
+					</li>
+					<li class=" tsd-kind-type-alias">
+						<a href="modules.html#aenone" class="tsd-kind-icon">Ae<wbr>None</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#aestaticsdef" class="tsd-kind-icon">Ae<wbr>Statics<wbr>Def</a>
@@ -1283,11 +1545,17 @@
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#memberamendment" class="tsd-kind-icon">Member<wbr>Amendment</a>
 					</li>
-					<li class=" tsd-kind-type-alias">
-						<a href="modules.html#noneamended" class="tsd-kind-icon">None<wbr>Amended</a>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#pseudomemberamendment" class="tsd-kind-icon">Pseudo<wbr>Member<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
+						<a href="modules.html#pseudostaticamendment" class="tsd-kind-icon">Pseudo<wbr>Static<wbr>Amendment</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="modules.html#staticamendment" class="tsd-kind-icon">Static<wbr>Amendment</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="modules.html#pseudomember__symbol" class="tsd-kind-icon">Pseudo<wbr>Member__symbol</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#aeclass" class="tsd-kind-icon">Ae<wbr>Class</a>
@@ -1303,6 +1571,12 @@
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#aestatics" class="tsd-kind-icon">Ae<wbr>Statics</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#pseudomember" class="tsd-kind-icon">Pseudo<wbr>Member</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="modules.html#pseudostatic" class="tsd-kind-icon">Pseudo<wbr>Static</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="modules.html#amendmemberof" class="tsd-kind-icon">amend<wbr>Member<wbr>Of</a>
