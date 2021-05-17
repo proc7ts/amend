@@ -7,7 +7,6 @@ Amendments
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][API documentation]
 
-
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/amend.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/amend
 [build-status-img]: https://github.com/proc7ts/amend/workflows/Build/badge.svg
@@ -15,4 +14,264 @@ Amendments
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
 [github-url]: https://github.com/proc7ts/amend
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
-[API documentation]: https://proc7ts.github.io/amend/ 
+[API documentation]: https://proc7ts.github.io/amend/
+
+
+Class Member Amendments
+-----------------------
+
+```typescript
+import { AeMember } from '@proc7ts/amend';
+
+class MyClass {
+
+  @AeMember(({ key, get, set, amend }) => amend({
+    get(instance) { // Replace the getter.
+
+      const value = get(instance); // Read the value with default getter.  
+
+      console.debug(`${key} value read:`, value);
+
+      return value;
+    },
+    set(instance, update) { // Replace the setter.
+
+      const oldValue = get(instance)
+
+      set(instance, update);
+
+      console.debug(`${key} value updated:`, oldValue, ' -> ', update);
+    },
+  }))
+  field = 'value';
+
+}
+```
+
+Here [@AeMember()] creates an amendment that can be used as a class member decorator. This decorator can be
+applied to property, accessor, or method. In any case the provided `get` and `set` functions read and write values
+correspondingly.
+
+The [@AeMember()] accepts arbitrary number of nested amendments. Each amendment receives an object with the following
+properties (from [AeMember] and [AmendTarget.Core] interfaces):
+
+- `amendedClass` - Amended class constructor.
+- `key` - Amended member key.
+- `configurable` - Whether the amended member is [configurable].
+- `enumberable` - Whether the amended member is [enumerable].
+- `readable` - Whether the amended member is readable. The member is readable, unless it has only setter.
+- `writable` - Whether the amended member is writable. The member is writable, unless it has only setter, or it is
+  defined non-[writable].
+- `get(instance)` - Member value reader function.
+- `set(instance, update)` - Member value writer function.
+- `amend(request)` - Member amendment function.
+
+The [amend()][AmendTarget.Core.amend] function call modifies the member definition. It accepts an object with the same properties and overrides
+the member definition:
+
+- If `get` or `set` specified and differ from the passed in value, then the member converted to accessor with
+  corresponding `get` and/or `set` operations.
+
+  If `get` omitted, then the member becomes non-readable.
+
+  If `set` omitted, then the member becomes non-writable.
+
+  Note that `get` and `set` operations passed in still could be used even from inside their replacements.
+  They would act as before.
+
+- If neither `get`, nor `set` specified, then the member value access operations remain unchanged.
+
+- If `configurable` or `enumerable` specified and differ from the values passes in, then these properties used to
+  update the [property descriptor].
+
+- The rest of the properties are ignored.
+
+[configurable]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description
+[enumerable]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description
+[writable]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description
+[property descriptor]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/defineProperty
+
+[@AeMember()]: https://proc7ts.github.io/amend/modules.html#aemember
+[AeMember]: https://proc7ts.github.io/amend/interfaces/aemember.html
+[AmendTarget.Core]: https://proc7ts.github.io/amend/interfaces/amendtarget.core.html
+[AmendTarget.Core.amend]: https://proc7ts.github.io/amend/interfaces/amendtarget.core.html#amend
+
+
+Static Member Amendments
+------------------------
+
+The [@AeStatic()] creates an amendment that can be used as a static class member decorator. It is equivalent to
+[@AeMember()], except it is applicable to static members.
+
+[@AeStatic()]: https://proc7ts.github.io/amend/modules.html#aestatic
+
+
+Class Amendments
+----------------
+
+The [@AeClass()] creates an amendment that can be used as a class decorator.
+
+The nested amendments receive an object with only `amendedClass` and `amend()` properties.
+
+[@AeClass()]: https://proc7ts.github.io/amend/modules.html#aeclass
+
+
+Custom Amendments
+-----------------
+
+Custom amendment can be created by function that calls one of the predefined ones. It can be declared like this:
+
+```typescript
+import { AeMember, AmendTarget, MemberAmendment } from '@proc7ts/amend';
+import { Class } from '@proc7ts/primitives';
+
+export function LoggedMember<TValue extends TUpdate,       // Member value type.
+    TClass extends Class = Class, // Amended class type.
+    TUpdate = TValue,             // Member value update type accepted by its setter.
+    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
+    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeMember((
+      {
+        key,
+        get,
+        set,
+        amend,
+      }: AmendTarget<AeMember<TValue, TClass, TUpdate>>, // Amendment target. Contains amended entity properties
+                                                         // along with `amend()` function.
+  ) => amend({
+    get(instance) { // Replace the getter.
+
+      const value = get(instance); // Read the value with default getter.  
+
+      console.debug(`${key} value read:`, value);
+
+      return value;
+    },
+    set(instance, update) { // Replace the setter.
+
+      const oldValue = get(instance)
+
+      set(instance, update);
+
+      console.debug(`${key} value updated:`, oldValue, ' -> ', update);
+    },
+  }));
+}
+```
+
+Then the first example could be rewritten like this:
+```typescript
+class MyClass {
+
+  @LoggedMember()
+  field = 'value';
+
+}
+```
+
+
+Combining Amendments
+--------------------
+
+The simplest way to combine multiple amendments is to apply multiple decorators.
+
+However, it is possible to declare a combined amendment that applies multiple amendments by single decorator:
+
+```typescript
+import { AeMember, AmendTarget, MemberAmendment } from '@proc7ts/amend';
+import { Class } from '@proc7ts/primitives';
+
+/**
+ * Logs member reads.
+ */
+export function ReadLoggedMember<
+    TValue extends TUpdate,       // Member value type.
+    TClass extends Class = Class, // Amended class type.
+    TUpdate = TValue,             // Member value update type accepted by its setter.
+    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
+    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeMember((
+      {
+        key,
+        get,
+        set,
+        amend,
+      }: AmendTarget<AeMember<TValue, TClass, TUpdate>>,
+  ) => amend({
+    get(instance) { // Replace the getter.
+
+      const value = get(instance); // Read the value with default getter.  
+
+      console.debug(`${key} value read:`, value);
+
+      return value;
+    },
+    set, // The setter remains unchanged.
+  }));
+}
+
+/**
+ * Logs member writes.
+ */
+export function WriteLoggedMember<
+    TValue extends TUpdate,       // Member value type.
+    TClass extends Class = Class, // Amended class type.
+    TUpdate = TValue,             // Member value update type accepted by its setter.
+    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
+    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeMember((
+      {
+        key,
+        get,
+        set,
+        amend,
+      }: AmendTarget<AeMember<TValue, TClass, TUpdate>>,
+  ) => amend({
+    get, // The getter remains unchanged.
+    set(instance, update) { // Replace the setter.
+
+      const oldValue = get(instance)
+
+      set(instance, update);
+
+      console.debug(`${key} value updated:`, oldValue, ' -> ', update);
+    },
+  }));
+}
+
+/**
+ * Logs any member access.
+ */
+export function LoggedMember<
+    TValue extends TUpdate,       // Member value type.
+    TClass extends Class = Class, // Amended class type.
+    TUpdate = TValue,             // Member value update type accepted by its setter.
+    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
+    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  // Apply both amendments in chain.
+  return AeMember(
+      ReadLoggedMember(),
+      WriteLoggedMember(),
+  );
+}
+```
+
+
+Other Helpful Amendments
+------------------------
+
+The library contains a few more helpful amendments:
+
+- [@AeMembers()] - A class amendment that amends existing and declares new class members.
+- [@AeStatics()] - A class amendment that amends existing and declares new static members.
+- [@PseudoMember()] - A class amendment that declares a pseudo-member, which is not actually defined in class
+  prototype. Such member value may be derived from the real one.
+- [@PseudoStatic()] - A class amendment that declares a static pseudo-member, which is not actually defined in
+  class constructor.
+
+See the [API documentation] for the detailed info.
+
+[@AeMembers()]: https://proc7ts.github.io/amend/modules.html#aemembers
+[@AeStatics()]: https://proc7ts.github.io/amend/modules.html#aestatics
+[@PseudoMember()]: https://proc7ts.github.io/amend/modules.html#pseudomember
+[@PseudoStatic()]: https://proc7ts.github.io/amend/modules.html#pseudostatic
