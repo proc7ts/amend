@@ -1,6 +1,5 @@
-import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AeClass, ClassAmendment } from '../class';
+import { AeClass, AmendableClass, ClassAmendment } from '../class';
 import { AeStatic, DecoratedAeStatic } from './ae-static';
 import { amendStaticOf } from './amend-static-of';
 
@@ -13,7 +12,7 @@ import { amendStaticOf } from './amend-static-of';
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
-export type AeStaticsDef<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
+export type AeStaticsDef<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
   [K in keyof TClass]?: Amendment<TAmended & AeStatic<TClass[K], TClass>> | null;
 };
 
@@ -28,7 +27,7 @@ export type AeStaticsDef<TClass extends Class, TAmended extends AeClass<TClass> 
  * @returns New class amendment instance.
  */
 export function AeStatics<
-    TClass extends Class,
+    TClass extends AmendableClass,
     TExtClass extends TClass = TClass,
     TAmended extends AeClass<TExtClass> = AeClass<TExtClass>>(
     def: AeStaticsDef<TExtClass, TAmended>,

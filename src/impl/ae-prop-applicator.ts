@@ -1,6 +1,5 @@
-import { Class } from '@proc7ts/primitives';
 import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
-import { AeClass } from '../class';
+import { AeClass, AmendableClass } from '../class';
 import { AeProp } from './ae-prop';
 import { AePropHost } from './ae-prop-host';
 import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessibility';
@@ -18,7 +17,7 @@ export interface AePropDesc<THost, TValue extends TUpdate, TUpdate> {
 export function createAePropApplicator<
     THost extends object,
     TValue extends TUpdate,
-    TClass extends Class,
+    TClass extends AmendableClass,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
     host: AePropHost<THost, TClass> | PseudoHost<THost, TClass>,

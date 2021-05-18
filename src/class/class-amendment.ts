@@ -1,4 +1,4 @@
-import { Class } from '@proc7ts/primitives';
+import { AbstractClass } from '@proc7ts/primitives';
 import { Amendatory } from '../base';
 import { AeClass, DecoratedAeClass } from './ae-class';
 
@@ -10,14 +10,14 @@ import { AeClass, DecoratedAeClass } from './ae-class';
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of amended entity representing a class to amend.
  */
-export type ClassAmendment<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> =
+export type ClassAmendment<TClass extends AbstractClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
     AeClass<any> extends TAmended
         ? ClassAmendmentDecorator<TClass>
         : ClassAmendatory<TClass, TAmended>;
 
 export namespace ClassAmendment {
 
-  export type ForBase<TBase extends AeClass<TClass>, TClass extends Class, TAmended extends TBase> =
+  export type ForBase<TBase extends AeClass<TClass>, TClass extends AbstractClass, TAmended extends TBase> =
       TBase extends TAmended
           ? ClassAmendmentDecorator<TClass>
           : ClassAmendatory.ForBase<TBase, TClass, TAmended>;
@@ -30,7 +30,7 @@ export namespace ClassAmendment {
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of amended entity representing a class to amend.
  */
-export interface ClassAmendatory<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>>
+export interface ClassAmendatory<TClass extends AbstractClass, TAmended extends AeClass<TClass> = AeClass<TClass>>
     extends ClassAmendatory.ForBase<AeClass<TClass>, TClass, TAmended> {
 
   /**
@@ -51,7 +51,7 @@ export namespace ClassAmendatory {
    * @typeParam TClass - A type of amended class.
    * @typeParam TAmended - A type of amended entity representing a class to amend.
    */
-  export interface ForBase<TBase extends AeClass<TClass>, TClass extends Class, TAmended extends TBase>
+  export interface ForBase<TBase extends AeClass<TClass>, TClass extends AbstractClass, TAmended extends TBase>
       extends Amendatory<TAmended> {
 
     /**
@@ -70,7 +70,7 @@ export namespace ClassAmendatory {
  *
  * @typeParam TClass - A type of amended class.
  */
-export interface ClassAmendmentDecorator<TClass extends Class> extends ClassAmendatory<TClass> {
+export interface ClassAmendmentDecorator<TClass extends AbstractClass> extends ClassAmendatory<TClass> {
 
   /**
    * Applies this amendment to decorated class.

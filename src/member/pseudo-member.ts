@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AeClass, ClassAmendment } from '../class';
+import { AeClass, AmendableClass, ClassAmendment } from '../class';
 import { PseudoHost, PseudoHostKind, PseudoProp } from '../impl';
 import { AeMember } from './ae-member';
 
@@ -59,7 +59,7 @@ export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TU
  */
 export type PseudoMemberAmendment<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
   ClassAmendment.ForBase<AeMember<TValue, TClass, TUpdate>, TClass, TAmended>;
@@ -81,7 +81,7 @@ export type PseudoMemberAmendment<
  */
 export function PseudoMember<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>>(
     accessor: PseudoAccessor<InstanceType<TClass>, TValue, TUpdate>,
@@ -94,7 +94,7 @@ const PseudoMember$HostKind: PseudoHostKind = {
   pName: 'Pseudo-property',
 };
 
-function PseudoMember$createHost<TClass extends Class>(
+function PseudoMember$createHost<TClass extends AmendableClass>(
     { amendedClass }: AeClass<TClass>,
 ): PseudoHost<InstanceType<TClass>, TClass> {
   return {

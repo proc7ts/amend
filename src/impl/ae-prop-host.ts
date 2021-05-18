@@ -1,6 +1,6 @@
-import { Class } from '@proc7ts/primitives';
+import { AmendableClass } from '../class';
 
-export interface AePropHost<THost extends object = any, TClass extends Class = Class> {
+export interface AePropHost<THost extends object = any, TClass extends AmendableClass = AmendableClass> {
   readonly kind: AePropHostKind;
   readonly cls: TClass;
   readonly host: THost;
