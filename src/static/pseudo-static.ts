@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AeClass, ClassAmendment } from '../class';
+import { AeClass, AmendableClass, ClassAmendment } from '../class';
 import { PseudoHost, PseudoHostKind, PseudoProp } from '../impl';
 import { PseudoAccessor } from '../member';
 import { AeStatic } from './ae-static';
@@ -20,7 +20,7 @@ import { AeStatic } from './ae-static';
  */
 export type PseudoStaticAmendment<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>> =
   ClassAmendment.ForBase<AeStatic<TValue, TClass, TUpdate>, TClass, TAmended>;
@@ -42,7 +42,7 @@ export type PseudoStaticAmendment<
  */
 export function PseudoStatic<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>>(
     accessor: PseudoAccessor<TClass, TValue, TUpdate>,
@@ -55,7 +55,7 @@ const PseudoStatic$HostKind: PseudoHostKind = {
   pName: 'Static pseudo-property',
 };
 
-function PseudoStatic$createHost<TClass extends Class>(
+function PseudoStatic$createHost<TClass extends AmendableClass>(
     { amendedClass }: AeClass<TClass>,
 ): PseudoHost<TClass, TClass> {
   return {

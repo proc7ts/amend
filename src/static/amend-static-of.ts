@@ -1,5 +1,5 @@
-import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
+import { AmendableClass } from '../class';
 import { AeStatic, DecoratedAeStatic } from './ae-static';
 
 /**
@@ -15,7 +15,7 @@ import { AeStatic, DecoratedAeStatic } from './ae-static';
  * @param amendments - Amendment to apply.
  */
 export function amendStaticOf<
-    TClass extends Class,
+    TClass extends AmendableClass,
     TKey extends keyof TClass = keyof TClass,
     TAmended extends AeStatic<TClass[TKey], TClass> = AeStatic<TClass[TKey], TClass>>(
     decorated: DecoratedAeStatic<TClass, TAmended>,
@@ -23,7 +23,7 @@ export function amendStaticOf<
     ...amendments: Amendment<TAmended & AeStatic<TClass[TKey], TClass>>[]
 ): void {
 
-  const amendment = AeStatic(...amendments);
+  const amendment = AeStatic<TClass[TKey], TClass, TClass[TKey], TAmended>(...amendments);
   const targetClass = decorated.amendedClass;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(targetClass, memberKey);
   const amendedDesc = amendment.decorateAmended(

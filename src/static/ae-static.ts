@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment, AmendTarget } from '../base';
-import { AeClass } from '../class';
+import { AeClass, AmendableClass } from '../class';
 import { AeProp, AePropHost, AePropHostKind } from '../impl';
 import { StaticAmendment } from './static-amendment';
 
@@ -15,7 +15,7 @@ import { StaticAmendment } from './static-amendment';
  */
 export interface AeStatic<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     > extends AeClass<TClass>{
 
@@ -89,7 +89,7 @@ export interface AeStatic<
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeStatic<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> =
+export type DecoratedAeStatic<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
     DecoratedAeStatic.ForBase<AeClass<TClass>, AeStatic<any, TClass>, TClass, TAmended>;
 
 export namespace DecoratedAeStatic {
@@ -97,7 +97,7 @@ export namespace DecoratedAeStatic {
   export type ForBase<
       TClassBase extends AeClass<TClass>,
       TStaticBase extends AeStatic<any, TClass>,
-      TClass extends Class,
+      TClass extends AmendableClass,
       TAmended extends TClassBase> = {
     [K in Exclude<keyof TAmended, keyof TStaticBase>]: TAmended[K];
   } & {
@@ -121,7 +121,7 @@ export namespace DecoratedAeStatic {
  */
 export function AeStatic<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>>(
     ...amendments: Amendment<TAmended>[]
@@ -134,7 +134,7 @@ const AeStatic$HostKind: AePropHostKind = {
   vDesc: key => `staticOf(${String(key)}`,
 };
 
-function AeStatic$createHost<TClass extends Class>(
+function AeStatic$createHost<TClass extends AmendableClass>(
     { amendedClass }: AeClass<TClass>,
 ): AePropHost<TClass, TClass> {
   return {
@@ -144,7 +144,7 @@ function AeStatic$createHost<TClass extends Class>(
   };
 }
 
-function AeStatic$hostClass<TClass extends Class>(
+function AeStatic$hostClass<TClass extends AmendableClass>(
     classConstructor: TClass,
 ): TClass {
   return classConstructor;

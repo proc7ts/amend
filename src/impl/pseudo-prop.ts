@@ -1,6 +1,5 @@
-import { Class } from '@proc7ts/primitives';
 import { Amendment, AmendTarget, combineAmendments } from '../base';
-import { AeClass, DecoratedAeClass, PseudoMember__symbol } from '../class';
+import { AeClass, AmendableClass, DecoratedAeClass, PseudoMember__symbol } from '../class';
 import { PseudoAccessor, PseudoMemberAmendment } from '../member';
 import { AeProp } from './ae-prop';
 import { AePropDesc, createAePropApplicator } from './ae-prop-applicator';
@@ -10,7 +9,7 @@ import { PseudoHost } from './pseudo-host';
 export function PseudoProp<
     THost extends object,
     TValue extends TUpdate,
-    TClass extends Class,
+    TClass extends AmendableClass,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
     createHost: (decorated: AeClass<TClass>) => PseudoHost<THost, TClass>,

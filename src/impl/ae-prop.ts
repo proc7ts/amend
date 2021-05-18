@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { AmendablePropertyDescriptor, Amendatory, Amendment, combineAmendments } from '../base';
-import { AeClass, DecoratedAeClass } from '../class';
+import { AeClass, AmendableClass, DecoratedAeClass } from '../class';
 import { DecoratedAeMember } from '../member';
 import { createAePropAccessor } from './ae-prop-accessor';
 import { AePropDesc, createAePropApplicator } from './ae-prop-applicator';
@@ -9,7 +9,7 @@ import { AePropHost } from './ae-prop-host';
 export interface AeProp<
     THost extends object,
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue
     > extends AeClass<TClass>{
 
@@ -26,7 +26,7 @@ export interface AeProp<
 export type PropAmendment<
     THost extends object,
     TValue extends TUpdate,
-    TClass extends Class,
+    TClass extends AmendableClass,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>> =
     AeProp<THost, any, any, any> extends TAmended
@@ -36,7 +36,7 @@ export type PropAmendment<
 export interface PropAmendatory<
     THost extends object,
     TValue extends TUpdate,
-    TClass extends Class,
+    TClass extends AmendableClass,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>
     extends Amendatory<TAmended> {
@@ -53,7 +53,7 @@ export interface PropAmendatory<
 export interface PropAmendmentDecorator<
     THost extends object,
     TValue extends TUpdate,
-    TClass extends Class,
+    TClass extends AmendableClass,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>
     extends PropAmendatory<THost, TValue, TClass, TUpdate, TAmended> {
@@ -70,7 +70,7 @@ export interface PropAmendmentDecorator<
 export function AeProp<
     THost extends object,
     TValue extends TUpdate,
-    TClass extends Class,
+    TClass extends AmendableClass,
     TUpdate,
     TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
     createHost: (decorated: AeClass<TClass>) => AePropHost<THost, TClass>,

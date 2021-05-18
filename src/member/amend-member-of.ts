@@ -1,5 +1,5 @@
-import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
+import { AmendableClass } from '../class';
 import { AeMember, DecoratedAeMember } from './ae-member';
 
 /**
@@ -15,7 +15,7 @@ import { AeMember, DecoratedAeMember } from './ae-member';
  * @param amendments - Amendment to apply.
  */
 export function amendMemberOf<
-    TClass extends Class,
+    TClass extends AmendableClass,
     TKey extends keyof InstanceType<TClass> = keyof InstanceType<TClass>,
     TAmended extends AeMember<InstanceType<TClass>[TKey], TClass> = AeMember<InstanceType<TClass>[TKey], TClass>>(
     decorated: DecoratedAeMember<TClass, TAmended>,
@@ -23,7 +23,7 @@ export function amendMemberOf<
     ...amendments: Amendment<TAmended>[]
 ): void {
 
-  const amendment = AeMember(...amendments);
+  const amendment = AeMember<InstanceType<TClass>[TKey], TClass, InstanceType<TClass>[TKey], TAmended>(...amendments);
   const proto = decorated.amendedClass.prototype;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(proto, memberKey);
   const amendedDesc = amendment.decorateAmended(

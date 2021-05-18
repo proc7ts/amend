@@ -1,6 +1,5 @@
-import { Class } from '@proc7ts/primitives';
 import { Amendment } from '../base';
-import { AeClass, ClassAmendment } from '../class';
+import { AeClass, AmendableClass, ClassAmendment } from '../class';
 import { AeMember, DecoratedAeMember } from './ae-member';
 import { amendMemberOf } from './amend-member-of';
 
@@ -13,7 +12,7 @@ import { amendMemberOf } from './amend-member-of';
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type AeMembersDef<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
+export type AeMembersDef<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
   [K in keyof InstanceType<TClass>]?: Amendment<TAmended & AeMember<InstanceType<TClass>[K], TClass>> | null;
 };
 
@@ -28,7 +27,7 @@ export type AeMembersDef<TClass extends Class, TAmended extends AeClass<TClass> 
  * @returns New class amendment instance.
  */
 export function AeMembers<
-    TClass extends Class,
+    TClass extends AmendableClass,
     TExtClass extends TClass = TClass,
     TAmended extends AeClass<TExtClass> = AeClass<TExtClass>>(
     def: AeMembersDef<TExtClass, TAmended>,

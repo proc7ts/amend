@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { AmendablePropertyDescriptor, Amendatory } from '../base';
-import { AeClass } from '../class';
+import { AeClass, AmendableClass } from '../class';
 import { AeMember, DecoratedAeMember } from './ae-member';
 
 /**
@@ -15,7 +15,7 @@ import { AeMember, DecoratedAeMember } from './ae-member';
  */
 export type MemberAmendment<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
     MemberAmendment.ForBase<
@@ -32,7 +32,7 @@ export namespace MemberAmendment {
       TClassBase extends AeClass<TClass>,
       TMemberBase extends TClassBase & AeMember<TValue, TClass, TUpdate>,
       TValue extends TUpdate,
-      TClass extends Class,
+      TClass extends AmendableClass,
       TUpdate,
       TAmended extends TMemberBase> =
       TMemberBase extends TAmended
@@ -51,7 +51,7 @@ export namespace MemberAmendment {
  */
 export interface MemberAmendatory<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
     > extends MemberAmendatory.ForBase<
@@ -86,7 +86,7 @@ export namespace MemberAmendatory {
       TClassBase extends AeClass<TClass>,
       TMemberBase extends TClassBase & AeMember<TValue, TClass, TUpdate>,
       TValue extends TUpdate,
-      TClass extends Class,
+      TClass extends AmendableClass,
       TUpdate,
       TAmended extends TMemberBase,
       > extends Amendatory<TAmended> {
@@ -111,7 +111,7 @@ export namespace MemberAmendatory {
  */
 export interface MemberAmendmentDecorator<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     > extends MemberAmendatory<TValue, TClass, TUpdate, AeMember<TValue, TClass, TUpdate>> {
 

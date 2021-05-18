@@ -1,5 +1,7 @@
-import { Class, noop } from '@proc7ts/primitives';
-import { Amendment, AmendRequest, AmendTarget, combineAmendments, newAmendTarget } from '../base';
+import { Class } from '@proc7ts/primitives';
+import { Amendment, AmendTarget, combineAmendments } from '../base';
+import { AeClass$target } from './ae-class.target.impl';
+import { AmendableClass } from './amendable';
 import { ClassAmendment } from './class-amendment';
 
 /**
@@ -9,7 +11,7 @@ import { ClassAmendment } from './class-amendment';
  *
  * @typeParam TClass - A type of amended class.
  */
-export interface AeClass<TClass extends Class = Class> {
+export interface AeClass<TClass extends AmendableClass = Class> {
 
   /**
    * Amended class constructor.
@@ -30,12 +32,12 @@ export interface AeClass<TClass extends Class = Class> {
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeClass<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> =
+export type DecoratedAeClass<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
     DecoratedAeClass.ForBase<AeClass<TClass>, TClass, TAmended>;
 
 export namespace DecoratedAeClass {
 
-  export type ForBase<TBase extends AeClass<TClass>, TClass extends Class, TAmended extends TBase> = {
+  export type ForBase<TBase extends AeClass<TClass>, TClass extends AmendableClass, TAmended extends TBase> = {
     [K in Exclude<keyof TAmended, keyof TBase>]: TAmended[K];
   } & {
     readonly amendedClass: TClass;
@@ -54,17 +56,12 @@ export namespace DecoratedAeClass {
  *
  * @returns - New class amendment instance.
  */
-export function AeClass<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>>(
+export function AeClass<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>>(
     ...amendments: Amendment<TAmended>[]
 ): ClassAmendment<TClass, TAmended> {
 
   const amender = combineAmendments(amendments);
-  const decorateAmended = (base: TAmended): void => {
-    amender(newAmendTarget({
-      base,
-      amend: AeClass$amendTarget$amend(base),
-    }));
-  };
+  const decorateAmended = (base: TAmended): void => amender(AeClass$target(base));
   const decorator = ((target: TClass): void => {
     decorateAmended({ amendedClass: target } as TAmended);
   }) as ClassAmendment<TClass, TAmended>;
@@ -73,17 +70,4 @@ export function AeClass<TClass extends Class, TAmended extends AeClass<TClass> =
   decorator.decorateAmended = decorateAmended;
 
   return decorator;
-}
-
-function AeClass$amendTarget$amend<TClass extends Class, TAmended extends AeClass<TClass>>(
-    { amend }: DecoratedAeClass<TClass, TAmended>,
-): AmendTarget.Options<TAmended>['amend'] {
-  if (!amend) {
-    return noop;
-  }
-
-  return <TBase extends TAmended, TExt>(
-      _base: TBase,
-      request?: AmendRequest<TBase, TExt>,
-  ) => amend(request as AmendRequest<TAmended, TExt>) as () => AmendTarget.Draft<TBase & TExt>;
 }

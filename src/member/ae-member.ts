@@ -1,6 +1,6 @@
 import { Class } from '@proc7ts/primitives';
 import { Amendment, AmendTarget } from '../base';
-import { AeClass } from '../class';
+import { AeClass, AmendableClass } from '../class';
 import { AeProp, AePropHost, AePropHostKind } from '../impl';
 import { MemberAmendment } from './member-amendment';
 
@@ -15,7 +15,7 @@ import { MemberAmendment } from './member-amendment';
  */
 export interface AeMember<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     > extends AeClass<TClass>{
 
@@ -91,7 +91,7 @@ export interface AeMember<
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeMember<TClass extends Class, TAmended extends AeClass<TClass> = AeClass<TClass>> =
+export type DecoratedAeMember<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
     DecoratedAeMember.ForBase<AeClass<TClass>, AeMember<any, TClass>, TClass, TAmended>;
 
 export namespace DecoratedAeMember {
@@ -99,7 +99,7 @@ export namespace DecoratedAeMember {
   export type ForBase<
       TClassBase extends AeClass<TClass>,
       TMemberBase extends AeMember<any, TClass>,
-      TClass extends Class,
+      TClass extends AmendableClass,
       TAmended extends TClassBase> = {
     [K in Exclude<keyof TAmended, keyof TMemberBase>]: TAmended[K];
   } & {
@@ -123,7 +123,7 @@ export namespace DecoratedAeMember {
  */
 export function AeMember<
     TValue extends TUpdate,
-    TClass extends Class = Class,
+    TClass extends AmendableClass = Class,
     TUpdate = TValue,
     TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>>(
     ...amendments: Amendment<TAmended>[]
@@ -136,7 +136,7 @@ const AeMember$HostKind: AePropHostKind = {
   vDesc: key => `valueOf(${String(key)}`,
 };
 
-function AeMember$createHost<TClass extends Class>(
+function AeMember$createHost<TClass extends AmendableClass>(
     { amendedClass }: AeClass<TClass>,
 ): AePropHost<InstanceType<TClass>, TClass> {
   return {
@@ -146,7 +146,7 @@ function AeMember$createHost<TClass extends Class>(
   };
 }
 
-function AeMember$hostClass<TClass extends Class>(
+function AeMember$hostClass<TClass extends AmendableClass>(
     proto: InstanceType<TClass>,
 ): TClass {
   return proto.constructor;
