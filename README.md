@@ -256,7 +256,6 @@ export function LoggedMember<
 }
 ```
 
-
 Other Helpful Amendments
 ------------------------
 
@@ -275,3 +274,55 @@ See the [API documentation] for the detailed info.
 [@AeStatics()]: https://proc7ts.github.io/amend/modules.html#aestatics
 [@PseudoMember()]: https://proc7ts.github.io/amend/modules.html#pseudomember
 [@PseudoStatic()]: https://proc7ts.github.io/amend/modules.html#pseudostatic
+
+
+Manual Amendment
+----------------
+
+There are two issues with TypeScript decorators:
+
+1. They are [experimental][decorators]. They may change in future releases, and probably will due to ECMAScript
+   chosen [another approach][proposal-decorators].
+
+2. Each TypeScript decorator adds a `__decorate()` function call to generated JavaScript. This function has side
+   effects, so the bundler is unable to tree-shake it. The latter could be a major issue (especially for the library
+   authors), as a bundler would add all decorated classes to application bundle, even unused ones.
+
+Manual class amendment designed to resolve these issues.
+
+To make it work just extend an [Amendable] abstract class, and place the amendments to [amendThisClass] static method:
+
+```typescript
+import { AeMembers, Amendable, AmendableTarget } from '@proc7ts/amend';
+
+class MyClass extends Amendable {
+
+  static amendThisClass(target: AmendableTarget<typeof MyClass>): void {
+    // Apply amendments here.  
+    AeMembers({
+      field: LoggedMember(), // An amendment of `field` property.
+    }).applyAmendment(target);
+  }
+
+  field = 'value';
+
+}
+```
+
+The manual amendments will be applied to the class automatically, right before the first instance of that class
+constructed.
+
+Alternatively, the class could be amended explicitly by calling an [amend()] function with that class as an argument.
+The class (and its super-classes) would be amended at most once. The [amend()] method could be safely called multiple
+times for the same class.
+
+It is not necessary to extend an [Amendable] class if [amend()] will be called explicitly for the class. It would be
+enough to implement an [amendThisClass] static method.
+
+An explicit amendment with [amend()] function call could be necessary, e.g. when accessing amended static members.
+
+[decorators]: https://www.typescriptlang.org/docs/handbook/decorators.html
+[proposal-decorators]: https://github.com/tc39/proposal-decorators
+[Amendable]: https://proc7ts.github.io/amend/classes/amendable.html
+[amendThisClass]: https://proc7ts.github.io/amend/interfaces/amendableclass.html#amendthisclass
+[amend()]: https://proc7ts.github.io/amend/modules.html#amend
