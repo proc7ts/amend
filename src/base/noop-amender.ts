@@ -3,8 +3,10 @@ import { AmendTarget } from './amend-target';
 /**
  * An {@link Amender amender} that amends nothing.
  *
- * @param _target - An amendment target that remains intact.
+ * @param _target - An unused amendment target that remains intact.
+ *
+ * @returns Itself for convenience.
  */
-export function noopAmender(_target: AmendTarget<unknown>): void {
-    // Do not amend
+export function noopAmender(_target?: AmendTarget<unknown>): typeof noopAmender {
+  return noopAmender;
 }
