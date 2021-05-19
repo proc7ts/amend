@@ -10,7 +10,7 @@ import { amend } from './amend';
 export interface AmendableClass<T extends object = any> extends AbstractClass<T> {
 
   /**
-   * Amends this class instance.
+   * Auto-amends this class.
    *
    * This static method is called by {@link amend} function at most once per class instance.
    *
@@ -18,7 +18,7 @@ export interface AmendableClass<T extends object = any> extends AbstractClass<T>
    *
    * @param target - An amendment target representing this class.
    */
-  amendThisClass?(target: AeClassTarget<this>): void;
+  autoAmend?(target: AeClassTarget<this>): void;
 
 }
 
@@ -30,9 +30,9 @@ export interface AmendableClass<T extends object = any> extends AbstractClass<T>
 export abstract class Amendable {
 
   /**
-   * Amends this class instance.
+   * Auto-amends this class.
    *
-   * This is an implementation of {@link AmendableClass.amendThisClass} static method.
+   * This is an implementation of {@link AmendableClass.autoAmend} static method.
    *
    * This static method is called by {@link amend} function at most once per class instance. If not explicitly called,
    * then it is called by class constructed when the first instance of particular class created.
@@ -41,7 +41,7 @@ export abstract class Amendable {
    *
    * @param target - An amendment target representing current class.
    */
-  static amendThisClass?(target: AeClassTarget<typeof Amendable>): void;
+  static autoAmend?(target: AeClassTarget<typeof Amendable>): void;
 
   /**
    * Constructs an amendable class instance.

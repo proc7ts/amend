@@ -7,7 +7,7 @@ describe('Amendable', () => {
 
     class TestClass extends Amendable {
 
-      static amendThisClass(target: AeClassTarget<typeof TestClass>): void {
+      static autoAmend(target: AeClassTarget<typeof TestClass>): void {
         AeMembers<typeof TestClass>({
           field({ get, set, amend }) {
             amend({

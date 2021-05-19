@@ -276,7 +276,7 @@ See the [API documentation] for the detailed info.
 [@PseudoStatic()]: https://proc7ts.github.io/amend/modules.html#pseudostatic
 
 
-Manual Amendment
+Auto-Amendment
 ----------------
 
 There are two issues with TypeScript decorators:
@@ -288,16 +288,16 @@ There are two issues with TypeScript decorators:
    effects, so the bundler is unable to tree-shake it. The latter could be a major issue (especially for the library
    authors), as a bundler would add all decorated classes to application bundle, even unused ones.
 
-Manual class amendment designed to resolve these issues.
+Auto-amendment designed to resolve these issues.
 
-To make it work just extend an [Amendable] abstract class, and place the amendments to [amendThisClass] static method:
+To make it work just extend an [Amendable] abstract class, and place the amendments to [autoAmend] static method:
 
 ```typescript
 import { AeClassTarget, AeMembers, Amendable } from '@proc7ts/amend';
 
 class MyClass extends Amendable {
 
-  static amendThisClass(target: AeClassTarget<typeof MyClass>): void {
+  static autoAmend(target: AeClassTarget<typeof MyClass>): void {
     // Apply amendments here.  
     AeMembers({
       field: LoggedMember(), // An amendment of `field` property.
@@ -309,20 +309,19 @@ class MyClass extends Amendable {
 }
 ```
 
-The manual amendments will be applied to the class automatically, right before the first instance of that class
-constructed.
+Auto-amendment will be applied to the class when the first instance of that class constructed.
 
 Alternatively, the class could be amended explicitly by calling an [amend()] function with that class as an argument.
-The class (and its super-classes) would be amended at most once. The [amend()] method could be safely called multiple
-times for the same class.
+The class (and its super-classes) would be auto-amended at most once. The [amend()] method could be safely called
+multiple times for the same class.
 
 It is not necessary to extend an [Amendable] class if [amend()] will be called explicitly for the class. It would be
-enough to implement an [amendThisClass] static method.
+enough to implement an [autoAmend] static method.
 
 An explicit amendment with [amend()] function call could be necessary, e.g. when accessing amended static members.
 
 [decorators]: https://www.typescriptlang.org/docs/handbook/decorators.html
 [proposal-decorators]: https://github.com/tc39/proposal-decorators
 [Amendable]: https://proc7ts.github.io/amend/classes/amendable.html
-[amendThisClass]: https://proc7ts.github.io/amend/interfaces/amendableclass.html#amendthisclass
+[autoAmend]: https://proc7ts.github.io/amend/interfaces/amendableclass.html#autoamend
 [amend()]: https://proc7ts.github.io/amend/modules.html#amend
