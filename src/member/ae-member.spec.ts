@@ -1,11 +1,10 @@
-import { AmendTarget } from '../base';
-import { AeMember } from './ae-member';
+import { AeMember, AeMemberTarget } from './ae-member';
 
 describe('@AeMember', () => {
   describe('when decorates a field', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AeMember<string, typeof TestClass>> | undefined;
+      let target: AeMemberTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 
@@ -281,7 +280,7 @@ describe('@AeMember', () => {
   describe('when decorates accessor', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AeMember<string, typeof TestClass>> | undefined;
+      let target: AeMemberTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 

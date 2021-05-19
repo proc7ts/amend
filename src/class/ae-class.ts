@@ -24,7 +24,7 @@ export interface AeClass<TClass extends AmendableClass = Class> {
  * An amendment target representing a class to amend.
  *
  * @typeParam TClass - A type of amended class.
- * @typeParam TAmended - Amended entity type representing a class to amend.
+ * @typeParam TAmended - A type of the entity representing a class to amend.
  */
 export type AeClassTarget<
     TClass extends AmendableClass = Class,

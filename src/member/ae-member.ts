@@ -80,6 +80,21 @@ export interface AeMember<
 }
 
 /**
+ * An amendment target representing a class instance member (property) to amend.
+ *
+ * @typeParam TValue - Amended member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Amended member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a member to amend.
+ */
+export type AeMemberTarget<
+    TValue extends TUpdate,
+    TClass extends AmendableClass = Class,
+    TUpdate = TValue,
+    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
+    AmendTarget<TAmended>;
+
+/**
  * An amended entity representing a class containing a member to decorate.
  *
  * Contains a data required for member {@link MemberAmendatory.decorateAmended decoration}.

@@ -1,11 +1,10 @@
-import { AmendTarget } from '../base';
-import { AeStatic } from './ae-static';
+import { AeStatic, AeStaticTarget } from './ae-static';
 
 describe('@AeStatic', () => {
   describe('when decorates a static field', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
+      let target: AeStaticTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 
@@ -141,7 +140,7 @@ describe('@AeStatic', () => {
   describe('when decorates a static accessor', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
+      let target: AeStaticTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 

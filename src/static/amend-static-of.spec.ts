@@ -1,12 +1,11 @@
-import { AmendTarget } from '../base';
-import { AeStatic } from './ae-static';
+import { AeStatic, AeStaticTarget } from './ae-static';
 import { amendStaticOf } from './amend-static-of';
 
 describe('amendStaticOf', () => {
   describe('when applied to static field', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
+      let target: AeStaticTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 
@@ -58,7 +57,7 @@ describe('amendStaticOf', () => {
   describe('when applied to static accessor', () => {
     it('does not update descriptor', () => {
 
-      let target: AmendTarget<AeStatic<string, typeof TestClass>> | undefined;
+      let target: AeStaticTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 

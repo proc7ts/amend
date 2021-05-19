@@ -80,6 +80,21 @@ export interface AeStatic<
 }
 
 /**
+ * An amendment target representing a static class member (static property) to amend.
+ *
+ * @typeParam TValue - Amended member value type.
+ * @typeParam TClass - A type of amended class.
+ * @typeParam TUpdate - Amended member update type accepted by its setter.
+ * @typeParam TAmended - A type of the entity representing a static member to amend.
+ */
+export type AeStaticTarget<
+    TValue extends TUpdate,
+    TClass extends AmendableClass = Class,
+    TUpdate = TValue,
+    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>> =
+    AmendTarget<TAmended>;
+
+/**
  * An amended entity representing a class containing a static member to decorate.
  *
  * Contains a data required for static member {@link StaticAmendatory.decorateAmended decoration}.
