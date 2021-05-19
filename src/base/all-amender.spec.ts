@@ -1,12 +1,12 @@
 import { AeClass } from '../class';
 import { AeNone } from './ae-none';
+import { allAmender } from './all-amender';
 import { AmendTarget, newAmendTarget } from './amend-target';
-import { combineAmendments } from './combine-amendments';
 import { noopAmender } from './noop-amender';
 
-describe('combineAmendments', () => {
+describe('allAmender', () => {
   it('returns no-op amender for empty array', () => {
-    expect(combineAmendments([])).toBe(noopAmender);
+    expect(allAmender([])).toBe(noopAmender);
   });
   it('returns singleton amendment action', () => {
 
@@ -15,7 +15,7 @@ describe('combineAmendments', () => {
 
     amendment.applyAmendment = applyAmendment;
 
-    expect(combineAmendments([amendment])).toBe(applyAmendment);
+    expect(allAmender([amendment])).toBe(applyAmendment);
   });
   it('allows to chain amendments', () => {
 
@@ -26,7 +26,7 @@ describe('combineAmendments', () => {
       amend();
     };
 
-    const amender = combineAmendments([amendment1, amendment2]);
+    const amender = allAmender([amendment1, amendment2]);
 
     const amend = jest.fn();
 

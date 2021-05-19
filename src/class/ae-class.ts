@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { Amendment, AmendTarget, combineAmendments } from '../base';
+import { allAmender, Amendment, AmendTarget } from '../base';
 import { AeClass$target } from './ae-class.target.impl';
 import { AmendableClass } from './amendable';
 import { ClassAmendment } from './class-amendment';
@@ -60,7 +60,7 @@ export function AeClass<TClass extends AmendableClass, TAmended extends AeClass<
     ...amendments: Amendment<TAmended>[]
 ): ClassAmendment<TClass, TAmended> {
 
-  const amender = combineAmendments(amendments);
+  const amender = allAmender(amendments);
   const decorateAmended = (base: TAmended): void => amender(AeClass$target(base));
   const decorator = ((target: TClass): void => {
     decorateAmended({ amendedClass: target } as TAmended);

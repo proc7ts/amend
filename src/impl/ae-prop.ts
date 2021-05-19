@@ -1,5 +1,5 @@
 import { Class } from '@proc7ts/primitives';
-import { AmendablePropertyDescriptor, Amendatory, Amendment, combineAmendments } from '../base';
+import { allAmender, AmendablePropertyDescriptor, Amendatory, Amendment } from '../base';
 import { AeClass, AmendableClass, DecoratedAeClass } from '../class';
 import { DecoratedAeMember } from '../member';
 import { createAePropAccessor } from './ae-prop-accessor';
@@ -78,7 +78,7 @@ export function AeProp<
     amendments: Amendment<TAmended>[],
 ): PropAmendment<THost, TValue, TClass, TUpdate, TAmended> {
 
-  const amender = combineAmendments(amendments);
+  const amender = allAmender(amendments);
   const decorateAmended = <TPropValue extends TValue>(
       decorated: DecoratedAeMember<TClass, TAmended>,
       key: string | symbol,

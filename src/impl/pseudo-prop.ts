@@ -1,4 +1,4 @@
-import { Amendment, AmendTarget, combineAmendments } from '../base';
+import { allAmender, Amendment, AmendTarget } from '../base';
 import { AeClass, AmendableClass, DecoratedAeClass, PseudoMember__symbol } from '../class';
 import { PseudoAccessor, PseudoMemberAmendment } from '../member';
 import { AeProp } from './ae-prop';
@@ -17,7 +17,7 @@ export function PseudoProp<
     amendments: Amendment<TAmended>[],
 ): PseudoMemberAmendment<TValue, TClass, TUpdate, TAmended> {
 
-  const amender = combineAmendments(amendments);
+  const amender = allAmender(amendments);
   const decorateAmended = (decorated: DecoratedAeClass<TClass, TAmended>, memberKey?: string | symbol): void => {
     if (key) {
       memberKey = key;

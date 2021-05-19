@@ -12,9 +12,9 @@ import { noopAmender } from './noop-amender';
  * @typeParam TAmended - Amended entity type.
  * @param amendments - An iterable of amendments to apply in their application order.
  *
- * @returns A combining amendment {@link Amender action}.
+ * @returns A combining amender.
  */
-export function combineAmendments<TAmended>(amendments: Iterable<Amendment<TAmended>>): Amender<TAmended> {
+export function allAmender<TAmended>(amendments: Iterable<Amendment<TAmended>>): Amender<TAmended> {
     if (Array.isArray(amendments) && amendments.length < 2) {
 
         const [amender = noopAmender] = amendments;
