@@ -1,6 +1,5 @@
-import { AbstractClass, Class } from '@proc7ts/primitives';
-import { AmendTarget } from '../base';
-import { AeClass } from './ae-class';
+import { AbstractClass } from '@proc7ts/primitives';
+import { AeClassTarget } from './ae-class';
 import { amend } from './amend';
 
 /**
@@ -19,16 +18,9 @@ export interface AmendableClass<T extends object = any> extends AbstractClass<T>
    *
    * @param target - An amendment target representing this class.
    */
-  amendThisClass?(target: AmendableTarget<this>): void;
+  amendThisClass?(target: AeClassTarget<this>): void;
 
 }
-
-/**
- * An amendment target representing an amendable class to amend.
- *
- * @typeParam TClass - A type of amended class.
- */
-export type AmendableTarget<TClass extends AmendableClass = Class> = AmendTarget<AeClass<TClass>>;
 
 /**
  * Abstract {@link AmendableClass amendable class} instance.
@@ -49,7 +41,7 @@ export abstract class Amendable {
    *
    * @param target - An amendment target representing current class.
    */
-  static amendThisClass?(target: AmendableTarget<typeof Amendable>): void;
+  static amendThisClass?(target: AeClassTarget<typeof Amendable>): void;
 
   /**
    * Constructs an amendable class instance.

@@ -1,12 +1,13 @@
 import { AeMembers } from '../member';
-import { Amendable, AmendableTarget } from './amendable';
+import { AeClassTarget } from './ae-class';
+import { Amendable } from './amendable';
 
 describe('Amendable', () => {
   it('applies amendments when instantiating', () => {
 
     class TestClass extends Amendable {
 
-      static amendThisClass(target: AmendableTarget<typeof TestClass>): void {
+      static amendThisClass(target: AeClassTarget<typeof TestClass>): void {
         AeMembers<typeof TestClass>({
           field({ get, set, amend }) {
             amend({

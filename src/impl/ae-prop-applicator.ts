@@ -1,5 +1,5 @@
 import { Amender, AmendRequest, AmendTarget, newAmendTarget } from '../base';
-import { AeClass, AmendableClass } from '../class';
+import { AeClassTarget, AmendableClass } from '../class';
 import { AeProp } from './ae-prop';
 import { AePropHost } from './ae-prop-host';
 import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessibility';
@@ -25,10 +25,10 @@ export function createAePropApplicator<
     key: string | symbol,
     init: AePropDesc<THost, TValue, TUpdate>,
 ): (
-    baseTarget: AmendTarget<AeClass<TClass>>,
+    baseTarget: AeClassTarget<TClass>,
 ) => AePropDesc<THost, TValue, TUpdate> {
   return (
-      baseTarget: AmendTarget<AeClass<TClass>>,
+      baseTarget: AeClassTarget<TClass>,
   ): AePropDesc<THost, TValue, TUpdate> => {
 
     const result = { ...init };

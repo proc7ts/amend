@@ -293,11 +293,11 @@ Manual class amendment designed to resolve these issues.
 To make it work just extend an [Amendable] abstract class, and place the amendments to [amendThisClass] static method:
 
 ```typescript
-import { AeMembers, Amendable, AmendableTarget } from '@proc7ts/amend';
+import { AeClassTarget, AeMembers, Amendable } from '@proc7ts/amend';
 
 class MyClass extends Amendable {
 
-  static amendThisClass(target: AmendableTarget<typeof MyClass>): void {
+  static amendThisClass(target: AeClassTarget<typeof MyClass>): void {
     // Apply amendments here.  
     AeMembers({
       field: LoggedMember(), // An amendment of `field` property.

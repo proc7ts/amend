@@ -1,18 +1,17 @@
 import { noop } from '@proc7ts/primitives';
-import { AeClass } from '../class';
-import { AmendTarget } from './amend-target';
+import { AeClassTarget } from '../class';
 import { amenderOf, isAmendatory } from './amendment';
 
 describe('amenderOf', () => {
   it('returns amender as is', () => {
 
-    const amender = (_target: AmendTarget<AeClass>): void => { /* amend */ };
+    const amender = (_target: AeClassTarget): void => { /* amend */ };
 
     expect(amenderOf(amender)).toBe(amender);
   });
   it('returns amendment action for amendatory function', () => {
 
-    const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
+    const applyAmendment = (_target: AeClassTarget): void => { /* amend */ };
     const amendment = (): void => { /* fn */ };
 
     amendment.applyAmendment = applyAmendment;
@@ -21,7 +20,7 @@ describe('amenderOf', () => {
   });
   it('returns amendment action for amendatory object', () => {
 
-    const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
+    const applyAmendment = (_target: AeClassTarget): void => { /* amend */ };
     const amendment = { applyAmendment };
 
     expect(amenderOf(amendment)).toBe(applyAmendment);

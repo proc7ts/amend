@@ -1,4 +1,4 @@
-import { AeClass } from '../class';
+import { AeClassTarget } from '../class';
 import { AeNone } from './ae-none';
 import { allAmender } from './all-amender';
 import { AmendTarget, newAmendTarget } from './amend-target';
@@ -10,7 +10,7 @@ describe('allAmender', () => {
   });
   it('returns singleton amendment action', () => {
 
-    const applyAmendment = (_target: AmendTarget<AeClass>): void => { /* amend */ };
+    const applyAmendment = (_target: AeClassTarget): void => { /* amend */ };
     const amendment = (): void => { /* fn */ };
 
     amendment.applyAmendment = applyAmendment;
