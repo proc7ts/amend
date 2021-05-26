@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { AeStatics } from './ae-statics';
 
 describe('@AeStatics', () => {

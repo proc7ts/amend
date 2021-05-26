@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { AeMember, AeMemberTarget } from './ae-member';
 import { amendMemberOf } from './amend-member-of';
 

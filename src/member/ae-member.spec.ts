@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { AeMember, AeMemberTarget } from './ae-member';
 
 describe('@AeMember', () => {
@@ -140,7 +141,7 @@ describe('@AeMember', () => {
       const instance = new TestClass();
 
       expect(instance.field).toBe('initial!');
-      expect(() => instance.field = 'other').toThrow(TypeError);
+      expect(() => instance.field = 'other').toThrow(new TypeError('Property TestClass.field is not writable'));
     });
     it('converts to write-only accessor', () => {
 
@@ -164,11 +165,10 @@ describe('@AeMember', () => {
 
       const instance = new TestClass();
 
-      expect(() => instance.field).toThrow(TypeError);
+      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
 
       instance.field = 'other';
-      expect(() => instance.field).toThrow(TypeError);
-      expect(() => instance.field).toThrow('Property TestClass.field is not readable');
+      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
       expect(instance.update).toBe('other');
     });
     it('allows to read field value', () => {
@@ -246,8 +246,9 @@ describe('@AeMember', () => {
 
       expect(getValue(instance)).toBe('initial');
 
-      expect(() => instance.field = 'some').toThrow(TypeError);
-      expect(() => setValue(instance, 'other')).toThrow(TypeError);
+      expect(() => instance.field = 'some')
+          .toThrow(new TypeError('Cannot assign to read only property \'field\' of object \'#<TestClass>\''));
+      expect(() => setValue(instance, 'other')).toThrow(new TypeError('Property TestClass.field is not writable'));
       expect(getValue(instance)).toBe('initial');
     });
     it('applies multiple amendments', () => {
@@ -379,8 +380,7 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('initial!');
       expect(getValue(instance)).toBe('initial');
 
-      expect(() => instance.field = 'wrong').toThrow(TypeError);
-      expect(() => instance.field = 'wrong').toThrow('Property TestClass.field is not writable');
+      expect(() => instance.field = 'wrong').toThrow(TypeError('Property TestClass.field is not writable'));
       expect(instance.field).toBe('initial!');
 
       setValue(instance, 'other');
@@ -421,7 +421,7 @@ describe('@AeMember', () => {
 
       const instance = new TestClass();
 
-      expect(() => instance.field).toThrow(TypeError);
+      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
       expect(getValue(instance)).toBe('initial');
 
       instance.field = 'some';
@@ -493,8 +493,8 @@ describe('@AeMember', () => {
 
       const instance = new TestClass();
 
-      expect(() => instance.field).toThrow(TypeError);
-      expect(() => getValue(instance)).toThrow(TypeError);
+      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
+      expect(() => getValue(instance)).toThrow(new TypeError('Property TestClass.field is not readable'));
       expect(instance._field).toBe('initial');
 
       instance.field = 'some';
@@ -534,8 +534,8 @@ describe('@AeMember', () => {
       const instance = new TestClass();
 
       expect(instance['custom field']).toBe('initial!');
-      expect(() => instance['custom field'] = 'other').toThrow(TypeError);
-      expect(() => instance['custom field'] = 'other').toThrow('Property TestClass["custom field"] is not writable');
+      expect(() => instance['custom field'] = 'other')
+          .toThrow(new TypeError('Property TestClass["custom field"] is not writable'));
     });
     it('reports inaccessible field key', () => {
 
@@ -570,8 +570,8 @@ describe('@AeMember', () => {
       const instance = new TestClass();
 
       expect(instance[key]).toBe('initial!');
-      expect(() => instance[key] = 'other').toThrow(TypeError);
-      expect(() => instance[key] = 'other').toThrow('Property TestClass[Symbol(testKey)] is not writable');
+      expect(() => instance[key] = 'other')
+          .toThrow(new TypeError('Property TestClass[Symbol(testKey)] is not writable'));
     });
     it('updates property descriptor', () => {
       class TestClass {
