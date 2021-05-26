@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { AeMember } from './ae-member';
 import { AeMembers } from './ae-members';
 import { PseudoMember } from './pseudo-member';
@@ -27,9 +28,8 @@ describe('@PseudoMember', () => {
 
     expect(getValue(instance)).toBe('initial!');
 
-    expect(() => setValue(instance, 'wrong')).toThrow(TypeError);
     expect(() => setValue(instance, 'wrong'))
-        .toThrow('Pseudo-property TestClass[Symbol(PseudoMember)] is not writable');
+        .toThrow(new TypeError('Pseudo-property TestClass[Symbol(PseudoMember)] is not writable'));
 
     instance.field = 'other';
     expect(getValue(instance)).toBe('other!');
@@ -56,9 +56,8 @@ describe('@PseudoMember', () => {
 
     const instance = new TestClass();
 
-    expect(() => getValue(instance)).toThrow(TypeError);
     expect(() => getValue(instance))
-        .toThrow('Pseudo-property TestClass[Symbol(PseudoMember)] is not readable');
+        .toThrow(new TypeError('Pseudo-property TestClass[Symbol(PseudoMember)] is not readable'));
 
     setValue(instance, 'other');
     expect(instance.field).toBe('other!');

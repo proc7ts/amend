@@ -1,3 +1,4 @@
+import { describe, expect, it, jest } from '@jest/globals';
 import { AeClassTarget } from '../class';
 import { AeNone } from './ae-none';
 import { allAmender } from './all-amender';
@@ -28,7 +29,7 @@ describe('allAmender', () => {
 
     const amender = allAmender([amendment1, amendment2]);
 
-    const amend = jest.fn();
+    const amend = jest.fn<void, []>();
 
     amender(newAmendTarget({
       base: {},

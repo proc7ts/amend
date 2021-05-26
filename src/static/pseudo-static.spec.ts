@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { AeStatic } from './ae-static';
 import { AeStatics } from './ae-statics';
 import { PseudoStatic } from './pseudo-static';
@@ -25,9 +26,8 @@ describe('@PseudoStatic', () => {
 
     expect(getValue(TestClass)).toBe('initial!');
 
-    expect(() => setValue(TestClass, 'wrong')).toThrow(TypeError);
     expect(() => setValue(TestClass, 'wrong'))
-        .toThrow('Static pseudo-property TestClass[Symbol(PseudoMember)] is not writable');
+        .toThrow(new TypeError('Static pseudo-property TestClass[Symbol(PseudoMember)] is not writable'));
 
     TestClass.field = 'other';
     expect(getValue(TestClass)).toBe('other!');
@@ -52,9 +52,8 @@ describe('@PseudoStatic', () => {
 
     }
 
-    expect(() => getValue(TestClass)).toThrow(TypeError);
     expect(() => getValue(TestClass))
-        .toThrow('Static pseudo-property TestClass[Symbol(PseudoMember)] is not readable');
+        .toThrow(new TypeError('Static pseudo-property TestClass[Symbol(PseudoMember)] is not readable'));
 
     setValue(TestClass, 'other');
     expect(TestClass.field).toBe('other!');

@@ -1,3 +1,4 @@
+import { describe, expect, it } from '@jest/globals';
 import { Class } from '@proc7ts/primitives';
 import { AeClass } from '../class';
 import { AeMembers } from './ae-members';
