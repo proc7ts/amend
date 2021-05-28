@@ -21,7 +21,7 @@
   "types": "./index.d.ts",
   "exports": "./dist/amend.js",
   "dependencies": {
-    "@proc7ts/primitives": "^2.2.0"
+    "@proc7ts/primitives": "^3.0.0"
   },
   "devDependencies": {
     "@jest/globals": "^27.0.1",
