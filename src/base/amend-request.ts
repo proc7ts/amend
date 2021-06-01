@@ -20,4 +20,3 @@ export type AmendRequest<TAmended, TExt = AeNone> = {
 } & {
   [K in keyof AmendTarget.Core<TAmended & TExt>]?: AmendTarget.Core<TAmended & TExt>[K];
 };
-
