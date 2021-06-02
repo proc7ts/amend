@@ -4,7 +4,7 @@
   "description": "Programmatically reusable decorators (amendments) for TypeScript",
   "keywords": [
     "decorators",
-    "typescript"
+    "typescript-decorators"
   ],
   "homepage": "https://github.com/proc7ts/amend",
   "repository": {
