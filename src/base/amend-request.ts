@@ -14,9 +14,9 @@ import { AmendTarget } from './amend-target';
  * @typeParam TExt - A type of amended entity extension.
  */
 export type AmendRequest<TAmended, TExt = AeNone> = {
-  [K in keyof TAmended]?: TAmended[K];
+  [K in keyof TAmended]?: TAmended[K] | undefined;
 } & {
   [K in Exclude<keyof TExt, keyof TAmended>]: TExt[K];
 } & {
-  [K in keyof AmendTarget.Core<TAmended & TExt>]?: AmendTarget.Core<TAmended & TExt>[K];
+  [K in keyof AmendTarget.Core<TAmended & TExt>]?: AmendTarget.Core<TAmended & TExt>[K] | undefined;
 };

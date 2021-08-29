@@ -13,7 +13,10 @@ import { amendMemberOf } from './amend-member-of';
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
 export type AeMembersDef<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
-  [K in keyof InstanceType<TClass>]?: Amendment<TAmended & AeMember<InstanceType<TClass>[K], TClass>> | null;
+  [K in keyof InstanceType<TClass>]?:
+    | Amendment<TAmended & AeMember<InstanceType<TClass>[K], TClass>>
+    | null
+    | undefined;
 };
 
 /**

@@ -13,7 +13,7 @@ import { amendStaticOf } from './amend-static-of';
  * @typeParam TAmended - Amended entity type representing a class to amend.
  */
 export type AeStaticsDef<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
-  [K in keyof TClass]?: Amendment<TAmended & AeStatic<TClass[K], TClass>> | null;
+  [K in keyof TClass]?: Amendment<TAmended & AeStatic<TClass[K], TClass>> | null | undefined;
 };
 
 /**

@@ -44,7 +44,7 @@ describe('@AeStatics', () => {
     class TestClass {
 
       static field = 'initial';
-      static added?: string;
+      static added?: string | undefined;
 
     }
 

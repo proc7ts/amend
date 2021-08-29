@@ -56,7 +56,7 @@ export namespace AmendTarget {
    */
   export type Draft<TAmended> =
       & TAmended
-      & { readonly [K in keyof Core<TAmended>]?: unknown };
+      & { readonly [K in keyof Core<TAmended>]?: unknown | undefined };
 
   /**
    * Options for {@link newAmendTarget custom amendment target}.

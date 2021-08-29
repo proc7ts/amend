@@ -53,7 +53,7 @@ export namespace DecoratedAeClass {
   } & {
     readonly amendedClass: TClass;
   } & {
-    [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K];
+    [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K] | undefined;
   };
 
 }

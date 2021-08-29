@@ -19,7 +19,7 @@ export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TU
    *
    * Defaults to {@link PseudoMember__symbol}.
    */
-  key?: string | symbol;
+  key?: string | symbol | undefined;
 
   /**
    * Reads pseudo-member value.
@@ -30,7 +30,7 @@ export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TU
    *
    * @returns Pseudo-member value.
    */
-  get?(this: void, hostInstance: THost): TValue;
+  get?: ((this: void, hostInstance: THost) => TValue) | undefined;
 
   /**
    * Writes pseudo-member value.
@@ -40,7 +40,7 @@ export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TU
    * @param hostInstance - Host object instance.
    * @param update - Updated pseudo-member value.
    */
-  set?(this: void, hostInstance: THost, update: TUpdate): TValue;
+  set?: ((this: void, hostInstance: THost, update: TUpdate) => TValue) | undefined;
 
 }
 

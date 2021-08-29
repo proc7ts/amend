@@ -147,7 +147,7 @@ describe('@AeMember', () => {
 
       class TestClass {
 
-        update?: string;
+        update?: string | undefined;
 
         @AeMember<string, typeof TestClass>(({ amend }) => {
           amend({ set: (instance, update) => instance.update = update });
