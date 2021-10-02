@@ -119,6 +119,7 @@ describe('@PseudoMember', () => {
     expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'test')).toBeUndefined();
 
     const instance = new TestClass();
+
     expect(memberKey).toBe('test');
 
     expect(getValue(instance)).toBe('initial!!!');

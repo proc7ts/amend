@@ -232,6 +232,7 @@ describe('@AeMember', () => {
         field!: string;
 
       }
+
       Reflect.defineProperty(TestClass.prototype, 'field', { value: 'initial' });
 
       AeMember<string, typeof TestClass>(({ get, set }) => {
@@ -434,6 +435,7 @@ describe('@AeMember', () => {
 
       class BaseClass {
       }
+
       Reflect.defineProperty(BaseClass.prototype, 'field', { get: () => 'initial' });
 
       class TestClass extends BaseClass {

@@ -73,6 +73,7 @@ export function createAePropAccessor<THost extends object, TValue extends TUpdat
           if (valueKey in hostInstance) {
             return (hostInstance as ValueHost)[valueKey];
           }
+
           return (hostInstance as ValueHost)[valueKey] = Reflect.get(superProto, key, hostInstance);
         };
       } else {

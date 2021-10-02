@@ -29,5 +29,6 @@ function AmendProp$accessString(key: string | symbol): string {
   if (typeof key === 'string') {
     return AeProp$idPattern.test(key) ? `.${key}` : `[${JSON.stringify(key)}]`;
   }
+
   return `[${String(key)}]`;
 }
