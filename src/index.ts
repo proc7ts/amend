@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module Module @proc7ts/amend
+ * @module @proc7ts/amend
  */
 export * from './base';
 export * from './class';

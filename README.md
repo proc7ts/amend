@@ -97,10 +97,10 @@ the member definition:
 [writable]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description
 [property descriptor]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/defineProperty
 
-[@AeMember()]: https://proc7ts.github.io/amend/modules.html#aemember
-[AeMember]: https://proc7ts.github.io/amend/interfaces/aemember.html
-[AmendTarget.Core]: https://proc7ts.github.io/amend/interfaces/amendtarget.core.html
-[AmendTarget.Core.amend]: https://proc7ts.github.io/amend/interfaces/amendtarget.core.html#amend
+[@AeMember()]: https://proc7ts.github.io/amend/modules.html#AeMember
+[AeMember]: https://proc7ts.github.io/amend/interfaces/AeMember.html
+[AmendTarget.Core]: https://proc7ts.github.io/amend/interfaces/AmendTarget.Core.html
+[AmendTarget.Core.amend]: https://proc7ts.github.io/amend/interfaces/AmendTarget.core.html#amend
 
 
 Static Member Amendments
@@ -109,7 +109,7 @@ Static Member Amendments
 The [@AeStatic()] creates an amendment that can be used as a static class member decorator. It is equivalent to
 [@AeMember()], except it is applicable to static members.
 
-[@AeStatic()]: https://proc7ts.github.io/amend/modules.html#aestatic
+[@AeStatic()]: https://proc7ts.github.io/amend/modules.html#AeStatic
 
 
 Class Amendments
@@ -119,7 +119,7 @@ The [@AeClass()] creates an amendment that can be used as a class decorator.
 
 The nested amendments receive an object with only `amendedClass` and `amend()` properties.
 
-[@AeClass()]: https://proc7ts.github.io/amend/modules.html#aeclass
+[@AeClass()]: https://proc7ts.github.io/amend/modules.html#AeClass
 
 
 Custom Amendments
@@ -276,10 +276,10 @@ The library contains a few more helpful amendments:
 
 See the [API documentation] for the detailed info.
 
-[@AeMembers()]: https://proc7ts.github.io/amend/modules.html#aemembers
-[@AeStatics()]: https://proc7ts.github.io/amend/modules.html#aestatics
-[@PseudoMember()]: https://proc7ts.github.io/amend/modules.html#pseudomember
-[@PseudoStatic()]: https://proc7ts.github.io/amend/modules.html#pseudostatic
+[@AeMembers()]: https://proc7ts.github.io/amend/modules.html#AeMembers
+[@AeStatics()]: https://proc7ts.github.io/amend/modules.html#AeStatics
+[@PseudoMember()]: https://proc7ts.github.io/amend/modules.html#PseudoMember
+[@PseudoStatic()]: https://proc7ts.github.io/amend/modules.html#PseudoStatic
 
 
 Auto-Amendment
@@ -328,6 +328,6 @@ An explicit amendment with [amend()] function call could be necessary, e.g. when
 
 [decorators]: https://www.typescriptlang.org/docs/handbook/decorators.html
 [proposal-decorators]: https://github.com/tc39/proposal-decorators
-[Amendable]: https://proc7ts.github.io/amend/classes/amendable.html
-[autoAmend]: https://proc7ts.github.io/amend/interfaces/amendableclass.html#autoamend
+[Amendable]: https://proc7ts.github.io/amend/classes/Amendable.html
+[autoAmend]: https://proc7ts.github.io/amend/interfaces/AmendableClass.html#autoAmend
 [amend()]: https://proc7ts.github.io/amend/modules.html#amend
