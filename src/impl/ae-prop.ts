@@ -10,7 +10,7 @@ export interface AeProp<
     THost extends object,
     TValue extends TUpdate,
     TClass extends AmendableClass = Class,
-    TUpdate = TValue
+    TUpdate = TValue,
     > extends AeClass<TClass>{
 
   readonly key: string | symbol;
