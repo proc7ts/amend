@@ -24,7 +24,7 @@ export function amendMemberOf<
 ): void {
 
   const amendment = AeMember<InstanceType<TClass>[TKey], TClass, InstanceType<TClass>[TKey], TAmended>(...amendments);
-  const proto = decorated.amendedClass.prototype;
+  const proto: object = decorated.amendedClass.prototype;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(proto, memberKey);
   const amendedDesc = amendment.decorateAmended(
       decorated as DecoratedAeMember<TClass, TAmended & AeMember<InstanceType<TClass>[TKey], TClass>>,

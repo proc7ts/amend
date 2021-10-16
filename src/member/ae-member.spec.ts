@@ -92,7 +92,7 @@ describe('@AeMember', () => {
 
       Reflect.setPrototypeOf(TestClass.prototype, null);
 
-      const desc = AeMember<string, typeof TestClass>(({ get, set, amend }) => {
+      const desc: PropertyDescriptor = AeMember<string, typeof TestClass>(({ get, set, amend }) => {
         amend({
           get: instance => get(instance) + '!',
           set: (instance, update) => set(instance, update),

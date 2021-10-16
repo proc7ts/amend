@@ -58,7 +58,7 @@ describe('@AeStatic', () => {
 
       }
 
-      const desc = AeStatic<string>(({ get, set, amend }) => {
+      const desc: PropertyDescriptor = AeStatic<string>(({ get, set, amend }) => {
         amend({
           get: targetClass => get(targetClass) + '!',
           set: (targetClass, update) => set(targetClass, update),

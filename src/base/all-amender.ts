@@ -17,7 +17,7 @@ import { noopAmender } from './noop-amender';
 export function allAmender<TAmended>(amendments: Iterable<Amendment<TAmended>>): Amender<TAmended> {
     if (Array.isArray(amendments) && amendments.length < 2) {
 
-        const [amender = noopAmender] = amendments;
+        const [amender = noopAmender] = amendments as Amendment<TAmended>[];
 
         return amenderOf(amender);
     }
