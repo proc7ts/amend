@@ -1,5 +1,5 @@
-Amendments
-==========
+# Amendments
+
 **Programmatically reusable decorators for TypeScript**
 
 [![NPM][npm-image]][npm-url]
@@ -7,7 +7,7 @@ Amendments
 [![Code Quality][quality-img]][quality-link]
 [![Coverage][coverage-img]][coverage-link]
 [![GitHub Project][github-image]][github-url]
-[![API Documentation][api-docs-image]][API documentation]
+[![API Documentation][api-docs-image]][api documentation]
 
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/amend.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/amend
@@ -20,37 +20,37 @@ Amendments
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
 [github-url]: https://github.com/proc7ts/amend
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
-[API documentation]: https://proc7ts.github.io/amend/
+[api documentation]: https://proc7ts.github.io/amend/
 
-
-Class Member Amendments
------------------------
+## Class Member Amendments
 
 ```typescript
 import { AeMember } from '@proc7ts/amend';
 
 class MyClass {
+  @AeMember(({ key, get, set, amend }) =>
+    amend({
+      get(instance) {
+        // Replace the getter.
 
-  @AeMember(({ key, get, set, amend }) => amend({
-    get(instance) { // Replace the getter.
+        const value = get(instance); // Read the value with default getter.
 
-      const value = get(instance); // Read the value with default getter.  
+        console.debug(`${key} value read:`, value);
 
-      console.debug(`${key} value read:`, value);
+        return value;
+      },
+      set(instance, update) {
+        // Replace the setter.
 
-      return value;
-    },
-    set(instance, update) { // Replace the setter.
+        const oldValue = get(instance);
 
-      const oldValue = get(instance)
+        set(instance, update);
 
-      set(instance, update);
-
-      console.debug(`${key} value updated:`, oldValue, ' -> ', update);
-    },
-  }))
+        console.debug(`${key} value updated:`, oldValue, ' -> ', update);
+      },
+    }),
+  )
   field = 'value';
-
 }
 ```
 
@@ -72,7 +72,7 @@ properties (from [AeMember] and [AmendTarget.Core] interfaces):
 - `set(instance, update)` - Member value writer function.
 - `amend(request)` - Member amendment function.
 
-The [amend()][AmendTarget.Core.amend] function call modifies the member definition. It accepts an object with the same properties and overrides
+The [amend()][amendtarget.core.amend] function call modifies the member definition. It accepts an object with the same properties and overrides
 the member definition:
 
 - If `get` or `set` specified and differ from the passed in value, then the member converted to accessor with
@@ -96,34 +96,27 @@ the member definition:
 [enumerable]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description
 [writable]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty#description
 [property descriptor]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Reflect/defineProperty
+[@aemember()]: https://proc7ts.github.io/amend/modules.html#AeMember
+[aemember]: https://proc7ts.github.io/amend/interfaces/AeMember.html
+[amendtarget.core]: https://proc7ts.github.io/amend/interfaces/AmendTarget.Core.html
+[amendtarget.core.amend]: https://proc7ts.github.io/amend/interfaces/AmendTarget.core.html#amend
 
-[@AeMember()]: https://proc7ts.github.io/amend/modules.html#AeMember
-[AeMember]: https://proc7ts.github.io/amend/interfaces/AeMember.html
-[AmendTarget.Core]: https://proc7ts.github.io/amend/interfaces/AmendTarget.Core.html
-[AmendTarget.Core.amend]: https://proc7ts.github.io/amend/interfaces/AmendTarget.core.html#amend
-
-
-Static Member Amendments
-------------------------
+## Static Member Amendments
 
 The [@AeStatic()] creates an amendment that can be used as a static class member decorator. It is equivalent to
 [@AeMember()], except it is applicable to static members.
 
-[@AeStatic()]: https://proc7ts.github.io/amend/modules.html#AeStatic
+[@aestatic()]: https://proc7ts.github.io/amend/modules.html#AeStatic
 
-
-Class Amendments
-----------------
+## Class Amendments
 
 The [@AeClass()] creates an amendment that can be used as a class decorator.
 
 The nested amendments receive an object with only `amendedClass` and `amend()` properties.
 
-[@AeClass()]: https://proc7ts.github.io/amend/modules.html#AeClass
+[@aeclass()]: https://proc7ts.github.io/amend/modules.html#AeClass
 
-
-Custom Amendments
------------------
+## Custom Amendments
 
 Custom amendment can be created by function that calls one of the predefined ones. It can be declared like this:
 
@@ -131,53 +124,51 @@ Custom amendment can be created by function that calls one of the predefined one
 import { AeMember, AmendTarget, MemberAmendment } from '@proc7ts/amend';
 import { Class } from '@proc7ts/primitives';
 
-export function LoggedMember<TValue extends TUpdate,       // Member value type.
-    TClass extends Class = Class, // Amended class type.
-    TUpdate = TValue,             // Member value update type accepted by its setter.
-    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
-    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
-  return AeMember((
-      {
-        key,
-        get,
-        set,
-        amend,
-      }: AmendTarget<AeMember<TValue, TClass, TUpdate>>, // Amendment target. Contains amended entity properties
-                                                         // along with `amend()` function.
-  ) => amend({
-    get(instance) { // Replace the getter.
+export function LoggedMember<
+  TValue extends TUpdate, // Member value type.
+  TClass extends Class = Class, // Amended class type.
+  TUpdate = TValue, // Member value update type accepted by its setter.
+  TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended>, // Amended entity type.
+>(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeMember(
+    (
+      { key, get, set, amend }: AmendTarget<AeMember<TValue, TClass, TUpdate>>, // Amendment target. Contains amended entity properties
+    ) =>
+      // along with `amend()` function.
+      amend({
+        get(instance) {
+          // Replace the getter.
 
-      const value = get(instance); // Read the value with default getter.  
+          const value = get(instance); // Read the value with default getter.
 
-      console.debug(`${key} value read:`, value);
+          console.debug(`${key} value read:`, value);
 
-      return value;
-    },
-    set(instance, update) { // Replace the setter.
+          return value;
+        },
+        set(instance, update) {
+          // Replace the setter.
 
-      const oldValue = get(instance)
+          const oldValue = get(instance);
 
-      set(instance, update);
+          set(instance, update);
 
-      console.debug(`${key} value updated:`, oldValue, ' -> ', update);
-    },
-  }));
+          console.debug(`${key} value updated:`, oldValue, ' -> ', update);
+        },
+      }),
+  );
 }
 ```
 
 Then the first example could be rewritten like this:
+
 ```typescript
 class MyClass {
-
   @LoggedMember()
   field = 'value';
-
 }
 ```
 
-
-Combining Amendments
---------------------
+## Combining Amendments
 
 The simplest way to combine multiple amendments is to apply multiple decorators.
 
@@ -191,79 +182,67 @@ import { Class } from '@proc7ts/primitives';
  * Logs member reads.
  */
 export function ReadLoggedMember<
-    TValue extends TUpdate,       // Member value type.
-    TClass extends Class = Class, // Amended class type.
-    TUpdate = TValue,             // Member value update type accepted by its setter.
-    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
-    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
-  return AeMember((
-      {
-        key,
-        get,
-        set,
-        amend,
-      }: AmendTarget<AeMember<TValue, TClass, TUpdate>>,
-  ) => amend({
-    get(instance) { // Replace the getter.
+  TValue extends TUpdate, // Member value type.
+  TClass extends Class = Class, // Amended class type.
+  TUpdate = TValue, // Member value update type accepted by its setter.
+  TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended>, // Amended entity type.
+>(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeMember(({ key, get, set, amend }: AmendTarget<AeMember<TValue, TClass, TUpdate>>) =>
+    amend({
+      get(instance) {
+        // Replace the getter.
 
-      const value = get(instance); // Read the value with default getter.  
+        const value = get(instance); // Read the value with default getter.
 
-      console.debug(`${key} value read:`, value);
+        console.debug(`${key} value read:`, value);
 
-      return value;
-    },
-    set, // The setter remains unchanged.
-  }));
+        return value;
+      },
+      set, // The setter remains unchanged.
+    }),
+  );
 }
 
 /**
  * Logs member writes.
  */
 export function WriteLoggedMember<
-    TValue extends TUpdate,       // Member value type.
-    TClass extends Class = Class, // Amended class type.
-    TUpdate = TValue,             // Member value update type accepted by its setter.
-    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
-    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
-  return AeMember((
-      {
-        key,
-        get,
-        set,
-        amend,
-      }: AmendTarget<AeMember<TValue, TClass, TUpdate>>,
-  ) => amend({
-    get, // The getter remains unchanged.
-    set(instance, update) { // Replace the setter.
+  TValue extends TUpdate, // Member value type.
+  TClass extends Class = Class, // Amended class type.
+  TUpdate = TValue, // Member value update type accepted by its setter.
+  TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended>, // Amended entity type.
+>(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  return AeMember(({ key, get, set, amend }: AmendTarget<AeMember<TValue, TClass, TUpdate>>) =>
+    amend({
+      get, // The getter remains unchanged.
+      set(instance, update) {
+        // Replace the setter.
 
-      const oldValue = get(instance)
+        const oldValue = get(instance);
 
-      set(instance, update);
+        set(instance, update);
 
-      console.debug(`${key} value updated:`, oldValue, ' -> ', update);
-    },
-  }));
+        console.debug(`${key} value updated:`, oldValue, ' -> ', update);
+      },
+    }),
+  );
 }
 
 /**
  * Logs any member access.
  */
 export function LoggedMember<
-    TValue extends TUpdate,       // Member value type.
-    TClass extends Class = Class, // Amended class type.
-    TUpdate = TValue,             // Member value update type accepted by its setter.
-    TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended> // Amended entity type.
-    >(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  TValue extends TUpdate, // Member value type.
+  TClass extends Class = Class, // Amended class type.
+  TUpdate = TValue, // Member value update type accepted by its setter.
+  TAmended extends AeMember<TValue, TClass, TAmended> = AeMember<TValue, TClass, TAmended>, // Amended entity type.
+>(): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
   // Apply both amendments in chain.
-  return AeMember(
-      ReadLoggedMember(),
-      WriteLoggedMember(),
-  );
+  return AeMember(ReadLoggedMember(), WriteLoggedMember());
 }
 ```
 
-Other Helpful Amendments
-------------------------
+## Other Helpful Amendments
 
 The library contains a few more helpful amendments:
 
@@ -276,14 +255,12 @@ The library contains a few more helpful amendments:
 
 See the [API documentation] for the detailed info.
 
-[@AeMembers()]: https://proc7ts.github.io/amend/modules.html#AeMembers
-[@AeStatics()]: https://proc7ts.github.io/amend/modules.html#AeStatics
-[@PseudoMember()]: https://proc7ts.github.io/amend/modules.html#PseudoMember
-[@PseudoStatic()]: https://proc7ts.github.io/amend/modules.html#PseudoStatic
+[@aemembers()]: https://proc7ts.github.io/amend/modules.html#AeMembers
+[@aestatics()]: https://proc7ts.github.io/amend/modules.html#AeStatics
+[@pseudomember()]: https://proc7ts.github.io/amend/modules.html#PseudoMember
+[@pseudostatic()]: https://proc7ts.github.io/amend/modules.html#PseudoStatic
 
-
-Auto-Amendment
-----------------
+## Auto-Amendment
 
 There are two issues with TypeScript decorators:
 
@@ -302,16 +279,14 @@ To make it work just extend an [Amendable] abstract class, and place the amendme
 import { AeClassTarget, AeMembers, Amendable } from '@proc7ts/amend';
 
 class MyClass extends Amendable {
-
   static autoAmend(target: AeClassTarget<typeof MyClass>): void {
-    // Apply amendments here.  
+    // Apply amendments here.
     AeMembers({
       field: LoggedMember(), // An amendment of `field` property.
     }).applyAmendment(target);
   }
 
   field = 'value';
-
 }
 ```
 
@@ -328,6 +303,6 @@ An explicit amendment with [amend()] function call could be necessary, e.g. when
 
 [decorators]: https://www.typescriptlang.org/docs/handbook/decorators.html
 [proposal-decorators]: https://github.com/tc39/proposal-decorators
-[Amendable]: https://proc7ts.github.io/amend/classes/Amendable.html
-[autoAmend]: https://proc7ts.github.io/amend/interfaces/AmendableClass.html#autoAmend
+[amendable]: https://proc7ts.github.io/amend/classes/Amendable.html
+[autoamend]: https://proc7ts.github.io/amend/interfaces/AmendableClass.html#autoAmend
 [amend()]: https://proc7ts.github.io/amend/modules.html#amend
