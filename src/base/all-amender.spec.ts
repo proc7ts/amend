@@ -29,7 +29,7 @@ describe('allAmender', () => {
 
     const amender = allAmender([amendment1, amendment2]);
 
-    const amend = jest.fn<void, []>();
+    const amend = jest.fn<() => void>();
 
     amender(newAmendTarget({
       base: {},
