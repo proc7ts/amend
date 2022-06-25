@@ -126,7 +126,6 @@ export function newAmendTarget<TAmended>(
             || (() => AmendTarget$default$modify(nextBase, nextRequest)),
         );
 
-        // eslint-disable-next-line @typescript-eslint/no-use-before-define
         return () => nextTarget<TBase & TExt, TNextExt>(modify);
       },
     };
