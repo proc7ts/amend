@@ -13,10 +13,9 @@ import { AmendRequest } from './amend-request';
  *
  * @typeParam TAmended - Amended entity type.
  */
-export type AmendTarget<TAmended> = TAmended & AmendTarget.Core<TAmended>;
+export type AmendTarget<TAmended extends object> = TAmended & AmendTarget.Core<TAmended>;
 
 export namespace AmendTarget {
-
   /**
    * A core API of {@link AmendTarget amendment target}.
    *
@@ -24,8 +23,7 @@ export namespace AmendTarget {
    *
    * @typeParam TAmended - Amended entity type.
    */
-  export interface Core<TAmended> {
-
+  export interface Core<TAmended extends object> {
     /**
      * Amends the target.
      *
@@ -40,11 +38,10 @@ export namespace AmendTarget {
      *
      * @returns A function without arguments returning modified amendment target.
      */
-    amend<TExt = AeNone>(
-        this: void,
-        request?: AmendRequest<TAmended, TExt>,
+    amend<TExt extends object = AeNone>(
+      this: void,
+      request?: AmendRequest<TAmended, TExt>,
     ): (this: void) => AmendTarget<TAmended & TExt>;
-
   }
 
   /**
@@ -54,17 +51,16 @@ export namespace AmendTarget {
    *
    * @typeParam TAmended - Amended entity type.
    */
-  export type Draft<TAmended> =
-      & TAmended
-      & { readonly [K in keyof Core<TAmended>]?: unknown | undefined };
+  export type Draft<TAmended extends object> = TAmended & {
+    readonly [K in keyof Core<TAmended>]?: unknown | undefined;
+  };
 
   /**
    * Options for {@link newAmendTarget custom amendment target}.
    *
    * @typeParam TAmended - Amended entity type.
    */
-  export interface Options<TAmended> {
-
+  export interface Options<TAmended extends object> {
     /**
      * An amended entity the created target will be based on initially.
      */
@@ -87,14 +83,12 @@ export namespace AmendTarget {
      * @returns Either a function without arguments that creates a draft of modified amendment target, or nothing to
      * construct it by objects spread operator. The returned function will be called at most once.
      */
-    amend<TBase extends TAmended, TExt>(
-        this: void,
-        base: TBase,
-        request?: AmendRequest<TBase, TExt>,
+    amend<TBase extends TAmended, TExt extends object>(
+      this: void,
+      base: TBase,
+      request?: AmendRequest<TBase, TExt>,
     ): void | ((this: void) => AmendTarget.Draft<TBase & TExt>);
-
   }
-
 }
 
 /**
@@ -105,24 +99,21 @@ export namespace AmendTarget {
  *
  * @returns New amendment target instance.
  */
-export function newAmendTarget<TAmended>(
-    options: AmendTarget.Options<TAmended>,
+export function newAmendTarget<TAmended extends object>(
+  options: AmendTarget.Options<TAmended>,
 ): AmendTarget<TAmended> {
-
   const { base, amend: baseAmend } = options;
 
   const nextTarget = <TBase extends TAmended, TExt>(
-      createBase: () => AmendTarget.Draft<TBase & TExt>,
+    createBase: () => AmendTarget.Draft<TBase & TExt>,
   ): AmendTarget<TBase & TExt> => {
-
     const nextBase = createBase();
 
     return {
       ...nextBase,
-      amend<TNextExt>(nextRequest?: AmendRequest<TBase & TExt, TNextExt>) {
-
+      amend<TNextExt extends object>(nextRequest?: AmendRequest<TBase & TExt, TNextExt>) {
         const modify = lazyValue(
-            baseAmend<TBase & TExt, TNextExt>(nextBase, nextRequest)
+          baseAmend<TBase & TExt, TNextExt>(nextBase, nextRequest)
             || (() => AmendTarget$default$modify(nextBase, nextRequest)),
         );
 
@@ -134,9 +125,9 @@ export function newAmendTarget<TAmended>(
   return nextTarget<TAmended, AeNone>(valueProvider<TAmended>(base));
 }
 
-function AmendTarget$default$modify<TBase, TExt>(
-    base: TBase,
-    request?: AmendRequest<TBase, TExt>,
+function AmendTarget$default$modify<TBase extends object, TExt extends object>(
+  base: TBase,
+  request?: AmendRequest<TBase, TExt>,
 ): AmendTarget.Draft<TBase & TExt> {
-  return { ...base, ...request as TExt };
+  return { ...base, ...(request as TExt) };
 }

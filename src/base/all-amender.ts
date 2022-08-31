@@ -14,52 +14,47 @@ import { noopAmender } from './noop-amender';
  *
  * @returns A combining amender.
  */
-export function allAmender<TAmended>(amendments: Iterable<Amendment<TAmended>>): Amender<TAmended> {
-    if (Array.isArray(amendments) && amendments.length < 2) {
+export function allAmender<TAmended extends object>(
+  amendments: Iterable<Amendment<TAmended>>,
+): Amender<TAmended> {
+  if (Array.isArray(amendments) && amendments.length < 2) {
+    const [amender = noopAmender] = amendments as Amendment<TAmended>[];
 
-        const [amender = noopAmender] = amendments as Amendment<TAmended>[];
+    return amenderOf(amender);
+  }
 
-        return amenderOf(amender);
-    }
+  return target => {
+    let amendBy = (amendment: Amendment<TAmended>): void => {
+      const amend = <TExt extends object>(
+        request?: AmendRequest<TAmended, TExt>,
+      ): ((this: void) => AmendTarget<TAmended & TExt>) => {
+        const result = target.amend<TExt>(request);
 
-    return target => {
+        amendBy = (next: Amendment<TAmended>) => {
+          const nextTarget: AmendTarget<TAmended & TExt> = result();
 
-        let amendBy = (
-            amendment: Amendment<TAmended>,
-        ): void => {
+          amenderOf(next)({
+            ...nextTarget,
+            amend,
+          } as AmendTarget<TAmended>);
 
-            const amend = <TExt>(request?: AmendRequest<TAmended, TExt>): (
-                this: void,
-            ) => AmendTarget<TAmended & TExt> => {
-
-                const result = target.amend<TExt>(request);
-
-                amendBy = (next: Amendment<TAmended>) => {
-
-                    const nextTarget: AmendTarget<TAmended & TExt> = result();
-
-                    amenderOf(next)({
-                        ...nextTarget,
-                        amend,
-                    } as AmendTarget<TAmended>);
-
-                    return nextTarget;
-                };
-
-                return () => ({
-                    ...result(),
-                    amend,
-                }) as AmendTarget<TAmended & TExt>;
-            };
-
-            amenderOf(amendment)({
-                ...target,
-                amend,
-            });
+          return nextTarget;
         };
 
-        for (const amendment of amendments) {
-            amendBy(amendment);
-        }
+        return () => ({
+            ...result(),
+            amend,
+          } as AmendTarget<TAmended & TExt>);
+      };
+
+      amenderOf(amendment)({
+        ...target,
+        amend,
+      });
     };
+
+    for (const amendment of amendments) {
+      amendBy(amendment);
+    }
+  };
 }

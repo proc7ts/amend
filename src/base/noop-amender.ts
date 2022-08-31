@@ -1,3 +1,4 @@
+import { AeNone } from './ae-none';
 import { AmendTarget } from './amend-target';
 
 /**
@@ -7,6 +8,6 @@ import { AmendTarget } from './amend-target';
  *
  * @returns Itself for convenience.
  */
-export function noopAmender(_target?: AmendTarget<unknown>): typeof noopAmender {
+export function noopAmender(_target?: AmendTarget<AeNone>): typeof noopAmender {
   return noopAmender;
 }

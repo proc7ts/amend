@@ -13,7 +13,7 @@ import { AmendTarget } from './amend-target';
  * @typeParam TAmended - A type of amended entity to modify.
  * @typeParam TExt - A type of amended entity extension.
  */
-export type AmendRequest<TAmended, TExt = AeNone> = {
+export type AmendRequest<TAmended extends object, TExt = AeNone> = {
   [K in keyof TAmended]?: TAmended[K] | undefined;
 } & {
   [K in Exclude<keyof TExt, keyof TAmended>]: TExt[K];

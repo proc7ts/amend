@@ -10,9 +10,7 @@ import { AmendTarget } from './amend-target';
  *
  * @typeParam TAmended - Amended entity type.
  */
-export type Amendment<TAmended> =
-    | Amender<TAmended>
-    | Amendatory<TAmended>;
+export type Amendment<TAmended extends object> = Amender<TAmended> | Amendatory<TAmended>;
 
 /**
  * Amendment action (amender) signature.
@@ -21,11 +19,11 @@ export type Amendment<TAmended> =
  *
  * @typeParam TAmended - Amended entity type.
  */
-export type Amender<TAmended> =
-/**
- * @param target - Amendment target.
- */
-    (this: void, target: AmendTarget<TAmended>) => void;
+export type Amender<TAmended extends object> =
+  /**
+   * @param target - Amendment target.
+   */
+  (this: void, target: AmendTarget<TAmended>) => void;
 
 /**
  * Amendatory instance.
@@ -36,8 +34,7 @@ export type Amender<TAmended> =
  *
  * @typeParam TAmended - Amended entity type.
  */
-export interface Amendatory<TAmended> {
-
+export interface Amendatory<TAmended extends object> {
   /**
    * Applies an amendment to the given `target`.
    *
@@ -46,9 +43,7 @@ export interface Amendatory<TAmended> {
    * @param target - Amendment target.
    */
   applyAmendment(this: void, target: AmendTarget<TAmended>): void;
-
 }
-
 
 /**
  * Converts arbitrary amendment to {@link Amender amender}.
@@ -59,7 +54,9 @@ export interface Amendatory<TAmended> {
  * @returns Either the `amendment` itself if it is already an amender, or its {@link Amendatory.applyAmendment
  * applyAmendment} method if it is an {@link Amendatory} instance.
  */
-export function amenderOf<TAmended>(amendment: Amendment<TAmended>): Amender<TAmended> {
+export function amenderOf<TAmended extends object>(
+  amendment: Amendment<TAmended>,
+): Amender<TAmended> {
   return isAmendatoryAmendment(amendment) ? amendment.applyAmendment : amendment;
 }
 
@@ -72,7 +69,9 @@ export function amenderOf<TAmended>(amendment: Amendment<TAmended>): Amender<TAm
  * @returns `true` if the given `amendment` has an {@link Amendatory.applyAmendment applyAmendment} method,
  * or `false` otherwise.
  */
-function isAmendatoryAmendment<TAmended>(amendment: Amendment<TAmended>): amendment is Amendatory<TAmended> {
+function isAmendatoryAmendment<TAmended extends object>(
+  amendment: Amendment<TAmended>,
+): amendment is Amendatory<TAmended> {
   return typeof (amendment as Partial<Amendatory<TAmended>>).applyAmendment === 'function';
 }
 
@@ -86,10 +85,12 @@ function isAmendatoryAmendment<TAmended>(amendment: Amendment<TAmended>): amendm
  * @returns `true` if the given `value` is an object or function with {@link Amendatory.applyAmendment applyAmendment}
  * method, or `false` otherwise.
  */
-export function isAmendatory<TAmended, TOther = unknown>(
-    value: Amendatory<TAmended> | TOther,
+export function isAmendatory<TAmended extends object, TOther = unknown>(
+  value: Amendatory<TAmended> | TOther,
 ): value is Amendatory<TAmended> {
-  return !!value
-      && (typeof value === 'object' || typeof value === 'function')
-      && isAmendatoryAmendment(value as Amendment<TAmended>);
+  return (
+    !!value
+    && (typeof value === 'object' || typeof value === 'function')
+    && isAmendatoryAmendment(value as Amendment<TAmended>)
+  );
 }
