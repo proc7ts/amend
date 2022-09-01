@@ -7,12 +7,11 @@ import { AePropDesc, createAePropApplicator } from './ae-prop-applicator';
 import { AePropHost } from './ae-prop-host';
 
 export interface AeProp<
-    THost extends object,
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    > extends AeClass<TClass>{
-
+  THost extends object,
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+> extends AeClass<TClass> {
   readonly key: string | symbol;
   readonly enumerable: boolean;
   readonly configurable: boolean;
@@ -20,71 +19,65 @@ export interface AeProp<
   readonly writable: boolean;
   get(this: void, host: THost): TValue;
   set(this: void, host: THost, update: TUpdate): void;
-
 }
 
 export type PropAmendment<
-    THost extends object,
-    TValue extends TUpdate,
-    TClass extends AmendableClass,
-    TUpdate,
-    TAmended extends AeProp<THost, TValue, TClass, TUpdate>> =
-    AeProp<THost, any, any, any> extends TAmended
-        ? PropAmendmentDecorator<THost, TValue, TClass, TUpdate, TAmended>
-        : PropAmendatory<THost, TValue, TClass, TUpdate, TAmended>;
+  THost extends object,
+  TValue extends TUpdate,
+  TClass extends AmendableClass,
+  TUpdate,
+  TAmended extends AeProp<THost, TValue, TClass, TUpdate>,
+> = AeProp<THost, any, any, any> extends TAmended
+  ? PropAmendmentDecorator<THost, TValue, TClass, TUpdate, TAmended>
+  : PropAmendatory<THost, TValue, TClass, TUpdate, TAmended>;
 
 export interface PropAmendatory<
-    THost extends object,
-    TValue extends TUpdate,
-    TClass extends AmendableClass,
-    TUpdate,
-    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>
-    extends Amendatory<TAmended> {
-
+  THost extends object,
+  TValue extends TUpdate,
+  TClass extends AmendableClass,
+  TUpdate,
+  TAmended extends AeProp<THost, TValue, TClass, TUpdate>,
+> extends Amendatory<TAmended> {
   decorateAmended<TPropValue extends TValue>(
-      this: void,
-      decorated: DecoratedAeMember<TClass, TAmended>,
-      key: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
+    this: void,
+    decorated: DecoratedAeMember<TClass, TAmended>,
+    key: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
   ): void | AmendablePropertyDescriptor<TPropValue, THost, TUpdate>;
-
 }
 
 export interface PropAmendmentDecorator<
-    THost extends object,
-    TValue extends TUpdate,
-    TClass extends AmendableClass,
-    TUpdate,
-    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>
-    extends PropAmendatory<THost, TValue, TClass, TUpdate, TAmended> {
-
+  THost extends object,
+  TValue extends TUpdate,
+  TClass extends AmendableClass,
+  TUpdate,
+  TAmended extends AeProp<THost, TValue, TClass, TUpdate>,
+> extends PropAmendatory<THost, TValue, TClass, TUpdate, TAmended> {
   <TPropValue extends TValue>(
-      this: void,
-      host: THost,
-      propertyKey: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
+    this: void,
+    host: THost,
+    propertyKey: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
   ): void | any;
-
 }
 
 export function AeProp<
-    THost extends object,
-    TValue extends TUpdate,
-    TClass extends AmendableClass,
-    TUpdate,
-    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
-    createHost: (decorated: AeClass<TClass>) => AePropHost<THost, TClass>,
-    hostClass: (host: THost) => TClass,
-    amendments: Amendment<TAmended>[],
+  THost extends object,
+  TValue extends TUpdate,
+  TClass extends AmendableClass,
+  TUpdate,
+  TAmended extends AeProp<THost, TValue, TClass, TUpdate>,
+>(
+  createHost: (decorated: AeClass<TClass>) => AePropHost<THost, TClass>,
+  hostClass: (host: THost) => TClass,
+  amendments: Amendment<TAmended>[],
 ): PropAmendment<THost, TValue, TClass, TUpdate, TAmended> {
-
   const amender = allAmender(amendments);
   const decorateAmended = <TPropValue extends TValue>(
-      decorated: DecoratedAeMember<TClass, TAmended>,
-      key: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
+    decorated: DecoratedAeMember<TClass, TAmended>,
+    key: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
   ): void | AmendablePropertyDescriptor<TPropValue, THost, TUpdate> => {
-
     const host = createHost(decorated);
     const [getValue, setValue, toAccessor] = createAePropAccessor(host, key, descriptor);
     const init: AePropDesc<THost, TValue, TUpdate> = {
@@ -96,7 +89,12 @@ export function AeProp<
       set: (hostInstance, update) => setValue(hostInstance, update),
     };
 
-    const applyAmendment = createAePropApplicator<THost, TValue, TClass, TUpdate, TAmended>(host, amender, key, init);
+    const applyAmendment = createAePropApplicator<THost, TValue, TClass, TUpdate, TAmended>(
+      host,
+      amender,
+      key,
+      init,
+    );
     let desc!: AePropDesc<THost, TValue, TUpdate>;
 
     AeClass<TClass, TAmended>(classTarget => {
@@ -133,7 +131,6 @@ export function AeProp<
           writable: desc.writable,
         };
       }
-
     }
 
     if (newDescriptor && !descriptor) {
@@ -145,14 +142,17 @@ export function AeProp<
     return newDescriptor;
   };
   const decorator = (<TPropValue extends TValue>(
-      targetHost: THost,
-      key: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
+    targetHost: THost,
+    key: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TPropValue, THost, TUpdate>,
   ): void | AmendablePropertyDescriptor<TPropValue, THost, TUpdate> => {
-
     const aeClass: AeClass<TClass> = { amendedClass: hostClass(targetHost) };
 
-    return decorateAmended<TPropValue>(aeClass as DecoratedAeMember<TClass, TAmended>, key, descriptor);
+    return decorateAmended<TPropValue>(
+      aeClass as DecoratedAeMember<TClass, TAmended>,
+      key,
+      descriptor,
+    );
   }) as PropAmendment<THost, TValue, TClass, TUpdate, TAmended>;
 
   decorator.decorateAmended = decorateAmended;

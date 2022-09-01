@@ -2,7 +2,7 @@ import { hasOwnProperty, superClassOf } from '@proc7ts/primitives';
 import { AeClass$target } from './ae-class.target.impl';
 import { AmendableClass } from './amendable';
 
-const autoAmended = (/*#__PURE__*/ new WeakSet<AmendableClass>());
+const autoAmended = /*#__PURE__*/ new WeakSet<AmendableClass>();
 
 /**
  * Issues an auto-amendment of the given class.

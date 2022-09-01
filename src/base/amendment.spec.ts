@@ -5,37 +5,42 @@ import { amenderOf, isAmendatory } from './amendment';
 
 describe('amenderOf', () => {
   it('returns amender as is', () => {
-
-    const amender = (_target: AeClassTarget): void => { /* amend */ };
+    const amender = (_target: AeClassTarget): void => {
+      /* amend */
+    };
 
     expect(amenderOf(amender)).toBe(amender);
   });
   it('returns amendment action for amendatory function', () => {
-
-    const applyAmendment = (_target: AeClassTarget): void => { /* amend */ };
-    const amendment = (): void => { /* fn */ };
+    const applyAmendment = (_target: AeClassTarget): void => {
+      /* amend */
+    };
+    const amendment = (): void => {
+      /* fn */
+    };
 
     amendment.applyAmendment = applyAmendment;
 
     expect(amenderOf(amendment)).toBe(applyAmendment);
   });
   it('returns amendment action for amendatory object', () => {
-
-    const applyAmendment = (_target: AeClassTarget): void => { /* amend */ };
+    const applyAmendment = (_target: AeClassTarget): void => {
+      /* amend */
+    };
     const amendment = { applyAmendment };
 
     expect(amenderOf(amendment)).toBe(applyAmendment);
   });
 });
 
-
 describe('isAmendatory', () => {
   it('is `true` for amendatory object', () => {
     expect(isAmendatory({ applyAmendment: noop })).toBe(true);
   });
   it('is `true` for amendatory function', () => {
-
-    const amendment = (): void => { /* fn */ };
+    const amendment = (): void => {
+      /* fn */
+    };
 
     amendment.applyAmendment = noop;
 

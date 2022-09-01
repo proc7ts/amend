@@ -7,18 +7,21 @@ import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessibility'
 import { PseudoHost } from './pseudo-host';
 
 export function PseudoProp<
-    THost extends object,
-    TValue extends TUpdate,
-    TClass extends AmendableClass,
-    TUpdate,
-    TAmended extends AeProp<THost, TValue, TClass, TUpdate>>(
-    createHost: (decorated: AeClass<TClass>) => PseudoHost<THost, TClass>,
-    { key, get, set }: PseudoAccessor<THost, TValue, TUpdate>,
-    amendments: Amendment<TAmended>[],
+  THost extends object,
+  TValue extends TUpdate,
+  TClass extends AmendableClass,
+  TUpdate,
+  TAmended extends AeProp<THost, TValue, TClass, TUpdate>,
+>(
+  createHost: (decorated: AeClass<TClass>) => PseudoHost<THost, TClass>,
+  { key, get, set }: PseudoAccessor<THost, TValue, TUpdate>,
+  amendments: Amendment<TAmended>[],
 ): PseudoMemberAmendment<TValue, TClass, TUpdate, TAmended> {
-
   const amender = allAmender(amendments);
-  const decorateAmended = (decorated: DecoratedAeClass<TClass, TAmended>, memberKey?: string | symbol): void => {
+  const decorateAmended = (
+    decorated: DecoratedAeClass<TClass, TAmended>,
+    memberKey?: string | symbol,
+  ): void => {
     if (key) {
       memberKey = key;
     } else if (!memberKey) {
@@ -36,17 +39,16 @@ export function PseudoProp<
     };
 
     const applyAmendment = createAePropApplicator<THost, TValue, TClass, TUpdate, TAmended>(
-        host,
-        amender,
-        memberKey,
-        init,
+      host,
+      amender,
+      memberKey,
+      init,
     );
 
     AeClass<TClass, TAmended>(applyAmendment).decorateAmended(decorated);
   };
 
   const decorator = ((amendedClass: TClass): void => {
-
     const aeClass: AeClass<TClass> = { amendedClass };
 
     return decorateAmended(aeClass as DecoratedAeClass<TClass, TAmended>);

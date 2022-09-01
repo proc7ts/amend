@@ -12,12 +12,10 @@ import { ClassAmendment } from './class-amendment';
  * @typeParam TClass - A type of amended class.
  */
 export interface AeClass<TClass extends AmendableClass = Class> {
-
   /**
    * Amended class constructor.
    */
   readonly amendedClass: TClass;
-
 }
 
 /**
@@ -27,9 +25,9 @@ export interface AeClass<TClass extends AmendableClass = Class> {
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
 export type AeClassTarget<
-    TClass extends AmendableClass = Class,
-    TAmended extends AeClass<TClass> = AeClass<TClass>> =
-    AmendTarget<TAmended>;
+  TClass extends AmendableClass = Class,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+> = AmendTarget<TAmended>;
 
 /**
  * An amended entity representing a class to decorate.
@@ -43,19 +41,23 @@ export type AeClassTarget<
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeClass<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
-    DecoratedAeClass.ForBase<AeClass<TClass>, TClass, TAmended>;
+export type DecoratedAeClass<
+  TClass extends AmendableClass,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+> = DecoratedAeClass.ForBase<AeClass<TClass>, TClass, TAmended>;
 
 export namespace DecoratedAeClass {
-
-  export type ForBase<TBase extends AeClass<TClass>, TClass extends AmendableClass, TAmended extends TBase> = {
+  export type ForBase<
+    TBase extends AeClass<TClass>,
+    TClass extends AmendableClass,
+    TAmended extends TBase,
+  > = {
     [K in Exclude<keyof TAmended, keyof TBase>]: TAmended[K];
   } & {
     readonly amendedClass: TClass;
   } & {
     [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K] | undefined;
   };
-
 }
 
 /**
@@ -67,10 +69,10 @@ export namespace DecoratedAeClass {
  *
  * @returns - New class amendment instance.
  */
-export function AeClass<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>>(
-    ...amendments: Amendment<TAmended>[]
-): ClassAmendment<TClass, TAmended> {
-
+export function AeClass<
+  TClass extends AmendableClass,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+>(...amendments: Amendment<TAmended>[]): ClassAmendment<TClass, TAmended> {
   const amender = allAmender(amendments);
   const decorateAmended = (base: TAmended): void => amender(AeClass$target(base));
   const decorator = ((target: TClass): void => {

@@ -14,11 +14,10 @@ import { MemberAmendment } from './member-amendment';
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
 export interface AeMember<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    > extends AeClass<TClass>{
-
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+> extends AeClass<TClass> {
   /**
    * A key of the instance member.
    *
@@ -76,7 +75,6 @@ export interface AeMember<
    * @param update - Updated member value.
    */
   set(this: void, instance: InstanceType<TClass>, update: TUpdate): void;
-
 }
 
 /**
@@ -88,11 +86,11 @@ export interface AeMember<
  * @typeParam TAmended - A type of the entity representing a member to amend.
  */
 export type AeMemberTarget<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
-    AmendTarget<TAmended>;
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
+> = AmendTarget<TAmended>;
 
 /**
  * An amended entity representing a class containing a member to decorate.
@@ -106,23 +104,24 @@ export type AeMemberTarget<
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeMember<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
-    DecoratedAeMember.ForBase<AeClass<TClass>, AeMember<any, TClass>, TClass, TAmended>;
+export type DecoratedAeMember<
+  TClass extends AmendableClass,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+> = DecoratedAeMember.ForBase<AeClass<TClass>, AeMember<any, TClass>, TClass, TAmended>;
 
 export namespace DecoratedAeMember {
-
   export type ForBase<
-      TClassBase extends AeClass<TClass>,
-      TMemberBase extends AeMember<any, TClass>,
-      TClass extends AmendableClass,
-      TAmended extends TClassBase> = {
+    TClassBase extends AeClass<TClass>,
+    TMemberBase extends AeMember<any, TClass>,
+    TClass extends AmendableClass,
+    TAmended extends TClassBase,
+  > = {
     [K in Exclude<keyof TAmended, keyof TMemberBase>]: TAmended[K];
   } & {
     readonly amendedClass: TClass;
   } & {
     [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K] | undefined;
   };
-
 }
 
 /**
@@ -137,12 +136,11 @@ export namespace DecoratedAeMember {
  * @returns New class member amendment instance.
  */
 export function AeMember<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>>(
-    ...amendments: Amendment<TAmended>[]
-): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
+>(...amendments: Amendment<TAmended>[]): MemberAmendment<TValue, TClass, TUpdate, TAmended> {
   return AeProp(AeMember$createHost, AeMember$hostClass, amendments);
 }
 
@@ -151,9 +149,9 @@ const AeMember$HostKind: AePropHostKind = {
   vDesc: key => `valueOf(${String(key)}`,
 };
 
-function AeMember$createHost<TClass extends AmendableClass>(
-    { amendedClass }: AeClass<TClass>,
-): AePropHost<InstanceType<TClass>, TClass> {
+function AeMember$createHost<TClass extends AmendableClass>({
+  amendedClass,
+}: AeClass<TClass>): AePropHost<InstanceType<TClass>, TClass> {
   return {
     kind: AeMember$HostKind,
     cls: amendedClass,
@@ -161,8 +159,6 @@ function AeMember$createHost<TClass extends AmendableClass>(
   };
 }
 
-function AeMember$hostClass<TClass extends AmendableClass>(
-    proto: InstanceType<TClass>,
-): TClass {
+function AeMember$hostClass<TClass extends AmendableClass>(proto: InstanceType<TClass>): TClass {
   return proto.constructor;
 }

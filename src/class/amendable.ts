@@ -8,7 +8,6 @@ import { amend } from './amend';
  * @typeParam T - A type of class instance.
  */
 export interface AmendableClass<T extends object = any> extends AbstractClass<T> {
-
   /**
    * Auto-amends this class.
    *
@@ -19,7 +18,6 @@ export interface AmendableClass<T extends object = any> extends AbstractClass<T>
    * @param target - An amendment target representing this class.
    */
   autoAmend?(target: AeClassTarget<this>): void;
-
 }
 
 /**

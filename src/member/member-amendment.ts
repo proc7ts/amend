@@ -14,31 +14,30 @@ import { AeMember, DecoratedAeMember } from './ae-member';
  * @typeParam TAmended - A type of the entity representing a member to amend.
  */
 export type MemberAmendment<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
-    MemberAmendment.ForBase<
-        AeClass<TClass>,
-        AeMember<TValue, TClass, TUpdate>,
-        TValue,
-        TClass,
-        TUpdate,
-        TAmended>;
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
+> = MemberAmendment.ForBase<
+  AeClass<TClass>,
+  AeMember<TValue, TClass, TUpdate>,
+  TValue,
+  TClass,
+  TUpdate,
+  TAmended
+>;
 
 export namespace MemberAmendment {
-
   export type ForBase<
-      TClassBase extends AeClass<TClass>,
-      TMemberBase extends TClassBase & AeMember<TValue, TClass, TUpdate>,
-      TValue extends TUpdate,
-      TClass extends AmendableClass,
-      TUpdate,
-      TAmended extends TMemberBase> =
-      TMemberBase extends TAmended
-          ? MemberAmendmentDecorator<TValue, TClass, TUpdate>
-          : MemberAmendatory.ForBase<TClassBase, TMemberBase, TValue, TClass, TUpdate, TAmended>;
-
+    TClassBase extends AeClass<TClass>,
+    TMemberBase extends TClassBase & AeMember<TValue, TClass, TUpdate>,
+    TValue extends TUpdate,
+    TClass extends AmendableClass,
+    TUpdate,
+    TAmended extends TMemberBase,
+  > = TMemberBase extends TAmended
+    ? MemberAmendmentDecorator<TValue, TClass, TUpdate>
+    : MemberAmendatory.ForBase<TClassBase, TMemberBase, TValue, TClass, TUpdate, TAmended>;
 }
 
 /**
@@ -50,18 +49,18 @@ export namespace MemberAmendment {
  * @typeParam TAmended - A type of the entity representing a member to amend.
  */
 export interface MemberAmendatory<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
-    > extends MemberAmendatory.ForBase<
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
+> extends MemberAmendatory.ForBase<
     AeClass<TClass>,
     AeMember<TValue, TClass, TUpdate>,
     TValue,
     TClass,
     TUpdate,
-    TAmended> {
-
+    TAmended
+  > {
   /**
    * Decorates the given member.
    *
@@ -72,34 +71,29 @@ export interface MemberAmendatory<
    * @returns Either nothing, or updated property descriptor.
    */
   decorateAmended<TMemberValue extends TValue>(
-      this: void,
-      decorated: DecoratedAeMember<TClass, TAmended>,
-      key: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>
+    this: void,
+    decorated: DecoratedAeMember<TClass, TAmended>,
+    key: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>,
   ): void | AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>;
-
 }
 
 export namespace MemberAmendatory {
-
   export interface ForBase<
-      TClassBase extends AeClass<TClass>,
-      TMemberBase extends TClassBase & AeMember<TValue, TClass, TUpdate>,
-      TValue extends TUpdate,
-      TClass extends AmendableClass,
-      TUpdate,
-      TAmended extends TMemberBase,
-      > extends Amendatory<TAmended> {
-
+    TClassBase extends AeClass<TClass>,
+    TMemberBase extends TClassBase & AeMember<TValue, TClass, TUpdate>,
+    TValue extends TUpdate,
+    TClass extends AmendableClass,
+    TUpdate,
+    TAmended extends TMemberBase,
+  > extends Amendatory<TAmended> {
     decorateAmended<TMemberValue extends TValue>(
-        this: void,
-        decorated: DecoratedAeMember.ForBase<TClassBase, TMemberBase, TClass, TAmended>,
-        key: string | symbol,
-        descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>
+      this: void,
+      decorated: DecoratedAeMember.ForBase<TClassBase, TMemberBase, TClass, TAmended>,
+      key: string | symbol,
+      descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>,
     ): void | AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>;
-
   }
-
 }
 
 /**
@@ -110,11 +104,10 @@ export namespace MemberAmendatory {
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
 export interface MemberAmendmentDecorator<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    > extends MemberAmendatory<TValue, TClass, TUpdate, AeMember<TValue, TClass, TUpdate>> {
-
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+> extends MemberAmendatory<TValue, TClass, TUpdate, AeMember<TValue, TClass, TUpdate>> {
   /**
    * Applies this amendment to decorated property.
    *
@@ -125,11 +118,10 @@ export interface MemberAmendmentDecorator<
    *
    * @returns Either nothing, or updated property descriptor.
    */
-      <TMemberValue extends TValue>(
-      this: void,
-      proto: InstanceType<TClass>,
-      key: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>,
+  <TMemberValue extends TValue>(
+    this: void,
+    proto: InstanceType<TClass>,
+    key: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TMemberValue, InstanceType<TClass>, TUpdate>,
   ): void | any;
-
 }

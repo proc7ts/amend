@@ -14,11 +14,10 @@ import { StaticAmendment } from './static-amendment';
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
 export interface AeStatic<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    > extends AeClass<TClass>{
-
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+> extends AeClass<TClass> {
   /**
    * A key of the static member.
    *
@@ -76,7 +75,6 @@ export interface AeStatic<
    * @param update - Updated member value.
    */
   set(this: void, classConstructor: TClass, update: TUpdate): void;
-
 }
 
 /**
@@ -88,11 +86,11 @@ export interface AeStatic<
  * @typeParam TAmended - A type of the entity representing a static member to amend.
  */
 export type AeStaticTarget<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>> =
-    AmendTarget<TAmended>;
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>,
+> = AmendTarget<TAmended>;
 
 /**
  * An amended entity representing a class containing a static member to decorate.
@@ -104,23 +102,24 @@ export type AeStaticTarget<
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type DecoratedAeStatic<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
-    DecoratedAeStatic.ForBase<AeClass<TClass>, AeStatic<any, TClass>, TClass, TAmended>;
+export type DecoratedAeStatic<
+  TClass extends AmendableClass,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+> = DecoratedAeStatic.ForBase<AeClass<TClass>, AeStatic<any, TClass>, TClass, TAmended>;
 
 export namespace DecoratedAeStatic {
-
   export type ForBase<
-      TClassBase extends AeClass<TClass>,
-      TStaticBase extends AeStatic<any, TClass>,
-      TClass extends AmendableClass,
-      TAmended extends TClassBase> = {
+    TClassBase extends AeClass<TClass>,
+    TStaticBase extends AeStatic<any, TClass>,
+    TClass extends AmendableClass,
+    TAmended extends TClassBase,
+  > = {
     [K in Exclude<keyof TAmended, keyof TStaticBase>]: TAmended[K];
   } & {
     readonly amendedClass: TClass;
   } & {
     [K in keyof AmendTarget.Core<TAmended>]?: AmendTarget.Core<TAmended>[K] | undefined;
   };
-
 }
 
 /**
@@ -135,12 +134,11 @@ export namespace DecoratedAeStatic {
  * @returns - New static member amendment instance.
  */
 export function AeStatic<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>>(
-    ...amendments: Amendment<TAmended>[]
-): StaticAmendment<TValue, TClass, TUpdate, TAmended> {
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>,
+>(...amendments: Amendment<TAmended>[]): StaticAmendment<TValue, TClass, TUpdate, TAmended> {
   return AeProp(AeStatic$createHost, AeStatic$hostClass, amendments);
 }
 
@@ -149,9 +147,9 @@ const AeStatic$HostKind: AePropHostKind = {
   vDesc: key => `staticOf(${String(key)}`,
 };
 
-function AeStatic$createHost<TClass extends AmendableClass>(
-    { amendedClass }: AeClass<TClass>,
-): AePropHost<TClass, TClass> {
+function AeStatic$createHost<TClass extends AmendableClass>({
+  amendedClass,
+}: AeClass<TClass>): AePropHost<TClass, TClass> {
   return {
     kind: AeStatic$HostKind,
     cls: amendedClass,
@@ -159,8 +157,6 @@ function AeStatic$createHost<TClass extends AmendableClass>(
   };
 }
 
-function AeStatic$hostClass<TClass extends AmendableClass>(
-    classConstructor: TClass,
-): TClass {
+function AeStatic$hostClass<TClass extends AmendableClass>(classConstructor: TClass): TClass {
   return classConstructor;
 }

@@ -5,9 +5,11 @@
  * @typeParam TObject - A type of the object containing the property.
  * @typeParam TUpdate - Update value type accepted by property setter.
  */
-export interface AmendablePropertyDescriptor<TValue extends TUpdate, TObject = any, TUpdate = TValue>
-    extends TypedPropertyDescriptor<TValue> {
-
+export interface AmendablePropertyDescriptor<
+  TValue extends TUpdate,
+  TObject = any,
+  TUpdate = TValue,
+> extends TypedPropertyDescriptor<TValue> {
   /**
    * Reads property value.
    *
@@ -21,8 +23,7 @@ export interface AmendablePropertyDescriptor<TValue extends TUpdate, TObject = a
    * @param update - Updated property value.
    */
   set?:
-      | ((this: TObject, update: TUpdate) => void)
-      | ((this: TObject, update: TValue) => void)
-      | undefined;
-
+    | ((this: TObject, update: TUpdate) => void)
+    | ((this: TObject, update: TValue) => void)
+    | undefined;
 }

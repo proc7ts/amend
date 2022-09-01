@@ -3,7 +3,6 @@ import { AeStatics } from './ae-statics';
 
 describe('@AeStatics', () => {
   it('amends static members', () => {
-
     @AeStatics<typeof TestClass>({
       field({ get, set, amend }) {
         amend({
@@ -20,7 +19,7 @@ describe('@AeStatics', () => {
 
       static field = 'initial';
 
-    }
+}
 
     expect(TestClass.field).toBe('initial!');
 
@@ -28,7 +27,6 @@ describe('@AeStatics', () => {
     expect(TestClass.field).toBe('other!');
   });
   it('adds class members', () => {
-
     @AeStatics<typeof TestClass, typeof TestClass & { added: string }>({
       added({ amend }) {
         amend({
@@ -46,7 +44,7 @@ describe('@AeStatics', () => {
       static field = 'initial';
       static added?: string | undefined;
 
-    }
+}
 
     expect(TestClass.field).toBe('initial');
     expect(TestClass.added).toBe('initial!');
@@ -56,7 +54,6 @@ describe('@AeStatics', () => {
     expect(TestClass.added).toBe('other!');
   });
   it('skips omitted member amenders', () => {
-
     @AeStatics<typeof TestClass>({
       field: null,
     })
@@ -64,7 +61,7 @@ describe('@AeStatics', () => {
 
       static field = 'initial';
 
-    }
+}
 
     expect(TestClass.field).toBe('initial');
 

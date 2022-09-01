@@ -4,26 +4,23 @@ import { AePropHost } from './ae-prop-host';
 import { AeProp$notReadable, AeProp$notWritable } from './ae-prop.accessibility';
 
 export function createAePropAccessor<THost extends object, TValue extends TUpdate, TUpdate>(
-    host: AePropHost<THost>,
-    key: string | symbol,
-    descriptor: AmendablePropertyDescriptor<TValue, THost, TUpdate> | undefined,
+  host: AePropHost<THost>,
+  key: string | symbol,
+  descriptor: AmendablePropertyDescriptor<TValue, THost, TUpdate> | undefined,
 ): [
   getValue: (host: THost) => TValue,
   setValue: (host: THost, update: TUpdate) => void,
   toAccessor: () => void,
 ] {
   if (descriptor) {
-
     const { get, set } = descriptor;
 
     if (get || set) {
       return [
-        get
-            ? instance => get.call(instance)
-            : AeProp$notReadable(host, key),
+        get ? instance => get.call(instance) : AeProp$notReadable(host, key),
         set
-            ? (instance, update) => set.call(instance, update as TValue)
-            : AeProp$notWritable(host, key),
+          ? (instance, update) => set.call(instance, update as TValue)
+          : AeProp$notWritable(host, key),
         noop,
       ];
     }
@@ -49,14 +46,13 @@ export function createAePropAccessor<THost extends object, TValue extends TUpdat
   let toAccessor: () => void;
 
   if (descriptor && ('value' in descriptor || 'writable' in descriptor)) {
-
     const { value, writable } = descriptor;
 
     if (writable) {
       toAccessor = () => {
         getValue = host => valueKey in host
             ? (host as ValueHost)[valueKey]
-            : (host as ValueHost)[valueKey] = value as TValue;
+            : ((host as ValueHost)[valueKey] = value as TValue);
         setValue = writeValue;
       };
     } else {
@@ -65,7 +61,6 @@ export function createAePropAccessor<THost extends object, TValue extends TUpdat
     }
   } else {
     toAccessor = () => {
-
       const superProto = Reflect.getPrototypeOf(host.host);
 
       if (superProto != null) {
@@ -74,7 +69,11 @@ export function createAePropAccessor<THost extends object, TValue extends TUpdat
             return (hostInstance as ValueHost)[valueKey];
           }
 
-          return (hostInstance as ValueHost)[valueKey] = Reflect.get(superProto, key, hostInstance);
+          return ((hostInstance as ValueHost)[valueKey] = Reflect.get(
+            superProto,
+            key,
+            hostInstance,
+          ));
         };
       } else {
         getValue = instance => (instance as ValueHost)[valueKey];

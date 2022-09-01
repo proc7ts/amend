@@ -5,7 +5,6 @@ import { AeMembers } from './ae-members';
 
 describe('@AeMembers', () => {
   it('amends class members', () => {
-
     @AeMembers<typeof TestClass>({
       field({ get, set, amend }) {
         amend({
@@ -22,7 +21,7 @@ describe('@AeMembers', () => {
 
       field = 'initial';
 
-    }
+}
 
     const instance = new TestClass();
 
@@ -32,7 +31,6 @@ describe('@AeMembers', () => {
     expect(instance.field).toBe('other!');
   });
   it('adds class members', () => {
-
     @AeMembers<typeof TestClass, Class<TestClass & { added: string }>>({
       added({ amend }) {
         amend({
@@ -49,7 +47,7 @@ describe('@AeMembers', () => {
 
       field = 'initial';
 
-    }
+}
 
     const instance = new TestClass() as TestClass & { added: string };
 
@@ -61,7 +59,6 @@ describe('@AeMembers', () => {
     expect(instance.added).toBe('other!');
   });
   it('skips omitted member amenders', () => {
-
     @AeMembers<typeof TestClass>({
       field: null,
     })
@@ -69,7 +66,7 @@ describe('@AeMembers', () => {
 
       field = 'initial';
 
-    }
+}
 
     const instance = new TestClass();
 
@@ -79,24 +76,25 @@ describe('@AeMembers', () => {
     expect(instance.field).toBe('other');
   });
   it('can be used inside `@AeClass()`', () => {
-
-    @AeClass(AeMembers<typeof TestClass, Class<TestClass & { added: string }>>({
-      added({ amend }) {
-        amend({
-          get(instance: TestClass) {
-            return instance.field + '!';
-          },
-          set(instance, value) {
-            instance.field = value;
-          },
-        });
-      },
-    }))
+    @AeClass(
+      AeMembers<typeof TestClass, Class<TestClass & { added: string }>>({
+        added({ amend }) {
+          amend({
+            get(instance: TestClass) {
+              return instance.field + '!';
+            },
+            set(instance, value) {
+              instance.field = value;
+            },
+          });
+        },
+      }),
+    )
     class TestClass {
 
       field = 'initial';
 
-    }
+}
 
     const instance = new TestClass() as TestClass & { added: string };
 

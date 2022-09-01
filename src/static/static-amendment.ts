@@ -14,31 +14,30 @@ import { AeStatic, DecoratedAeStatic } from './ae-static';
  * @typeParam TAmended - A type of the entity representing a static member to amend.
  */
 export type StaticAmendment<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>> =
-    StaticAmendment.ForBase<
-        AeClass<TClass>,
-        AeStatic<TValue, TClass, TUpdate>,
-        TValue,
-        TClass,
-        TUpdate,
-        TAmended>;
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>,
+> = StaticAmendment.ForBase<
+  AeClass<TClass>,
+  AeStatic<TValue, TClass, TUpdate>,
+  TValue,
+  TClass,
+  TUpdate,
+  TAmended
+>;
 
 export namespace StaticAmendment {
-
   export type ForBase<
-      TClassBase extends AeClass<TClass>,
-      TStaticBase extends TClassBase & AeStatic<TValue, TClass, TUpdate>,
-      TValue extends TUpdate,
-      TClass extends AmendableClass,
-      TUpdate,
-      TAmended extends TStaticBase> =
-      TStaticBase extends TAmended
-          ? StaticAmendmentDecorator<TValue, TClass, TUpdate>
-          : StaticAmendatory.ForBase<TClassBase, TStaticBase, TValue, TClass, TUpdate, TAmended>;
-
+    TClassBase extends AeClass<TClass>,
+    TStaticBase extends TClassBase & AeStatic<TValue, TClass, TUpdate>,
+    TValue extends TUpdate,
+    TClass extends AmendableClass,
+    TUpdate,
+    TAmended extends TStaticBase,
+  > = TStaticBase extends TAmended
+    ? StaticAmendmentDecorator<TValue, TClass, TUpdate>
+    : StaticAmendatory.ForBase<TClassBase, TStaticBase, TValue, TClass, TUpdate, TAmended>;
 }
 
 /**
@@ -50,18 +49,18 @@ export namespace StaticAmendment {
  * @typeParam TAmended - A type of the entity representing a static member to amend.
  */
 export interface StaticAmendatory<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>,
-    > extends StaticAmendatory.ForBase<
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>,
+> extends StaticAmendatory.ForBase<
     AeClass<TClass>,
     AeStatic<TValue, TClass, TUpdate>,
     TValue,
     TClass,
     TUpdate,
-    TAmended> {
-
+    TAmended
+  > {
   /**
    * Decorates the given static member.
    *
@@ -72,34 +71,29 @@ export interface StaticAmendatory<
    * @returns Either nothing, or updated property descriptor.
    */
   decorateAmended<TStaticValue extends TValue>(
-      this: void,
-      decorated: DecoratedAeStatic<TClass, TAmended>,
-      key: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TStaticValue, TClass, TUpdate>
+    this: void,
+    decorated: DecoratedAeStatic<TClass, TAmended>,
+    key: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TStaticValue, TClass, TUpdate>,
   ): void | AmendablePropertyDescriptor<TStaticValue, TClass, TUpdate>;
-
 }
 
 export namespace StaticAmendatory {
-
   export interface ForBase<
-      TClassBase extends AeClass<TClass>,
-      TStaticBase extends TClassBase & AeStatic<TValue, TClass, TUpdate>,
-      TValue extends TUpdate,
-      TClass extends AmendableClass,
-      TUpdate,
-      TAmended extends TStaticBase,
-      > extends Amendatory<TAmended> {
-
+    TClassBase extends AeClass<TClass>,
+    TStaticBase extends TClassBase & AeStatic<TValue, TClass, TUpdate>,
+    TValue extends TUpdate,
+    TClass extends AmendableClass,
+    TUpdate,
+    TAmended extends TStaticBase,
+  > extends Amendatory<TAmended> {
     decorateAmended<TStaticValue extends TValue>(
-        this: void,
-        decorated: DecoratedAeStatic.ForBase<TClassBase, TStaticBase, TClass, TAmended>,
-        key: string | symbol,
-        descriptor?: AmendablePropertyDescriptor<TStaticValue, InstanceType<TClass>, TUpdate>
+      this: void,
+      decorated: DecoratedAeStatic.ForBase<TClassBase, TStaticBase, TClass, TAmended>,
+      key: string | symbol,
+      descriptor?: AmendablePropertyDescriptor<TStaticValue, InstanceType<TClass>, TUpdate>,
     ): void | AmendablePropertyDescriptor<TStaticValue, InstanceType<TClass>, TUpdate>;
-
   }
-
 }
 
 /**
@@ -110,11 +104,10 @@ export namespace StaticAmendatory {
  * @typeParam TUpdate - Amended member update type accepted by its setter.
  */
 export interface StaticAmendmentDecorator<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    > extends StaticAmendatory<TValue, TClass, TUpdate, AeStatic<TValue, TClass, TUpdate>> {
-
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+> extends StaticAmendatory<TValue, TClass, TUpdate, AeStatic<TValue, TClass, TUpdate>> {
   /**
    * Applies this amendment to decorated static property.
    *
@@ -125,11 +118,10 @@ export interface StaticAmendmentDecorator<
    *
    * @returns Either nothing, or updated property descriptor.
    */
-      <TMemberValue extends TValue>(
-      this: void,
-      classConstructor: TClass,
-      key: string | symbol,
-      descriptor?: AmendablePropertyDescriptor<TMemberValue, TClass, TUpdate>,
+  <TMemberValue extends TValue>(
+    this: void,
+    classConstructor: TClass,
+    key: string | symbol,
+    descriptor?: AmendablePropertyDescriptor<TMemberValue, TClass, TUpdate>,
   ): void | any;
-
 }

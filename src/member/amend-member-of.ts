@@ -15,21 +15,29 @@ import { AeMember, DecoratedAeMember } from './ae-member';
  * @param amendments - Amendment to apply.
  */
 export function amendMemberOf<
-    TClass extends AmendableClass,
-    TKey extends keyof InstanceType<TClass> = keyof InstanceType<TClass>,
-    TAmended extends AeMember<InstanceType<TClass>[TKey], TClass> = AeMember<InstanceType<TClass>[TKey], TClass>>(
-    decorated: DecoratedAeMember<TClass, TAmended>,
-    memberKey: TKey,
-    ...amendments: Amendment<TAmended>[]
+  TClass extends AmendableClass,
+  TKey extends keyof InstanceType<TClass> = keyof InstanceType<TClass>,
+  TAmended extends AeMember<InstanceType<TClass>[TKey], TClass> = AeMember<
+    InstanceType<TClass>[TKey],
+    TClass
+  >,
+>(
+  decorated: DecoratedAeMember<TClass, TAmended>,
+  memberKey: TKey,
+  ...amendments: Amendment<TAmended>[]
 ): void {
-
-  const amendment = AeMember<InstanceType<TClass>[TKey], TClass, InstanceType<TClass>[TKey], TAmended>(...amendments);
+  const amendment = AeMember<
+    InstanceType<TClass>[TKey],
+    TClass,
+    InstanceType<TClass>[TKey],
+    TAmended
+  >(...amendments);
   const proto: object = decorated.amendedClass.prototype;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(proto, memberKey);
   const amendedDesc = amendment.decorateAmended(
-      decorated as DecoratedAeMember<TClass, TAmended & AeMember<InstanceType<TClass>[TKey], TClass>>,
-      memberKey as string | symbol,
-      sourceDesc,
+    decorated as DecoratedAeMember<TClass, TAmended & AeMember<InstanceType<TClass>[TKey], TClass>>,
+    memberKey as string | symbol,
+    sourceDesc,
   );
 
   if (amendedDesc && sourceDesc) {

@@ -10,16 +10,18 @@ describe('allAmender', () => {
     expect(allAmender([])).toBe(noopAmender);
   });
   it('returns singleton amendment action', () => {
-
-    const applyAmendment = (_target: AeClassTarget): void => { /* amend */ };
-    const amendment = (): void => { /* fn */ };
+    const applyAmendment = (_target: AeClassTarget): void => {
+      /* amend */
+    };
+    const amendment = (): void => {
+      /* fn */
+    };
 
     amendment.applyAmendment = applyAmendment;
 
     expect(allAmender([amendment])).toBe(applyAmendment);
   });
   it('allows to chain amendments', () => {
-
     const amendment1 = ({ amend }: AmendTarget<AeNone>): void => {
       amend()().amend();
     };
@@ -31,10 +33,12 @@ describe('allAmender', () => {
 
     const amend = jest.fn<() => void>();
 
-    amender(newAmendTarget({
-      base: {},
-      amend,
-    }));
+    amender(
+      newAmendTarget({
+        base: {},
+        amend,
+      }),
+    );
 
     expect(amend).toHaveBeenCalledTimes(3);
   });

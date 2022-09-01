@@ -5,14 +5,13 @@ import { amendStaticOf } from './amend-static-of';
 describe('amendStaticOf', () => {
   describe('when applied to static field', () => {
     it('does not update descriptor', () => {
-
       let target: AeStaticTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 
         static field = 'some';
 
-      }
+}
 
       amendStaticOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
@@ -29,7 +28,6 @@ describe('amendStaticOf', () => {
       expect(TestClass.field).toBe('some');
     });
     it('updates descriptor', () => {
-
       class TestClass {
 
         @AeStatic<AeStatic<string>>(({ amend }) => {
@@ -37,7 +35,7 @@ describe('amendStaticOf', () => {
         })
         static field = 'some';
 
-      }
+}
 
       amendStaticOf({ amendedClass: TestClass }, 'field', ({ amend }) => {
         amend({ configurable: false });
@@ -57,7 +55,6 @@ describe('amendStaticOf', () => {
   });
   describe('when applied to static accessor', () => {
     it('does not update descriptor', () => {
-
       let target: AeStaticTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
@@ -66,7 +63,7 @@ describe('amendStaticOf', () => {
           return 'some';
         }
 
-      }
+}
 
       amendStaticOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
@@ -83,7 +80,6 @@ describe('amendStaticOf', () => {
       expect(TestClass.field).toBe('some');
     });
     it('updates accessor', () => {
-
       class TestClass {
 
         private static _field = 'initial';
@@ -96,7 +92,7 @@ describe('amendStaticOf', () => {
           this._field = value;
         }
 
-      }
+}
 
       amendStaticOf({ amendedClass: TestClass }, 'field', ({ get, set, amend }) => {
         amend({

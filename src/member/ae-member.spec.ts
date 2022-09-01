@@ -4,7 +4,6 @@ import { AeMember, AeMemberTarget } from './ae-member';
 describe('@AeMember', () => {
   describe('when decorates a field', () => {
     it('does not update descriptor', () => {
-
       let target: AeMemberTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
@@ -14,7 +13,7 @@ describe('@AeMember', () => {
         })
         field = 'some';
 
-      }
+}
 
       expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toBeUndefined();
@@ -24,7 +23,6 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('some');
     });
     it('updates descriptor', () => {
-
       class TestClass {
 
         @AeMember<string, typeof TestClass>(({ amend }) => {
@@ -32,11 +30,15 @@ describe('@AeMember', () => {
         })
         field = 'some';
 
-      }
+}
 
       const desc = AeMember(({ amend }) => {
         amend({ configurable: false });
-      })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
+      })(
+        TestClass.prototype,
+        'field',
+        Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'),
+      );
 
       expect(desc).toEqual({
         enumerable: false,
@@ -50,9 +52,7 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('some');
     });
     it('converts to accessor', () => {
-
-      class BaseClass {
-      }
+      class BaseClass {}
 
       Reflect.defineProperty(BaseClass.prototype, 'field', { value: 'initial' });
 
@@ -66,7 +66,7 @@ describe('@AeMember', () => {
         })
         field!: string;
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: true,
@@ -83,12 +83,11 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('other!');
     });
     it('converts to accessor without super class', () => {
-
       class TestClass {
 
         field = 'initial';
 
-      }
+}
 
       Reflect.setPrototypeOf(TestClass.prototype, null);
 
@@ -97,7 +96,11 @@ describe('@AeMember', () => {
           get: instance => get(instance) + '!',
           set: (instance, update) => set(instance, update),
         });
-      })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
+      })(
+        TestClass.prototype,
+        'field',
+        Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'),
+      );
 
       expect(desc).toEqual({
         enumerable: true,
@@ -116,9 +119,7 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('other!');
     });
     it('converts to read-only accessor', () => {
-
-      class BaseClass {
-      }
+      class BaseClass {}
 
       Reflect.defineProperty(BaseClass.prototype, 'field', { value: 'initial' });
 
@@ -129,7 +130,7 @@ describe('@AeMember', () => {
         })
         field!: string;
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: true,
@@ -141,20 +142,21 @@ describe('@AeMember', () => {
       const instance = new TestClass();
 
       expect(instance.field).toBe('initial!');
-      expect(() => instance.field = 'other').toThrow(new TypeError('Property TestClass.field is not writable'));
+      expect(() => (instance.field = 'other')).toThrow(
+        new TypeError('Property TestClass.field is not writable'),
+      );
     });
     it('converts to write-only accessor', () => {
-
       class TestClass {
 
         update?: string | undefined;
 
         @AeMember<string, typeof TestClass>(({ amend }) => {
-          amend({ set: (instance, update) => instance.update = update });
+          amend({ set: (instance, update) => (instance.update = update) });
         })
         field = 'initial';
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: true,
@@ -165,14 +167,17 @@ describe('@AeMember', () => {
 
       const instance = new TestClass();
 
-      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
+      expect(() => instance.field).toThrow(
+        new TypeError('Property TestClass.field is not readable'),
+      );
 
       instance.field = 'other';
-      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
+      expect(() => instance.field).toThrow(
+        new TypeError('Property TestClass.field is not readable'),
+      );
       expect(instance.update).toBe('other');
     });
     it('allows to read field value', () => {
-
       let getValue!: (instance: TestClass) => string;
 
       class TestClass {
@@ -182,7 +187,7 @@ describe('@AeMember', () => {
         })
         field!: string;
 
-      }
+}
 
       expect(getValue).toBeDefined();
 
@@ -194,7 +199,6 @@ describe('@AeMember', () => {
       expect(getValue(instance)).toBe('some');
     });
     it('allows to access initial field value', () => {
-
       let getValue!: (instance: TestClass) => string;
       let setValue!: (instance: TestClass, update: string) => void;
 
@@ -202,7 +206,7 @@ describe('@AeMember', () => {
 
         field!: string;
 
-      }
+}
 
       AeMember<string, typeof TestClass>(({ get, set }) => {
         getValue = get;
@@ -223,7 +227,6 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('other');
     });
     it('allows to read constant initial value', () => {
-
       let getValue!: (instance: TestClass) => string;
       let setValue!: (instance: TestClass, update: string) => void;
 
@@ -231,14 +234,18 @@ describe('@AeMember', () => {
 
         field!: string;
 
-      }
+}
 
       Reflect.defineProperty(TestClass.prototype, 'field', { value: 'initial' });
 
       AeMember<string, typeof TestClass>(({ get, set }) => {
         getValue = get;
         setValue = set;
-      })(TestClass.prototype, 'field', Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'));
+      })(
+        TestClass.prototype,
+        'field',
+        Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field'),
+      );
 
       expect(getValue).toBeDefined();
       expect(setValue).toBeDefined();
@@ -247,24 +254,26 @@ describe('@AeMember', () => {
 
       expect(getValue(instance)).toBe('initial');
 
-      expect(() => instance.field = 'some')
-          .toThrow(new TypeError('Cannot assign to read only property \'field\' of object \'#<TestClass>\''));
-      expect(() => setValue(instance, 'other')).toThrow(new TypeError('Property TestClass.field is not writable'));
+      expect(() => (instance.field = 'some')).toThrow(
+        new TypeError("Cannot assign to read only property 'field' of object '#<TestClass>'"),
+      );
+      expect(() => setValue(instance, 'other')).toThrow(
+        new TypeError('Property TestClass.field is not writable'),
+      );
       expect(getValue(instance)).toBe('initial');
     });
     it('applies multiple amendments', () => {
-
       class TestClass {
 
         @AeMember<string>(
-            ({ amend }) => amend({ enumerable: false }),
-            ({ get, amend }) => {
-              amend({ get: instance => get(instance) + '!' });
-            },
+          ({ amend }) => amend({ enumerable: false }),
+          ({ get, amend }) => {
+            amend({ get: instance => get(instance) + '!' });
+          },
         )
         field!: string;
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: false,
@@ -281,7 +290,6 @@ describe('@AeMember', () => {
 
   describe('when decorates accessor', () => {
     it('does not update descriptor', () => {
-
       let target: AeMemberTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
@@ -294,7 +302,7 @@ describe('@AeMember', () => {
           return 'some';
         }
 
-      }
+}
 
       expect(target?.amendedClass).toBe(TestClass);
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
@@ -308,7 +316,6 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('some');
     });
     it('updates accessor', () => {
-
       class TestClass {
 
         private _field = 'initial';
@@ -327,7 +334,7 @@ describe('@AeMember', () => {
           this._field = value;
         }
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: false,
@@ -344,7 +351,6 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('other!');
     });
     it('converts to read-only accessor', () => {
-
       let getValue!: (instance: TestClass) => string;
       let setValue!: (instance: TestClass, update: string) => void;
 
@@ -367,7 +373,7 @@ describe('@AeMember', () => {
           this._field = value;
         }
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: false,
@@ -381,14 +387,15 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('initial!');
       expect(getValue(instance)).toBe('initial');
 
-      expect(() => instance.field = 'wrong').toThrow(TypeError('Property TestClass.field is not writable'));
+      expect(() => (instance.field = 'wrong')).toThrow(
+        TypeError('Property TestClass.field is not writable'),
+      );
       expect(instance.field).toBe('initial!');
 
       setValue(instance, 'other');
       expect(getValue(instance)).toBe('other');
     });
     it('converts to write-only accessor', () => {
-
       let getValue!: (instance: TestClass) => string;
       let setValue!: (instance: TestClass, update: string) => void;
 
@@ -411,7 +418,7 @@ describe('@AeMember', () => {
           this._field = value;
         }
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: false,
@@ -422,7 +429,9 @@ describe('@AeMember', () => {
 
       const instance = new TestClass();
 
-      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
+      expect(() => instance.field).toThrow(
+        new TypeError('Property TestClass.field is not readable'),
+      );
       expect(getValue(instance)).toBe('initial');
 
       instance.field = 'some';
@@ -432,9 +441,7 @@ describe('@AeMember', () => {
       expect(getValue(instance)).toBe('other');
     });
     it('updates derived accessor', () => {
-
-      class BaseClass {
-      }
+      class BaseClass {}
 
       Reflect.defineProperty(BaseClass.prototype, 'field', { get: () => 'initial' });
 
@@ -448,7 +455,7 @@ describe('@AeMember', () => {
         })
         field!: string;
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: true,
@@ -465,7 +472,6 @@ describe('@AeMember', () => {
       expect(instance.field).toBe('other!');
     });
     it('updates write-only accessor', () => {
-
       let getValue!: (instance: TestClass) => string;
       let setValue!: (instance: TestClass, update: string) => void;
 
@@ -484,7 +490,7 @@ describe('@AeMember', () => {
           this._field = value;
         }
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: false,
@@ -495,8 +501,12 @@ describe('@AeMember', () => {
 
       const instance = new TestClass();
 
-      expect(() => instance.field).toThrow(new TypeError('Property TestClass.field is not readable'));
-      expect(() => getValue(instance)).toThrow(new TypeError('Property TestClass.field is not readable'));
+      expect(() => instance.field).toThrow(
+        new TypeError('Property TestClass.field is not readable'),
+      );
+      expect(() => getValue(instance)).toThrow(
+        new TypeError('Property TestClass.field is not readable'),
+      );
       expect(instance._field).toBe('initial');
 
       instance.field = 'some';
@@ -506,7 +516,6 @@ describe('@AeMember', () => {
       expect(instance._field).toBe('other');
     });
     it('reports inaccessible field name', () => {
-
       class TestClass {
 
         private _field = 'initial';
@@ -524,7 +533,7 @@ describe('@AeMember', () => {
           this._field = value;
         }
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'custom field')).toEqual({
         enumerable: false,
@@ -536,11 +545,11 @@ describe('@AeMember', () => {
       const instance = new TestClass();
 
       expect(instance['custom field']).toBe('initial!');
-      expect(() => instance['custom field'] = 'other')
-          .toThrow(new TypeError('Property TestClass["custom field"] is not writable'));
+      expect(() => (instance['custom field'] = 'other')).toThrow(
+        new TypeError('Property TestClass["custom field"] is not writable'),
+      );
     });
     it('reports inaccessible field key', () => {
-
       const key = Symbol('testKey');
 
       class TestClass {
@@ -560,7 +569,7 @@ describe('@AeMember', () => {
           this._field = value;
         }
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, key)).toEqual({
         enumerable: false,
@@ -572,8 +581,9 @@ describe('@AeMember', () => {
       const instance = new TestClass();
 
       expect(instance[key]).toBe('initial!');
-      expect(() => instance[key] = 'other')
-          .toThrow(new TypeError('Property TestClass[Symbol(testKey)] is not writable'));
+      expect(() => (instance[key] = 'other')).toThrow(
+        new TypeError('Property TestClass[Symbol(testKey)] is not writable'),
+      );
     });
     it('updates property descriptor', () => {
       class TestClass {
@@ -588,7 +598,7 @@ describe('@AeMember', () => {
           return 'initial';
         }
 
-      }
+}
 
       expect(Reflect.getOwnPropertyDescriptor(TestClass.prototype, 'field')).toEqual({
         enumerable: true,

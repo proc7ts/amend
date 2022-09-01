@@ -19,11 +19,11 @@ import { AeStatic } from './ae-static';
  * @typeParam TAmended - A type of the entity representing a static pseudo-member.
  */
 export type PseudoStaticAmendment<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>> =
-  ClassAmendment.ForBase<AeStatic<TValue, TClass, TUpdate>, TClass, TAmended>;
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>,
+> = ClassAmendment.ForBase<AeStatic<TValue, TClass, TUpdate>, TClass, TAmended>;
 
 /**
  * Creates a class amendment (and decorator) that declares a static pseudo-member of the target class.
@@ -41,12 +41,13 @@ export type PseudoStaticAmendment<
  * @returns New static pseudo-member amendment.
  */
 export function PseudoStatic<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>>(
-    accessor: PseudoAccessor<TClass, TValue, TUpdate>,
-    ...amendments: Amendment<TAmended>[]
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeStatic<TValue, TClass, TUpdate> = AeStatic<TValue, TClass, TUpdate>,
+>(
+  accessor: PseudoAccessor<TClass, TValue, TUpdate>,
+  ...amendments: Amendment<TAmended>[]
 ): PseudoStaticAmendment<TValue, TClass, TUpdate, TAmended> {
   return PseudoProp(PseudoStatic$createHost, accessor, amendments);
 }
@@ -55,9 +56,9 @@ const PseudoStatic$HostKind: PseudoHostKind = {
   pName: 'Static pseudo-property',
 };
 
-function PseudoStatic$createHost<TClass extends AmendableClass>(
-    { amendedClass }: AeClass<TClass>,
-): PseudoHost<TClass, TClass> {
+function PseudoStatic$createHost<TClass extends AmendableClass>({
+  amendedClass,
+}: AeClass<TClass>): PseudoHost<TClass, TClass> {
   return {
     kind: PseudoStatic$HostKind,
     cls: amendedClass,

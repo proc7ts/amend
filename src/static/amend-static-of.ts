@@ -15,21 +15,21 @@ import { AeStatic, DecoratedAeStatic } from './ae-static';
  * @param amendments - Amendment to apply.
  */
 export function amendStaticOf<
-    TClass extends AmendableClass,
-    TKey extends keyof TClass = keyof TClass,
-    TAmended extends AeStatic<TClass[TKey], TClass> = AeStatic<TClass[TKey], TClass>>(
-    decorated: DecoratedAeStatic<TClass, TAmended>,
-    memberKey: TKey,
-    ...amendments: Amendment<TAmended & AeStatic<TClass[TKey], TClass>>[]
+  TClass extends AmendableClass,
+  TKey extends keyof TClass = keyof TClass,
+  TAmended extends AeStatic<TClass[TKey], TClass> = AeStatic<TClass[TKey], TClass>,
+>(
+  decorated: DecoratedAeStatic<TClass, TAmended>,
+  memberKey: TKey,
+  ...amendments: Amendment<TAmended & AeStatic<TClass[TKey], TClass>>[]
 ): void {
-
   const amendment = AeStatic<TClass[TKey], TClass, TClass[TKey], TAmended>(...amendments);
   const targetClass = decorated.amendedClass;
   const sourceDesc = Reflect.getOwnPropertyDescriptor(targetClass, memberKey);
   const amendedDesc = amendment.decorateAmended(
-      decorated as DecoratedAeStatic<TClass, TAmended & AeStatic<TClass[TKey], TClass>>,
-      memberKey as string | symbol,
-      sourceDesc,
+    decorated as DecoratedAeStatic<TClass, TAmended & AeStatic<TClass[TKey], TClass>>,
+    memberKey as string | symbol,
+    sourceDesc,
   );
 
   if (amendedDesc && sourceDesc) {

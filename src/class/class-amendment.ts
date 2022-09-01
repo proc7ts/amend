@@ -10,18 +10,21 @@ import { AeClass, DecoratedAeClass } from './ae-class';
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of amended entity representing a class to amend.
  */
-export type ClassAmendment<TClass extends AbstractClass, TAmended extends AeClass<TClass> = AeClass<TClass>> =
-    AeClass<any> extends TAmended
-        ? ClassAmendmentDecorator<TClass>
-        : ClassAmendatory<TClass, TAmended>;
+export type ClassAmendment<
+  TClass extends AbstractClass,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+> = AeClass<any> extends TAmended
+  ? ClassAmendmentDecorator<TClass>
+  : ClassAmendatory<TClass, TAmended>;
 
 export namespace ClassAmendment {
-
-  export type ForBase<TBase extends AeClass<TClass>, TClass extends AbstractClass, TAmended extends TBase> =
-      TBase extends TAmended
-          ? ClassAmendmentDecorator<TClass>
-          : ClassAmendatory.ForBase<TBase, TClass, TAmended>;
-
+  export type ForBase<
+    TBase extends AeClass<TClass>,
+    TClass extends AbstractClass,
+    TAmended extends TBase,
+  > = TBase extends TAmended
+    ? ClassAmendmentDecorator<TClass>
+    : ClassAmendatory.ForBase<TBase, TClass, TAmended>;
 }
 
 /**
@@ -30,20 +33,19 @@ export namespace ClassAmendment {
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of amended entity representing a class to amend.
  */
-export interface ClassAmendatory<TClass extends AbstractClass, TAmended extends AeClass<TClass> = AeClass<TClass>>
-    extends ClassAmendatory.ForBase<AeClass<TClass>, TClass, TAmended> {
-
+export interface ClassAmendatory<
+  TClass extends AbstractClass,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+> extends ClassAmendatory.ForBase<AeClass<TClass>, TClass, TAmended> {
   /**
    * Decorates the given class.
    *
    * @param decorated - Decorated class representation.
    */
   decorateAmended(this: void, decorated: DecoratedAeClass<TClass, TAmended>): void;
-
 }
 
 export namespace ClassAmendatory {
-
   /**
    * Class amendatory instance for the given base amended entity type..
    *
@@ -51,18 +53,18 @@ export namespace ClassAmendatory {
    * @typeParam TClass - A type of amended class.
    * @typeParam TAmended - A type of amended entity representing a class to amend.
    */
-  export interface ForBase<TBase extends AeClass<TClass>, TClass extends AbstractClass, TAmended extends TBase>
-      extends Amendatory<TAmended> {
-
+  export interface ForBase<
+    TBase extends AeClass<TClass>,
+    TClass extends AbstractClass,
+    TAmended extends TBase,
+  > extends Amendatory<TAmended> {
     /**
      * Decorates the given class.
      *
      * @param decorated - Decorated class representation.
      */
     decorateAmended(this: void, decorated: DecoratedAeClass.ForBase<TBase, TClass, TAmended>): void;
-
   }
-
 }
 
 /**
@@ -70,13 +72,12 @@ export namespace ClassAmendatory {
  *
  * @typeParam TClass - A type of amended class.
  */
-export interface ClassAmendmentDecorator<TClass extends AbstractClass> extends ClassAmendatory<TClass> {
-
+export interface ClassAmendmentDecorator<TClass extends AbstractClass>
+  extends ClassAmendatory<TClass> {
   /**
    * Applies this amendment to decorated class.
    *
    * @param classConstructor - Decorated class constructor.
    */
   (this: void, classConstructor: TClass): void;
-
 }

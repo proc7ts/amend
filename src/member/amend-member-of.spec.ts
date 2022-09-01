@@ -5,14 +5,13 @@ import { amendMemberOf } from './amend-member-of';
 describe('amendMemberOf', () => {
   describe('when applied to field', () => {
     it('does not update descriptor', () => {
-
       let target: AeMemberTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
 
         field = 'some';
 
-      }
+}
 
       amendMemberOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
@@ -26,7 +25,6 @@ describe('amendMemberOf', () => {
       expect(instance.field).toBe('some');
     });
     it('updates descriptor', () => {
-
       class TestClass {
 
         @AeMember<AeMember<string>>(({ amend }) => {
@@ -34,7 +32,7 @@ describe('amendMemberOf', () => {
         })
         field = 'some';
 
-      }
+}
 
       amendMemberOf({ amendedClass: TestClass }, 'field', ({ amend }) => {
         amend({ configurable: false });
@@ -56,7 +54,6 @@ describe('amendMemberOf', () => {
   });
   describe('when applied to accessor', () => {
     it('does not update descriptor', () => {
-
       let target: AeMemberTarget<string, typeof TestClass> | undefined;
 
       class TestClass {
@@ -65,7 +62,7 @@ describe('amendMemberOf', () => {
           return 'some';
         }
 
-      }
+}
 
       amendMemberOf({ amendedClass: TestClass }, 'field', t => {
         target = t;
@@ -84,7 +81,6 @@ describe('amendMemberOf', () => {
       expect(instance.field).toBe('some');
     });
     it('updates accessor', () => {
-
       class TestClass {
 
         private _field = 'initial';
@@ -97,7 +93,7 @@ describe('amendMemberOf', () => {
           this._field = value;
         }
 
-      }
+}
 
       amendMemberOf({ amendedClass: TestClass }, 'field', ({ get, set, amend }) => {
         amend({

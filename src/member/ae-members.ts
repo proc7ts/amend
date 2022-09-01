@@ -12,7 +12,10 @@ import { amendMemberOf } from './amend-member-of';
  * @typeParam TClass - A type of amended class.
  * @typeParam TAmended - A type of the entity representing a class to amend.
  */
-export type AeMembersDef<TClass extends AmendableClass, TAmended extends AeClass<TClass> = AeClass<TClass>> = {
+export type AeMembersDef<
+  TClass extends AmendableClass,
+  TAmended extends AeClass<TClass> = AeClass<TClass>,
+> = {
   [K in keyof InstanceType<TClass>]?:
     | Amendment<TAmended & AeMember<InstanceType<TClass>[K], TClass>>
     | null
@@ -30,14 +33,12 @@ export type AeMembersDef<TClass extends AmendableClass, TAmended extends AeClass
  * @returns New class amendment instance.
  */
 export function AeMembers<
-    TClass extends AmendableClass,
-    TExtClass extends TClass = TClass,
-    TAmended extends AeClass<TExtClass> = AeClass<TExtClass>>(
-    def: AeMembersDef<TExtClass, TAmended>,
-): ClassAmendment<TClass, TAmended> {
+  TClass extends AmendableClass,
+  TExtClass extends TClass = TClass,
+  TAmended extends AeClass<TExtClass> = AeClass<TExtClass>,
+>(def: AeMembersDef<TExtClass, TAmended>): ClassAmendment<TClass, TAmended> {
   return AeClass(target => {
     for (const key of Reflect.ownKeys(def) as Iterable<keyof InstanceType<TExtClass>>) {
-
       const amendment = def[key] as Amendment<AeMember<any, TClass>> | undefined;
 
       if (amendment) {

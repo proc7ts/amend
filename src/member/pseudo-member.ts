@@ -13,7 +13,6 @@ import { AeMember } from './ae-member';
  * @typeParam TUpdate - Pseudo-member update type accepted by its setter.
  */
 export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TUpdate> {
-
   /**
    * Pseudo-member key.
    *
@@ -41,7 +40,6 @@ export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TU
    * @param update - Updated pseudo-member value.
    */
   set?: ((this: void, hostInstance: THost, update: TUpdate) => TValue) | undefined;
-
 }
 
 /**
@@ -58,11 +56,11 @@ export interface PseudoAccessor<THost extends object, TValue extends TUpdate, TU
  * @typeParam TAmended - A type of the entity representing a pseudo-member.
  */
 export type PseudoMemberAmendment<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>> =
-  ClassAmendment.ForBase<AeMember<TValue, TClass, TUpdate>, TClass, TAmended>;
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
+> = ClassAmendment.ForBase<AeMember<TValue, TClass, TUpdate>, TClass, TAmended>;
 
 /**
  * Creates a class amendment (and decorator) that declares a pseudo-member of the target class.
@@ -80,12 +78,13 @@ export type PseudoMemberAmendment<
  * @returns New pseudo-member amendment.
  */
 export function PseudoMember<
-    TValue extends TUpdate,
-    TClass extends AmendableClass = Class,
-    TUpdate = TValue,
-    TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>>(
-    accessor: PseudoAccessor<InstanceType<TClass>, TValue, TUpdate>,
-    ...amendments: Amendment<TAmended>[]
+  TValue extends TUpdate,
+  TClass extends AmendableClass = Class,
+  TUpdate = TValue,
+  TAmended extends AeMember<TValue, TClass, TUpdate> = AeMember<TValue, TClass, TUpdate>,
+>(
+  accessor: PseudoAccessor<InstanceType<TClass>, TValue, TUpdate>,
+  ...amendments: Amendment<TAmended>[]
 ): PseudoMemberAmendment<TValue, TClass, TUpdate, TAmended> {
   return PseudoProp(PseudoMember$createHost, accessor, amendments);
 }
@@ -94,9 +93,9 @@ const PseudoMember$HostKind: PseudoHostKind = {
   pName: 'Pseudo-property',
 };
 
-function PseudoMember$createHost<TClass extends AmendableClass>(
-    { amendedClass }: AeClass<TClass>,
-): PseudoHost<InstanceType<TClass>, TClass> {
+function PseudoMember$createHost<TClass extends AmendableClass>({
+  amendedClass,
+}: AeClass<TClass>): PseudoHost<InstanceType<TClass>, TClass> {
   return {
     kind: PseudoMember$HostKind,
     cls: amendedClass,

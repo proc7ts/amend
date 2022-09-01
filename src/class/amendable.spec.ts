@@ -5,7 +5,6 @@ import { Amendable } from './amendable';
 
 describe('Amendable', () => {
   it('applies amendments when instantiating', () => {
-
     class TestClass extends Amendable {
 
       static autoAmend(target: AeClassTarget<typeof TestClass>): void {
@@ -23,7 +22,7 @@ describe('Amendable', () => {
         super();
       }
 
-    }
+}
 
     const instance1 = new TestClass();
     const instance2 = new TestClass();
