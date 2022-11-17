@@ -28,14 +28,14 @@ describe('@AeStatic', () => {
     it('updates descriptor', () => {
       class TestClass {
 
-        @AeStatic<AeStatic<string>>(({ amend }) => {
+        @AeStatic<string>(({ amend }) => {
           amend({ enumerable: false });
         })
         static field = 'some';
 
 }
 
-      const desc = AeStatic<AeStatic<string>>(({ amend }) => {
+      const desc = AeStatic<string>(({ amend }) => {
         amend({ configurable: false });
       })(TestClass, 'field', Reflect.getOwnPropertyDescriptor(TestClass, 'field'));
 

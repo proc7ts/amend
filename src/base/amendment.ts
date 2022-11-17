@@ -18,12 +18,9 @@ export type Amendment<TAmended extends object> = Amender<TAmended> | Amendatory<
  * Applies an amendment to the given `target`.
  *
  * @typeParam TAmended - Amended entity type.
+ * @param target - Amendment target.
  */
-export type Amender<TAmended extends object> =
-  /**
-   * @param target - Amendment target.
-   */
-  (this: void, target: AmendTarget<TAmended>) => void;
+export type Amender<TAmended extends object> = (this: void, target: AmendTarget<TAmended>) => void;
 
 /**
  * Amendatory instance.
