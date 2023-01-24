@@ -31,7 +31,7 @@ export interface AeMember<
    * Updates to this property are always ignored.
    *
    * Set to `true` when {@link get} property assigned. Set to `false` when {@link set} property assigned, while the
-   * {@ling get} one is not. Remains unchanged when neither {@link get}, nor {@link set} properties assigned.
+   * {@link get} one is not. Remains unchanged when neither {@link get}, nor {@link set} properties assigned.
    */
   readonly readable: boolean;
 
@@ -41,7 +41,7 @@ export interface AeMember<
    * Updates to this property are always ignored.
    *
    * Set to `true` when {@link set} property assigned. Set to `false` when {@link get} property assigned, while the
-   * {@ling set} one is not. Remains unchanged when neither {@link get}, nor {@link set} properties assigned.
+   * {@link set} one is not. Remains unchanged when neither {@link get}, nor {@link set} properties assigned.
    */
   readonly writable: boolean;
 
