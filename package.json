@@ -22,6 +22,7 @@
     "types": "./dist/amend.d.ts",
     "default": "./dist/amend.js"
   },
+  "sideEffects": false,
   "dependencies": {
     "@proc7ts/primitives": "^3.0.2"
   },
